@@ -1,0 +1,36 @@
+{
+  "name": "Viva Livre Terapias",
+  "short_name": "Viva Livre",
+  "description": "Psicologia sistémica e Constelação Familiar com Mônica Alice Voelz",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5EFE6",
+  "theme_color": "#4F7A52",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mentora MAVC",
+      "url": "/mentora",
+      "description": "Área de membros e Mentora MAVC"
+    },
+    {
+      "name": "Agendar Sessão",
+      "url": "/#agendamento",
+      "description": "Agende uma sessão com a Mônica"
+    }
+  ]
+}
