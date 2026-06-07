@@ -1258,5 +1258,33 @@ Usa linguagem próxima, acolhedora e sistémica. Em português do Brasil. Máxim
   }
 
 </script>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <div style="display:none;" id="mobileNav">
+    <style>
+      @media (max-width: 1024px) {
+        #mobileNav { display:flex !important; }
+        .main { padding-bottom: 70px; }
+      }
+    </style>
+    <div style="position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--text);border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-around;padding:0.6rem 0 0.8rem;">
+      <button onclick="showPage('dashboard')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
+        <span style="font-size:1.3rem;">🏠</span>Início
+      </button>
+      <button onclick="showPage('mentora')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
+        <span style="font-size:1.3rem;">🌿</span>Mentora
+      </button>
+      <button onclick="showPage('oraculo')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
+        <span style="font-size:1.3rem;">🔮</span>Oráculo
+      </button>
+      <button onclick="showPage('materiais')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
+        <span style="font-size:1.3rem;">🗺️</span>Mapa
+      </button>
+      <button onclick="showPage('cursos')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
+        <span style="font-size:1.3rem;">🎓</span>Cursos
+      </button>
+    </div>
+  </div>
+
 </body>
 </html>
