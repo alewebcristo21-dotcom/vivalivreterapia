@@ -545,6 +545,10 @@
           <span class="nav-icon">🔮</span> Oráculo dos Sonhos
           <span class="nav-badge">IA</span>
         </a>
+        <a class="nav-item" onclick="showPage('maia')">
+          <span class="nav-icon">🌙</span> Calendário Maia
+          <span class="nav-badge">IA</span>
+        </a>
         <p class="nav-section-title">Conteúdo</p>
         <a class="nav-item" onclick="showPage('cursos')">
           <span class="nav-icon">🎓</span> Cursos
@@ -902,6 +906,81 @@
       </div>
 
 
+
+      <!-- CALENDÁRIO MAIA -->
+      <div class="page-content" id="page-maia">
+        <div class="mentora-layout">
+          <div class="chat-area">
+            <div class="chat-header">
+              <div class="chat-avatar" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);">🌙</div>
+              <div class="chat-header-info">
+                <h4>Calendário Maia — Kin Solar</h4>
+                <p>Descubra a sua energia maia pelo nascimento</p>
+              </div>
+              <span class="chat-online" style="color:#9B59B6;">Activo</span>
+            </div>
+
+            <!-- KIN CALCULATOR -->
+            <div id="maiaCalculator" style="padding:2rem;display:flex;flex-direction:column;gap:1.5rem;flex:1;overflow-y:auto;">
+              <div style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border-radius:1.5rem;padding:2rem;text-align:center;color:white;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-20px;right:-20px;font-size:8rem;opacity:0.06;">🌙</div>
+                <p style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(155,89,182,0.8);margin-bottom:0.8rem;">Tzolkin · 260 dias</p>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;margin-bottom:0.5rem;">Descubra o seu <em style="color:#C39BD3;font-style:italic;">Kin Maia</em></h3>
+                <p style="font-size:0.85rem;opacity:0.7;line-height:1.7;max-width:400px;margin:0 auto;">O Calendário Maia Tzolkin revela a energia que governava o cosmos no dia do seu nascimento — o seu propósito, o seu desafio e o seu dom.</p>
+              </div>
+
+              <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;">
+                <label style="display:block;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.8rem;">Data de Nascimento</label>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                  <input type="number" id="maiaDay" placeholder="Dia" min="1" max="31" style="flex:1;min-width:80px;padding:0.85rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" />
+                  <input type="number" id="maiaMonth" placeholder="Mês" min="1" max="12" style="flex:1;min-width:80px;padding:0.85rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" />
+                  <input type="number" id="maiaYear" placeholder="Ano" min="1900" max="2030" style="flex:2;min-width:120px;padding:0.85rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" />
+                </div>
+                <button onclick="calculateMaia()" style="width:100%;margin-top:1.2rem;padding:1rem;background:linear-gradient(135deg,#4a1a6e,#9B59B6);color:white;border:none;border-radius:3rem;font-family:'Jost',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.1em;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px rgba(155,89,182,0.3);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">🌙 Revelar o meu Kin Maia</button>
+              </div>
+
+              <!-- RESULTADO -->
+              <div id="maiaResult" style="display:none;"></div>
+
+              <!-- CHAT APÓS KIN -->
+              <div id="maiaChat" style="display:none;">
+                <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);overflow:hidden;">
+                  <div style="padding:1rem 1.5rem;border-bottom:1px solid var(--sand);font-size:0.82rem;color:var(--text-lt);">🌙 Aprofunde a sua energia maia com a IA</div>
+                  <div id="maiaChatMessages" style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem;max-height:300px;overflow-y:auto;"></div>
+                  <div style="padding:1rem 1.5rem;border-top:1px solid var(--sand);display:flex;gap:0.8rem;">
+                    <input type="text" id="maiaChatInput" placeholder="Pergunte sobre a sua energia maia..." style="flex:1;padding:0.75rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.85rem;color:var(--text);outline:none;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" onkeydown="if(event.key==='Enter')sendMaiaChat()" />
+                    <button onclick="sendMaiaChat()" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#4a1a6e,#9B59B6);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mentora-sidebar">
+            <div class="msidebar-card">
+              <h4>🌙 O que é o Kin?</h4>
+              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;">O <strong>Kin</strong> é a sua energia natal no Calendário Maia Tzolkin — uma combinação de um dos 20 <strong>Selos Solares</strong> com um dos 13 <strong>Tons Galácticos</strong>, formando 260 energias únicas.</p>
+            </div>
+            <div class="msidebar-card">
+              <h4>✨ Os 4 Elementos</h4>
+              <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                <div style="background:var(--cream);border-radius:0.8rem;padding:0.7rem;font-size:0.78rem;display:flex;align-items:center;gap:0.5rem;"><span>🔴</span><div><strong>Vermelho</strong> — Iniciar</div></div>
+                <div style="background:var(--cream);border-radius:0.8rem;padding:0.7rem;font-size:0.78rem;display:flex;align-items:center;gap:0.5rem;"><span>⚪</span><div><strong>Branco</strong> — Refinar</div></div>
+                <div style="background:var(--cream);border-radius:0.8rem;padding:0.7rem;font-size:0.78rem;display:flex;align-items:center;gap:0.5rem;"><span>🔵</span><div><strong>Azul</strong> — Transformar</div></div>
+                <div style="background:var(--cream);border-radius:0.8rem;padding:0.7rem;font-size:0.78rem;display:flex;align-items:center;gap:0.5rem;"><span>🟡</span><div><strong>Amarelo</strong> — Amadurecer</div></div>
+              </div>
+            </div>
+            <div class="msidebar-card">
+              <h4>🌿 Conexão Sistémica</h4>
+              <p style="font-size:0.78rem;color:var(--text-lt);line-height:1.6;margin-bottom:1rem;">O Calendário Maia pode revelar padrões que complementam o seu processo terapêutico com a Mônica.</p>
+              <button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="width:100%;padding:0.7rem;background:var(--sage-dk);color:white;border:none;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;">📅 Sessão com a Mônica</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ORÁCULO DOS SONHOS -->
       <div class="page-content" id="page-oraculo">
         <div class="mentora-layout">
@@ -1004,7 +1083,7 @@
     document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
   }
@@ -1067,6 +1146,201 @@
     }
     busy = false; document.getElementById('sendBtn').disabled = false;
     document.getElementById('chatInput').focus();
+  }
+
+
+  // ── CALENDÁRIO MAIA ──
+  const MAIA_SIGNS = [
+    {name:"Dragão Vermelho",icon:"🐉",keyword:"Nutrir",element:"🔴",power:"Nascimento",action:"Nutrir",essence:"Ser"},
+    {name:"Vento Branco",icon:"💨",keyword:"Espírito",element:"⚪",power:"Comunicação",action:"Respirar",essence:"Espírito"},
+    {name:"Noite Azul",icon:"🌙",keyword:"Abundância",element:"🔵",power:"Intuição",action:"Sonhar",essence:"Abundância"},
+    {name:"Semente Amarela",icon:"🌱",keyword:"Florescimento",element:"🟡",power:"Alvo",action:"Despertar",essence:"Florescimento"},
+    {name:"Serpente Vermelha",icon:"🐍",keyword:"Sobrevivência",element:"🔴",power:"Força",action:"Estabilizar",essence:"Instinto"},
+    {name:"Ligador de Mundos",icon:"💀",keyword:"Equalização",element:"⚪",power:"Oportunidade",action:"Equalizar",essence:"Morte-Renascimento"},
+    {name:"Mão Azul",icon:"✋",keyword:"Cura",element:"🔵",power:"Realização",action:"Conhecer",essence:"Cura"},
+    {name:"Estrela Amarela",icon:"⭐",keyword:"Elegância",element:"🟡",power:"Arte",action:"Embelezar",essence:"Beleza"},
+    {name:"Lua Vermelha",icon:"🌊",keyword:"Fluxo Universal",element:"🔴",power:"Água",action:"Purificar",essence:"Fluxo"},
+    {name:"Cão Branco",icon:"🐕",keyword:"Amor",element:"⚪",power:"Coração",action:"Amar",essence:"Fidelidade"},
+    {name:"Macaco Azul",icon:"🐒",keyword:"Magia",element:"🔵",power:"Jogo",action:"Brincar",essence:"Ilusão"},
+    {name:"Humano Amarelo",icon:"👤",keyword:"Livre Arbítrio",element:"🟡",power:"Sabedoria",action:"Influenciar",essence:"Sabedoria"},
+    {name:"Caminhante do Céu",icon:"🚶",keyword:"Espaço",element:"🔴",power:"Profecia",action:"Explorar",essence:"Exploração"},
+    {name:"Feiticeira Branca",icon:"🔮",keyword:"Magia Atemporal",element:"⚪",power:"Receptividade",action:"Encantar",essence:"Magia"},
+    {name:"Águia Azul",icon:"🦅",keyword:"Visão",element:"🔵",power:"Mente",action:"Criar",essence:"Visão"},
+    {name:"Guerreiro Amarelo",icon:"⚔️",keyword:"Inteligência",element:"🟡",power:"Questionar",action:"Questionar",essence:"Medo-Coragem"},
+    {name:"Terra Vermelha",icon:"🌍",keyword:"Navegação",element:"🔴",power:"Sincronicidade",action:"Evoluir",essence:"Terra"},
+    {name:"Espelho Branco",icon:"🪞",keyword:"Ordem",element:"⚪",power:"Reflexão",action:"Refletir",essence:"Infinito"},
+    {name:"Tempestade Azul",icon:"⛈️",keyword:"Auto-Geração",element:"🔵",power:"Energia",action:"Catalizar",essence:"Transformação"},
+    {name:"Sol Amarelo",icon:"☀️",keyword:"Iluminação",element:"🟡",power:"Vida",action:"Iluminar",essence:"Fogo Universal"},
+  ];
+
+  const MAIA_TONES = [
+    {num:1,name:"Magnético",keyword:"Propósito",action:"Unificar",power:"Atrair"},
+    {num:2,name:"Lunar",keyword:"Desafio",action:"Polarizar",power:"Estabilizar"},
+    {num:3,name:"Elétrico",keyword:"Serviço",action:"Ativar",power:"Ligar"},
+    {num:4,name:"Auto-existente",keyword:"Forma",action:"Definir",power:"Medir"},
+    {num:5,name:"Overtone",keyword:"Radiância",action:"Empoderar",power:"Comandar"},
+    {num:6,name:"Rítmico",keyword:"Igualdade",action:"Organizar",power:"Equilibrar"},
+    {num:7,name:"Ressonante",keyword:"Afinação",action:"Canalizar",power:"Inspirar"},
+    {num:8,name:"Galáctico",keyword:"Integridade",action:"Harmonizar",power:"Modelar"},
+    {num:9,name:"Solar",keyword:"Intenção",action:"Pulsar",power:"Realizar"},
+    {num:10,name:"Planetário",keyword:"Manifestação",action:"Manifestar",power:"Perfeição"},
+    {num:11,name:"Espectral",keyword:"Libertação",action:"Liberar",power:"Dissolver"},
+    {num:12,name:"Cristal",keyword:"Cooperação",action:"Dedicar",power:"Universalizar"},
+    {num:13,name:"Cósmico",keyword:"Presença",action:"Transcender",power:"Durar"},
+  ];
+
+  let maiaKinData = null;
+  let maiaChatHistory = [];
+  let maiaChatBusy = false;
+
+  function calculateMaia() {
+    const day = parseInt(document.getElementById('maiaDay').value);
+    const month = parseInt(document.getElementById('maiaMonth').value);
+    const year = parseInt(document.getElementById('maiaYear').value);
+
+    if (!day || !month || !year || year < 1900 || year > 2030) {
+      alert('Por favor insira uma data de nascimento válida! 🌙');
+      return;
+    }
+
+    // Calculate days from base date (July 26, 1987 = Kin 1)
+    const baseDate = new Date(1987, 6, 26); // July 26, 1987
+    const birthDate = new Date(year, month - 1, day);
+    const diffDays = Math.floor((birthDate - baseDate) / (1000 * 60 * 60 * 24));
+    
+    let kinNumber = ((diffDays % 260) + 260) % 260 + 1;
+    
+    const signIndex = (kinNumber - 1) % 20;
+    const toneIndex = (kinNumber - 1) % 13;
+    
+    const sign = MAIA_SIGNS[signIndex];
+    const tone = MAIA_TONES[toneIndex];
+    
+    maiaKinData = { kinNumber, sign, tone, day, month, year };
+    
+    displayMaiaResult(kinNumber, sign, tone);
+  }
+
+  function displayMaiaResult(kin, sign, tone) {
+    const resultDiv = document.getElementById('maiaResult');
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+      <div style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border-radius:1.5rem;padding:2rem;color:white;text-align:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-10px;right:-10px;font-size:6rem;opacity:0.08;">${sign.icon}</div>
+        <p style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(195,155,211,0.8);margin-bottom:0.5rem;">O teu Kin Maia</p>
+        <div style="font-size:3.5rem;margin-bottom:0.5rem;">${sign.icon}</div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;margin-bottom:0.3rem;">${tone.name} ${sign.name}</h2>
+        <div style="background:rgba(255,255,255,0.1);border-radius:2rem;padding:0.4rem 1.2rem;display:inline-block;font-size:0.78rem;margin-bottom:1.5rem;">Kin ${kin} · Tom ${tone.num} · ${sign.element}</div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+          <div style="background:rgba(255,255,255,0.08);border-radius:1rem;padding:0.8rem;">
+            <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;">Poder</div>
+            <div style="font-size:0.82rem;font-weight:500;">${sign.power}</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:1rem;padding:0.8rem;">
+            <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;">Ação</div>
+            <div style="font-size:0.82rem;font-weight:500;">${sign.action}</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:1rem;padding:0.8rem;">
+            <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;">Essência</div>
+            <div style="font-size:0.82rem;font-weight:500;">${sign.essence}</div>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.06);border-radius:1rem;padding:1rem;text-align:left;">
+          <p style="font-size:0.8rem;line-height:1.7;opacity:0.85;">
+            <strong style="color:#C39BD3;">Tom ${tone.num} — ${tone.name}:</strong> ${tone.keyword} · ${tone.action} · ${tone.power}<br/>
+            <strong style="color:#C39BD3;">Palavra-chave:</strong> ${sign.keyword}
+          </p>
+        </div>
+      </div>
+    `;
+
+    // Show chat and add initial message
+    document.getElementById('maiaChat').style.display = 'block';
+    const msgs = document.getElementById('maiaChatMessages');
+    msgs.innerHTML = '';
+    addMaiaMsg('assistant', `Que energia poderosa! O teu Kin é o **${tone.name} ${sign.name}** — Kin ${kin}! 🌙✨
+
+O teu poder é **${sign.power}**, a tua ação é **${sign.action}** e a tua essência é **${sign.essence}**.
+
+Quer que eu aprofunde algum aspecto do teu Kin? Posso falar sobre o teu propósito, os teus desafios, a tua missão de vida ou como esta energia se manifesta nos teus relacionamentos! 🌿`);
+    maiaChatHistory = [];
+  }
+
+  function addMaiaMsg(role, text) {
+    const msgs = document.getElementById('maiaChatMessages');
+    const d = document.createElement('div');
+    d.className = `cmsg ${role}`;
+    const av = role === 'assistant' 
+      ? '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);">🌙</div>'
+      : '<div class="cmsg-av">👤</div>';
+    d.innerHTML = av + `<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function sendMaiaChat() {
+    const input = document.getElementById('maiaChatInput');
+    const text = input.value.trim();
+    if (!text || maiaChatBusy || !maiaKinData) return;
+    input.value = '';
+    maiaChatBusy = true;
+    addMaiaMsg('user', text);
+    maiaChatHistory.push({ role: 'user', content: text });
+
+    const maiaSystem = `Você é um especialista em Calendário Maia Tzolkin integrado à plataforma da psicóloga Mônica Alice Voelz (Viva Livre Terapias).
+
+O utilizador tem o seguinte Kin Maia:
+- Kin: ${maiaKinData.kinNumber}
+- Selo Solar: ${maiaKinData.sign.name} ${maiaKinData.sign.icon}
+- Tom Galáctico: ${maiaKinData.tone.name} (Tom ${maiaKinData.tone.num})
+- Poder: ${maiaKinData.sign.power}
+- Ação: ${maiaKinData.sign.action}
+- Essência: ${maiaKinData.sign.essence}
+- Palavra-chave: ${maiaKinData.sign.keyword}
+- Tom - Propósito: ${maiaKinData.tone.keyword}
+
+Responde às perguntas sobre o Kin desta pessoa de forma profunda, poética e acolhedora. Conecta a energia maia com o autoconhecimento e crescimento pessoal. Quando relevante, sugere aprofundar com sessão terapêutica com a Mônica em vivalivreterapia.com.
+
+Tom: místico, acolhedor, profundo. Em português do Brasil. Máximo 200 palavras por resposta.`;
+
+    // Show typing
+    const msgs = document.getElementById('maiaChatMessages');
+    const typing = document.createElement('div');
+    typing.className = 'cmsg assistant'; typing.id = 'maiaTyping';
+    typing.innerHTML = '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);">🌙</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 512,
+          system: maiaSystem,
+          messages: maiaChatHistory
+        })
+      });
+      const data = await res.json();
+      document.getElementById('maiaTyping')?.remove();
+      if (data.content?.[0]) {
+        const reply = data.content[0].text;
+        maiaChatHistory.push({ role: 'assistant', content: reply });
+        addMaiaMsg('assistant', reply);
+      }
+    } catch(e) {
+      document.getElementById('maiaTyping')?.remove();
+      addMaiaMsg('assistant', 'Erro de conexão. Tenta novamente! 🌙');
+    }
+    maiaChatBusy = false;
+    document.getElementById('maiaChatInput').focus();
   }
 
   // ── ORÁCULO DOS SONHOS ──
@@ -1258,33 +1532,5 @@ Usa linguagem próxima, acolhedora e sistémica. Em português do Brasil. Máxim
   }
 
 </script>
-
-  <!-- MOBILE BOTTOM NAV -->
-  <div style="display:none;" id="mobileNav">
-    <style>
-      @media (max-width: 1024px) {
-        #mobileNav { display:flex !important; }
-        .main { padding-bottom: 70px; }
-      }
-    </style>
-    <div style="position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--text);border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-around;padding:0.6rem 0 0.8rem;">
-      <button onclick="showPage('dashboard')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
-        <span style="font-size:1.3rem;">🏠</span>Início
-      </button>
-      <button onclick="showPage('mentora')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
-        <span style="font-size:1.3rem;">🌿</span>Mentora
-      </button>
-      <button onclick="showPage('oraculo')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
-        <span style="font-size:1.3rem;">🔮</span>Oráculo
-      </button>
-      <button onclick="showPage('materiais')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
-        <span style="font-size:1.3rem;">🗺️</span>Mapa
-      </button>
-      <button onclick="showPage('cursos')" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:0.65rem;display:flex;flex-direction:column;align-items:center;gap:0.2rem;cursor:pointer;padding:0.3rem 0.8rem;">
-        <span style="font-size:1.3rem;">🎓</span>Cursos
-      </button>
-    </div>
-  </div>
-
 </body>
 </html>
