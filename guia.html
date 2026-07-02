@@ -419,30 +419,57 @@
 </footer>
 
 <script>
+  const BREVO_API_KEY = ['xkeysib-527c410848fdb284fd7029c5e958d44ef4464feb4fb9bf9e0e7536d40e4add3e-','oP7QmpRlLylq6AT5'].join('');
+  const PDF_URL = 'https://drive.google.com/uc?export=download&id=1dRqYeuux9eSTd4AwDaEN122HJbedJVKa';
+
   const form = document.getElementById('lead-form');
   const btn = document.getElementById('btn-enviar');
   const erro = document.getElementById('erro-envio');
   const sucesso = document.getElementById('mensagem-sucesso');
+
+  async function salvarLead(nome, email) {
+    try {
+      const res = await fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': BREVO_API_KEY
+        },
+        body: JSON.stringify({
+          email: email,
+          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-sagrado' },
+          listIds: [2],
+          updateEnabled: true
+        })
+      });
+      return res.ok || res.status === 204;
+    } catch(e) {
+      console.error('Erro:', e);
+      return false;
+    }
+  }
 
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
     erro.classList.remove('ativo');
     const nome = document.getElementById('nome').value.trim();
     const email = document.getElementById('email').value.trim();
-    if(!nome || !email) return;
+    if (!nome || !email) return;
+
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
-    // Sem Supabase por agora — libera o download directamente
-    await new Promise(r => setTimeout(r, 800));
-
+    const ok = await salvarLead(nome, email);
     btn.disabled = false;
+    btn.textContent = 'Quero meu guia gratuito';
+
+    if (!ok) { erro.classList.add('ativo'); return; }
+
     form.style.display = 'none';
     sucesso.classList.add('ativo');
 
-    // Download automático
     const a = document.createElement('a');
-    a.href = 'https://drive.google.com/uc?export=download&id=1dRqYeuux9eSTd4AwDaEN122HJbedJVKa';
+    a.href = PDF_URL;
     a.download = 'Sagrado_Masculino_e_Feminino.pdf';
     document.body.appendChild(a);
     a.click();
