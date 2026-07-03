@@ -564,6 +564,12 @@
         <a class="nav-item" href="https://wa.me/351962250741" target="_blank">
           <span class="nav-icon">💬</span> WhatsApp
         </a>
+        <div id="adminMenu" style="display:none;">
+          <p class="nav-section-title" style="color:var(--dourado);">Admin</p>
+          <a class="nav-item" onclick="showPage('socio')" style="color:var(--dourado);">
+            <span class="nav-icon">🚀</span> Sócio Estratégico
+          </a>
+        </div>
       </nav>
       <div class="sidebar-footer">
         <button class="logout-btn" onclick="doLogout()">↩ Sair da conta</button>
@@ -1053,6 +1059,55 @@
         </div>
       </div>
 
+
+      <!-- SÓCIO ESTRATÉGICO -->
+      <div class="page-content" id="page-socio">
+        <div class="mentora-layout">
+          <div class="chat-area">
+            <div class="chat-header">
+              <div class="chat-avatar" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>
+              <div class="chat-header-info">
+                <h4>Sócio Estratégico</h4>
+                <p>Consultor de marketing, vendas e negócios digitais · Acesso exclusivo Admin</p>
+              </div>
+              <span class="chat-online" style="color:var(--dourado);">Online</span>
+            </div>
+            <div class="chat-messages" id="socioMessages">
+              <div class="cmsg assistant">
+                <div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>
+                <div class="cmsg-bubble">Olá! Sou o vosso Sócio Estratégico — uma equipa formada pelos maiores especialistas em marketing, copywriting, funis de vendas e negócios digitais, com conhecimento profundo em Psicologia Sistémica e Constelação Familiar.<br><br>O meu único objetivo é ajudar a <strong>Viva Livre Terapias</strong> a crescer e faturar mais. Pensamos sempre como donos, priorizamos lucro e buscamos soluções simples e escaláveis.<br><br>O que vamos construir hoje? 🔥</div>
+              </div>
+            </div>
+            <div class="chat-suggestions" id="socioSugg">
+              <button class="sugg-btn" onclick="sendSocio('Cria uma estratégia completa para lançar o curso Ordens do Amor')">🎯 Lançar curso Ordens do Amor</button>
+              <button class="sugg-btn" onclick="sendSocio('Cria uma sequência de 5 emails para quem baixou o guia gratuito')">📧 Sequência de emails</button>
+              <button class="sugg-btn" onclick="sendSocio('Cria um script de Reels para divulgar a área de membros')">📱 Script para Reels</button>
+              <button class="sugg-btn" onclick="sendSocio('Como chegar a R$100.000 até dezembro? Cria um plano de ação')">💰 Plano para R$100k</button>
+            </div>
+            <div class="chat-input-area">
+              <textarea class="chat-textarea" id="socioInput" placeholder="Peça uma estratégia, copy, funil, script..." rows="1" onkeydown="handleSocioKey(event)" oninput="autoResize(this)"></textarea>
+              <button class="chat-send" id="socioBtn" onclick="sendSocioMsg()" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);box-shadow:0 4px 12px rgba(184,146,61,0.3);">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="mentora-sidebar">
+            <div class="msidebar-card">
+              <h4>🚀 Como usar</h4>
+              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;margin-bottom:1rem;">Peça estratégias completas, copies prontas, funis de vendas, scripts para redes sociais, sequências de email e muito mais!</p>
+            </div>
+            <div class="msidebar-card">
+              <h4>💡 Exemplos de pedidos</h4>
+              <button class="topic-btn" onclick="sendSocio('Cria uma página de vendas completa para o curso Criança Interior')">📄 Página de vendas</button>
+              <button class="topic-btn" onclick="sendSocio('Cria 10 ideias de posts para Instagram sobre Constelação Familiar')">📱 Posts Instagram</button>
+              <button class="topic-btn" onclick="sendSocio('Cria uma oferta irresistível para o primeiro curso')">💰 Oferta irresistível</button>
+              <button class="topic-btn" onclick="sendSocio('Qual é o melhor funil para vender cursos de psicologia?')">🎯 Funil de vendas</button>
+              <button class="topic-btn" onclick="sendSocio('Cria um plano de conteúdo para 30 dias no Instagram')">📅 Plano de conteúdo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ORÁCULO DOS SONHOS -->
       <div class="page-content" id="page-oraculo">
         <div class="mentora-layout">
@@ -1155,7 +1210,7 @@
     document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
   }
@@ -1420,6 +1475,110 @@ IMPORTANTE: Quando a pessoa pedir datas específicas ou dias favoráveis para al
     }
     maiaChatBusy = false;
     document.getElementById('maiaChatInput').focus();
+  }
+
+
+  // ── SÓCIO ESTRATÉGICO ──
+  const SOCIO_SYSTEM = `Você é uma equipe formada pelos maiores nomes do marketing direto, psicologia do consumidor, copywriting, funis de vendas, branding, storytelling e negócios digitais.
+
+Você incorpora simultaneamente o conhecimento de: Eugene Schwartz, Gary Halbert, Dan Kennedy, Russell Brunson, Alex Hormozi, Donald Miller, Joe Sugarman, Robert Cialdini, Seth Godin, Sabri Suby, David Ogilvy e Frank Kern.
+
+Mas também entende profundamente: Psicologia Sistêmica, Constelação Familiar, Ordens do Amor, Bert Hellinger, Traumas, Ansiedade, Autoconhecimento, Espiritualidade, Meditação e Neurociência.
+
+CONTEXTO DO NEGÓCIO:
+- Empresa: Viva Livre Terapias (vivalivreterapia.com)
+- Mônica: Psicóloga Sistémica e Consteladora Familiar
+- Alexandre: Terapeuta Sistémico e especialista em Meditações Guiadas
+- Objetivo: Faturar R$100.000 até 31 de dezembro
+- Foco: Portugal e Brasil, produtos digitais
+
+PRODUTOS:
+- Guia gratuito: Sagrado Masculino & Feminino (já publicado)
+- Área de membros: vivalivreterapia.com/mentora (senha: vivalivreterapias2025)
+- 10 cursos planeados: Ordens do Amor, Relacionamentos Sistémicos, Criança Interior, Autoestima, Ansiedade, Prosperidade, Pais e Filhos, Luto, Propósito de Vida, Constelação Familiar na Prática
+
+Seu objetivo NÃO é apenas dar conselhos. É construir uma máquina de vendas.
+
+Sempre pense: "O que faria esta empresa crescer 10 vezes?"
+
+Sempre responda neste formato quando aplicável:
+1. Objetivo
+2. Estratégia
+3. O que produzir
+4. Como vender
+5. Como automatizar
+6. Como escalar
+7. Próximo passo
+
+Nunca entregue respostas genéricas. Seja específico, direto e prático.
+Pense sempre em Lifetime Value. Venda jornadas, não cursos isolados.
+Responda em português do Brasil.`;
+
+  let socioHistory = [];
+  let socioBusy = false;
+
+  function handleSocioKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendSocioMsg();} }
+  function sendSocio(t) { document.getElementById('socioInput').value=t; sendSocioMsg(); }
+
+  function addSocioMsg(role, text) {
+    const msgs = document.getElementById('socioMessages');
+    const d = document.createElement('div');
+    d.className = `cmsg ${role}`;
+    const av = role==='assistant' 
+      ? '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>'
+      : '<div class="cmsg-av">👤</div>';
+    d.innerHTML = av + `<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function sendSocioMsg() {
+    const input = document.getElementById('socioInput');
+    const text = input.value.trim();
+    if (!text || socioBusy) return;
+    document.getElementById('socioSugg').style.display = 'none';
+    input.value = ''; input.style.height = 'auto';
+    socioBusy = true; document.getElementById('socioBtn').disabled = true;
+    addSocioMsg('user', text);
+    socioHistory.push({ role:'user', content:text });
+
+    const msgs = document.getElementById('socioMessages');
+    const typing = document.createElement('div');
+    typing.className = 'cmsg assistant'; typing.id = 'socioTyping';
+    typing.innerHTML = '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2048,
+          system: SOCIO_SYSTEM,
+          messages: socioHistory
+        })
+      });
+      const data = await res.json();
+      document.getElementById('socioTyping')?.remove();
+      if (data.content?.[0]) {
+        const reply = data.content[0].text;
+        socioHistory.push({ role:'assistant', content:reply });
+        addSocioMsg('assistant', reply);
+      } else {
+        addSocioMsg('assistant', 'Erro ao processar. Tenta novamente! 🚀');
+      }
+    } catch(e) {
+      document.getElementById('socioTyping')?.remove();
+      addSocioMsg('assistant', 'Erro de conexão. Verifica a ligação! 🚀');
+    }
+    socioBusy = false; document.getElementById('socioBtn').disabled = false;
+    document.getElementById('socioInput').focus();
   }
 
   // ── ORÁCULO DOS SONHOS ──
