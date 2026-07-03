@@ -1184,12 +1184,17 @@
   function doLogin() {
     const user = document.getElementById('loginUser').value.trim();
     const pass = document.getElementById('loginPass').value;
-    if (pass === SENHA) {
+    const SENHA_ADMIN = 'admin2025viva';
+    if (pass === SENHA || pass === SENHA_ADMIN) {
       document.getElementById('loginPage').style.display = 'none';
       document.getElementById('appPage').style.display = 'block';
       const name = user || 'Membro';
       document.getElementById('sidebarName').textContent = name;
       document.getElementById('heroName').textContent = name;
+      if (pass === SENHA_ADMIN) {
+        const adminMenu = document.getElementById('adminMenu');
+        if (adminMenu) adminMenu.style.display = 'block';
+      }
     } else {
       document.getElementById('loginError').style.display = 'block';
     }
