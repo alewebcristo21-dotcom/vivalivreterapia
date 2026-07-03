@@ -1611,5 +1611,26 @@ Usa linguagem próxima, acolhedora e sistémica. Em português do Brasil. Máxim
   }
 
 </script>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <div id="mobileNav">
+    <style>
+      @media (max-width: 1024px) {
+        #mobileNav { display:flex !important; }
+        .main { padding-bottom: 75px; }
+      }
+      #mobileNav { display:none; position:fixed; bottom:0; left:0; right:0; z-index:100; background:var(--text); border-top:1px solid rgba(255,255,255,0.1); justify-content:space-around; padding:0.5rem 0 0.8rem; }
+      #mobileNav button { background:none; border:none; color:rgba(255,255,255,0.5); font-size:0.6rem; display:flex; flex-direction:column; align-items:center; gap:0.2rem; cursor:pointer; padding:0.3rem 0.5rem; font-family:'Jost',sans-serif; }
+      #mobileNav button span { font-size:1.2rem; }
+      #mobileNav button.mob-active { color:var(--sage-lt); }
+    </style>
+    <button onclick="showPage('dashboard')" id="mob-dashboard"><span>🏠</span>Início</button>
+    <button onclick="showPage('mentora')" id="mob-mentora"><span>🌿</span>Mentora</button>
+    <button onclick="showPage('oraculo')" id="mob-oraculo"><span>🔮</span>Oráculo</button>
+    <button onclick="showPage('maia')" id="mob-maia"><span>🌙</span>Maia</button>
+    <button onclick="showPage('materiais')" id="mob-materiais"><span>🗺️</span>Mapa</button>
+    <button onclick="showPage('cursos')" id="mob-cursos"><span>🎓</span>Cursos</button>
+  </div>
+
 </body>
 </html>
