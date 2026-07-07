@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/mentora", "destination": "/mentora.html" },
-    { "source": "/guia", "destination": "/guia.html" }
+    { "source": "/guia", "destination": "/guia.html" },
+    { "source": "/guia2", "destination": "/guia2.html" }
   ]
 }

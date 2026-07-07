@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sagrado Masculino & Sagrado Feminino — Guia Gratuito | Viva Livre Terapias</title>
-<meta name="description" content="Um guia gratuito para reconectar suas energias masculina e feminina, pela abordagem sistêmica e da Constelação Familiar.">
+<title>Os 7 Sinais de que Você Repete Padrões Familiares — Guia Gratuito | Viva Livre Terapias</title>
+<meta name="description" content="Descubra se você está repetindo padrões da sua família sem perceber. Guia gratuito com abordagem sistémica e Constelação Familiar.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,14 +85,14 @@
     font-size: 0.72rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--sage-dk);
+    color: var(--terra-dk);
     font-weight: 500;
     margin-bottom: 18px;
   }
   .eyebrow::before{
     content:"";
     width: 22px; height: 1px;
-    background: var(--sage-dk);
+    background: var(--terra-dk);
     display:inline-block;
   }
   .hero h1{
@@ -102,7 +102,7 @@
   }
   .hero h1 em{
     font-style: italic;
-    color: var(--sage-dk);
+    color: var(--terra-dk);
   }
   .hero p.lead{
     font-size: 1rem;
@@ -116,7 +116,7 @@
     display:inline-flex;
     align-items:center;
     gap: 10px;
-    background: linear-gradient(135deg, #3d6140, var(--sage-dk));
+    background: linear-gradient(135deg, var(--terra-dk), var(--terra));
     color: var(--white);
     border: none;
     padding: 15px 28px;
@@ -128,9 +128,9 @@
     cursor: pointer;
     text-decoration:none;
     transition: transform .18s ease, box-shadow .18s ease;
-    box-shadow: 0 6px 20px rgba(79,122,82,0.3);
+    box-shadow: 0 6px 20px rgba(154,122,86,0.3);
   }
-  .btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 28px rgba(79,122,82,0.4); }
+  .btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 28px rgba(154,122,86,0.4); }
 
   /* Visual */
   .signature{
@@ -139,23 +139,16 @@
     border-radius: 28px;
     overflow:hidden;
     background: var(--sand);
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
   .signature svg{ width:100%; height:100%; display:block; }
-  .signature .label{
-    position:absolute;
-    font-family:'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 0.95rem;
-    letter-spacing: 0.02em;
-  }
-  .signature .label.masc{ top: 34px; left: 30px; color: var(--white); }
-  .signature .label.fem{ bottom: 34px; right: 30px; color: var(--text); }
 
-  /* SECOES */
+  /* OS 7 SINAIS */
   .secao{ padding: 64px 0; }
   .secao-titulo{
     font-size: clamp(1.5rem, 2.6vw, 2rem);
-    max-width: 20ch;
     margin-bottom: 12px;
     font-weight: 300;
   }
@@ -165,30 +158,35 @@
     margin-bottom: 40px;
     font-weight: 300;
   }
-  .cards{
+
+  .sinais-grid{
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
   }
-  .card{
+  .sinal-card{
     background: var(--white);
     border: 1px solid var(--sand);
-    border-radius: 18px;
-    padding: 28px 26px;
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    display:flex;
+    gap: 1rem;
+    align-items:flex-start;
     transition: transform .3s, box-shadow .3s;
   }
-  .card:hover{ transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.07); }
-  .card .num{
+  .sinal-card:hover{ transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.07); }
+  .sinal-num{
     font-family:'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
     font-style: italic;
-    color: var(--dourado);
-    font-size: 0.9rem;
-    margin-bottom: 14px;
-    display:block;
-    letter-spacing: 0.05em;
+    color: var(--terra);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
   }
-  .card h3{ font-size: 1.1rem; margin-bottom: 10px; font-weight: 400; }
-  .card p{ color: var(--text-lt); font-size: 0.9rem; font-weight: 300; }
+  .sinal-info h3{ font-size: 1rem; font-weight: 400; margin-bottom: 0.4rem; }
+  .sinal-info p{ font-size: 0.85rem; color: var(--text-lt); font-weight: 300; line-height: 1.6; }
 
   /* PARA QUEM */
   .para-quem{
@@ -249,11 +247,8 @@
     outline: none;
     transition: border-color .3s;
   }
-  .field input:focus{ border-color: var(--sage); }
-  form .btn{
-    justify-content:center;
-    margin-top: 6px;
-  }
+  .field input:focus{ border-color: var(--terra); }
+  form .btn{ justify-content:center; margin-top: 6px; }
   .form-nota{
     font-size: 0.75rem;
     color: var(--text-lt);
@@ -273,7 +268,7 @@
     font-weight: 300;
     margin-bottom: 10px;
   }
-  #mensagem-sucesso h3 em{ font-style: italic; color: var(--sage-dk); }
+  #mensagem-sucesso h3 em{ font-style: italic; color: var(--terra-dk); }
   #erro-envio{ display:none; color: #c0392b; font-size: 0.85rem; }
   #erro-envio.ativo{ display:block; }
 
@@ -291,7 +286,7 @@
   @media (max-width: 860px){
     .hero .container{ grid-template-columns: 1fr; }
     .signature{ order:-1; max-width: 340px; margin: 0 auto; }
-    .cards{ grid-template-columns: 1fr; }
+    .sinais-grid{ grid-template-columns: 1fr; }
     .para-quem{ padding: 40px 26px; }
     .lista-sinais{ grid-template-columns: 1fr; }
     .form-card{ grid-template-columns: 1fr; padding: 36px 26px; }
@@ -309,11 +304,10 @@
   <div class="container">
     <div>
       <span class="eyebrow">Guia gratuito</span>
-      <h1>Você vive mais no <em>fazer</em>, ou mais no <em>sentir</em>?</h1>
+      <h1>Você repete os <em>padrões</em><br/>da sua família?</h1>
       <p class="lead">
-        Um guia gratuito para reconhecer como sua energia masculina e feminina se formaram
-        na sua história — e começar, com a abordagem sistêmica, um caminho de equilíbrio
-        entre as duas.
+        Relacionamentos que não funcionam, dinheiro que nunca sobra, ansiedade sem causa aparente — 
+        muitas vezes não é coincidência. É herança sistémica. Descubra os 7 sinais com este guia gratuito.
       </p>
       <a href="#form" class="btn">✾ Quero receber o guia</a>
     </div>
@@ -321,45 +315,97 @@
     <div class="signature" aria-hidden="true">
       <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="gMasc" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#37453f"/>
-            <stop offset="1" stop-color="#4A5D45"/>
-          </linearGradient>
-          <linearGradient id="gFem" x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0" stop-color="#9A7A56"/>
-            <stop offset="1" stop-color="#C4A882"/>
-          </linearGradient>
+          <radialGradient id="gCenter" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#C4A882" stop-opacity="0.3"/>
+            <stop offset="1" stop-color="#E8DDD0" stop-opacity="0"/>
+          </radialGradient>
         </defs>
         <rect width="400" height="420" fill="#E8DDD0"/>
-        <path d="M0,0 H400 V210 C 300,150 260,260 180,220 C 100,180 90,80 0,120 Z" fill="url(#gMasc)"/>
-        <path d="M0,420 H400 V210 C 300,270 260,160 180,200 C 100,240 90,340 0,300 Z" fill="url(#gFem)"/>
-        <path d="M0,120 C90,80 100,180 180,220 C260,260 300,150 400,210" fill="none" stroke="#C9A96E" stroke-width="2"/>
+        <!-- Family tree visual -->
+        <circle cx="200" cy="80" r="30" fill="#9A7A56" opacity="0.8"/>
+        <circle cx="120" cy="180" r="25" fill="#C4A882" opacity="0.7"/>
+        <circle cx="280" cy="180" r="25" fill="#C4A882" opacity="0.7"/>
+        <circle cx="80" cy="280" r="20" fill="#E8DDD0" stroke="#9A7A56" stroke-width="2"/>
+        <circle cx="160" cy="280" r="20" fill="#E8DDD0" stroke="#9A7A56" stroke-width="2"/>
+        <circle cx="240" cy="280" r="20" fill="#E8DDD0" stroke="#9A7A56" stroke-width="2"/>
+        <circle cx="320" cy="280" r="20" fill="#E8DDD0" stroke="#9A7A56" stroke-width="2"/>
+        <circle cx="200" cy="370" r="18" fill="#4F7A52" opacity="0.9"/>
+        <!-- Lines -->
+        <line x1="200" y1="110" x2="120" y2="155" stroke="#C9A96E" stroke-width="1.5" opacity="0.6"/>
+        <line x1="200" y1="110" x2="280" y2="155" stroke="#C9A96E" stroke-width="1.5" opacity="0.6"/>
+        <line x1="120" y1="205" x2="80" y2="260" stroke="#C9A96E" stroke-width="1.5" opacity="0.5"/>
+        <line x1="120" y1="205" x2="160" y2="260" stroke="#C9A96E" stroke-width="1.5" opacity="0.5"/>
+        <line x1="280" y1="205" x2="240" y2="260" stroke="#C9A96E" stroke-width="1.5" opacity="0.5"/>
+        <line x1="280" y1="205" x2="320" y2="260" stroke="#C9A96E" stroke-width="1.5" opacity="0.5"/>
+        <line x1="200" y1="300" x2="200" y2="352" stroke="#4F7A52" stroke-width="2" opacity="0.7"/>
+        <!-- YOU label -->
+        <text x="200" y="375" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="11" fill="#FDFAF6">você</text>
+        <circle cx="200" cy="370" r="18" fill="none" stroke="#C9A96E" stroke-width="1.5"/>
       </svg>
-      <span class="label masc">masculino</span>
-      <span class="label fem">feminino</span>
     </div>
   </div>
 </header>
 
 <section class="secao">
   <div class="container">
-    <h2 class="secao-titulo">Um material feito pra ser vivido, não só lido</h2>
-    <p class="secao-sub">9 módulos guiando você da raiz sistêmica até a integração prática, com uma pergunta de reflexão em cada etapa.</p>
-    <div class="cards">
-      <div class="card">
-        <span class="num">Raiz</span>
-        <h3>De onde vieram seus padrões</h3>
-        <p>Como a dinâmica da sua família moldou sua relação com força e sensibilidade — e por que isso não é "culpa sua".</p>
+    <h2 class="secao-titulo">Os 7 sinais que o guia vai revelar</h2>
+    <p class="secao-sub">Cada sinal tem uma raiz sistémica — e um caminho de cura. Você vai reconhecer a sua história aqui.</p>
+    <div class="sinais-grid">
+      <div class="sinal-card">
+        <span class="sinal-num">1</span>
+        <div class="sinal-info">
+          <h3>Relacionamentos que sempre terminam igual</h3>
+          <p>Troca de pessoa, mas o roteiro é o mesmo. Isso tem nome — e tem origem na sua linhagem.</p>
+        </div>
       </div>
-      <div class="card">
-        <span class="num">Reconhecimento</span>
-        <h3>Feminino e masculino feridos</h3>
-        <p>Os sinais de desequilíbrio mais comuns em cada energia, para você identificar onde está hoje.</p>
+      <div class="sinal-card">
+        <span class="sinal-num">2</span>
+        <div class="sinal-info">
+          <h3>Dinheiro que nunca sobra</h3>
+          <p>Trabalha muito, mas sempre aparece algo para gastar. Pode ser lealdade inconsciente a padrões de escassez familiar.</p>
+        </div>
       </div>
-      <div class="card">
-        <span class="num">Caminho</span>
-        <h3>Práticas de reconexão</h3>
-        <p>Ferramentas simples — respiração, escrita, ritual, Constelação Familiar — para aplicar no seu dia a dia.</p>
+      <div class="sinal-card">
+        <span class="sinal-num">3</span>
+        <div class="sinal-info">
+          <h3>Ansiedade sem causa aparente</h3>
+          <p>Sente um peso que não é seu. Às vezes carregamos emoções de gerações anteriores sem perceber.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-num">4</span>
+        <div class="sinal-info">
+          <h3>Dificuldade de receber amor</h3>
+          <p>Quando alguém se aproxima, você afasta. Esse padrão quase sempre vem de vínculos primários feridos.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-num">5</span>
+        <div class="sinal-info">
+          <h3>Sentir que não merece ser feliz</h3>
+          <p>Uma voz interna que sabota. Muitas vezes é lealdade a alguém da família que também não se permitiu ser feliz.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-num">6</span>
+        <div class="sinal-info">
+          <h3>Repetir os erros dos seus pais</h3>
+          <p>Prometeu que seria diferente — e de repente percebe que está no mesmo lugar. Isso é herança sistémica.</p>
+        </div>
+      </div>
+      <div class="sinal-card">
+        <span class="sinal-num">7</span>
+        <div class="sinal-info">
+          <h3>Sensação de que algo está sempre faltando</h3>
+          <p>Um vazio difícil de nomear. Pode ser um luto não feito, um segredo de família ou um vínculo não honrado.</p>
+        </div>
+      </div>
+      <div class="sinal-card" style="background:linear-gradient(135deg,var(--sage-dk),#3d6140);border:none;">
+        <span class="sinal-num" style="color:rgba(255,255,255,0.5);">+</span>
+        <div class="sinal-info">
+          <h3 style="color:white;">Reconheceu algum sinal?</h3>
+          <p style="color:rgba(255,255,255,0.75);">O guia explica a origem sistémica de cada um e oferece um exercício prático para começar a transformação.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -368,15 +414,15 @@
 <section class="secao">
   <div class="container">
     <div class="para-quem">
-      <h2 class="secao-titulo">Esse guia é pra você se...</h2>
-      <p class="secao-sub">Alguns sinais de que vale a pena separar um tempo pra essa leitura:</p>
+      <h2 class="secao-titulo">Este guia é pra você se...</h2>
+      <p class="secao-sub">Reconhece pelo menos um destes padrões na sua vida:</p>
       <ul class="lista-sinais">
-        <li>Sente que cuida de todo mundo e esquece de si mesma</li>
-        <li>Tem dificuldade de descansar sem sentir culpa</li>
-        <li>Vive travada entre agir demais ou não sair do lugar</li>
-        <li>Repete, nas relações, um padrão que reconhece na própria família</li>
-        <li>Sente que perdeu contato com a própria intuição</li>
-        <li>Quer entender a si mesma antes de buscar terapia</li>
+        <li>Sente que repete os mesmos erros sem entender porquê</li>
+        <li>Tem relacionamentos que seguem sempre o mesmo padrão</li>
+        <li>Carrega um peso emocional que não sabe de onde vem</li>
+        <li>Quer entender a sua história antes de mudar o futuro</li>
+        <li>Já fez terapia mas sente que falta algo mais profundo</li>
+        <li>Quer quebrar o ciclo para não passar aos seus filhos</li>
       </ul>
     </div>
   </div>
@@ -387,26 +433,26 @@
     <div class="form-card">
       <div>
         <h2>Receba o guia completo, gratuito, no seu e-mail</h2>
-        <p>9 módulos em PDF para ler no seu ritmo — e um convite, ao final, caso você queira ir mais fundo com acompanhamento terapêutico.</p>
+        <p>Descubra a origem sistémica dos seus padrões e os primeiros passos para a transformação — com exercícios práticos baseados na Constelação Familiar.</p>
       </div>
       <div id="form-wrapper">
         <form id="lead-form" novalidate>
           <div class="field">
-            <label for="nome">Nome</label>
+            <label>Nome</label>
             <input type="text" id="nome" name="nome" autocomplete="name" placeholder="O seu nome" required>
           </div>
           <div class="field">
-            <label for="email">E-mail</label>
+            <label>E-mail</label>
             <input type="email" id="email" name="email" autocomplete="email" placeholder="seu@email.com" required>
           </div>
           <button type="submit" class="btn" id="btn-enviar">✾ Quero meu guia gratuito</button>
-          <p id="erro-envio">Não foi possível enviar agora. Tente novamente em instantes.</p>
+          <p id="erro-envio">Não foi possível enviar agora. Tente novamente.</p>
           <p class="form-nota">Sem spam. Você pode cancelar quando quiser.</p>
         </form>
         <div id="mensagem-sucesso">
           <h3>Prontinho <em>✾</em></h3>
           <p style="margin-bottom:1.5rem;color:var(--text-lt);font-weight:300;">O seu guia está pronto para download!</p>
-          <a class="btn" id="link-download" href="https://drive.google.com/uc?export=download&id=1dRqYeuux9eSTd4AwDaEN122HJbedJVKa" download>🌿 Baixar o PDF agora</a>
+          <a class="btn" id="link-download" href="https://drive.google.com/uc?export=download&id=1pFr_9BsqPzl_0n-pM5aG4ozPbd3sEG5d" download>🌿 Baixar o PDF agora</a>
           <p style="margin-top:1rem;font-size:0.78rem;color:var(--text-lt);">Aproveite também para agendar uma sessão com a Mônica em <a href="https://vivalivreterapia.com/#agendamento" style="color:var(--sage-dk);">vivalivreterapia.com</a></p>
         </div>
       </div>
@@ -420,7 +466,7 @@
 
 <script>
   const BREVO_API_KEY = ['xkeysib-527c410848fdb284fd7029c5e958d44ef4464feb4fb9bf9e0e7536d40e4add3e-','oP7QmpRlLylq6AT5'].join('');
-  const PDF_URL = 'https://drive.google.com/uc?export=download&id=1dRqYeuux9eSTd4AwDaEN122HJbedJVKa';
+  const PDF_URL = 'https://drive.google.com/uc?export=download&id=1pFr_9BsqPzl_0n-pM5aG4ozPbd3sEG5d';
 
   const form = document.getElementById('lead-form');
   const btn = document.getElementById('btn-enviar');
@@ -437,14 +483,13 @@
         },
         body: JSON.stringify({
           email: email,
-          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-sagrado' },
+          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-padroes-familiares' },
           listIds: [2],
           updateEnabled: true
         })
       });
       return res.ok || res.status === 204;
     } catch(e) {
-      console.error('Erro:', e);
       return false;
     }
   }
@@ -470,7 +515,7 @@
 
     const a = document.createElement('a');
     a.href = PDF_URL;
-    a.download = 'Sagrado_Masculino_e_Feminino.pdf';
+    a.download = 'Os_7_Sinais_de_Padroes_Familiares.pdf';
     document.body.appendChild(a);
     a.click();
     a.remove();
