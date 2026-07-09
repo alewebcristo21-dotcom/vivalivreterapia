@@ -113,10 +113,10 @@
     .login-link a { color: var(--sage-lt); text-decoration: none; }
 
     /* ── APP ── */
-    #appPage { display: none; height: 100vh; overflow: hidden; }
+    #appPage { display: none; min-height: 100vh; }
 
     /* Sidebar */
-    .layout { display: flex; height: 100vh; overflow: hidden; }
+    .layout { display: flex; min-height: 100vh; }
     .sidebar {
       width: 280px; flex-shrink: 0;
       background: var(--text);
@@ -196,7 +196,7 @@
     .logout-btn:hover { color: rgba(253,250,246,0.7); }
 
     /* Main content */
-    .main { margin-left: 280px; flex: 1; min-height: 100vh; overflow-y: auto; height: 100vh; }
+    .main { margin-left: 280px; flex: 1; min-height: 100vh; }
     .topbar {
       background: var(--white); border-bottom: 1px solid var(--sand);
       padding: 1.2rem 2.5rem;
@@ -216,8 +216,8 @@
     }
     .topbar-mavc:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,122,82,0.3); }
 
-    .page-content { padding: 2.5rem; display: none; }
-    .page-content.active { display: block; animation: fadeIn .4s ease; }
+    .page-content { padding: 2.5rem; display: none; min-height: 50vh; }
+    .page-content.active { display: block !important; animation: fadeIn .4s ease; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
     /* ── DASHBOARD ── */
@@ -1415,9 +1415,7 @@
     document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
-    const mainEl = document.querySelector('.main');
-    if (mainEl) mainEl.scrollTo(0, 0);
-    window.scrollTo(0, 0);
+    window.scrollTo({top: 0, behavior: 'instant'});
     const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
