@@ -1321,11 +1321,8 @@
       return;
     }
 
-    // Legacy password
-    if (pass === SENHA) {
-      entrarApp('Membro', false);
-      return;
-    }
+    // Legacy password disabled - only individual accounts allowed
+    // if (pass === SENHA) { entrarApp('Membro', false); return; }
 
     // Supabase login
     if (!email || !pass) { document.getElementById('loginError').style.display = 'block'; return; }
