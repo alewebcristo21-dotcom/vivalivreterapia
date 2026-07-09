@@ -600,6 +600,11 @@
           <a class="nav-item" onclick="showPage('socio')" style="color:rgba(253,250,246,0.85)!important;">
             <span class="nav-icon">🚀</span> Sócio Estratégico
           </a>
+        <p class="nav-section-title">Ferramentas</p>
+        <a class="nav-item" onclick="showPage('prosperidade')">
+          <span class="nav-icon">💰</span> Prosperidade Sistémica
+          <span class="nav-badge">IA</span>
+        </a>
         </div>
       </nav>
       <div class="sidebar-footer">
@@ -1139,6 +1144,61 @@
         </div>
       </div>
 
+
+      <!-- PROSPERIDADE SISTÉMICA -->
+      <div class="page-content" id="page-prosperidade">
+        <div class="mentora-layout">
+          <div class="chat-area">
+            <div class="chat-header">
+              <div class="chat-avatar" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>
+              <div class="chat-header-info">
+                <h4>Prosperidade Sistémica</h4>
+                <p>Descubra e transforme os seus padrões financeiros familiares</p>
+              </div>
+              <span class="chat-online" style="color:var(--dourado);">Online</span>
+            </div>
+            <div class="chat-messages" id="prospMessages">
+              <div class="cmsg assistant">
+                <div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>
+                <div class="cmsg-bubble">Olá! Sou a <strong>Prosperidade Sistémica</strong> 💰🌿<br><br>Estou aqui para te ajudar a compreender a sua relação com o dinheiro através da lente sistémica — porque muitos dos nossos padrões financeiros não são nossos, são heranças da nossa família.<br><br>Vamos explorar juntos o que o seu sistema familiar te ensinou sobre dinheiro, abundância e merecimento. Como posso ajudar-te hoje?</div>
+              </div>
+            </div>
+            <div class="chat-suggestions" id="prospSugg">
+              <button class="sugg-btn" onclick="sendProsp('O dinheiro nunca sobra na minha vida, o que pode ser?')">💸 Dinheiro nunca sobra</button>
+              <button class="sugg-btn" onclick="sendProsp('Tenho medo de ganhar muito dinheiro, por quê?')">😰 Medo de prosperar</button>
+              <button class="sugg-btn" onclick="sendProsp('Como era a relação com dinheiro na minha família de origem?')">🌳 Padrões familiares</button>
+              <button class="sugg-btn" onclick="sendProsp('Sinto que não mereço ter abundância')">💙 Não me sinto merecedora</button>
+              <button class="sugg-btn" onclick="sendProsp('Quero um exercício sistémico para melhorar minha relação com o dinheiro')">✨ Exercício prático</button>
+            </div>
+            <div class="chat-input-area">
+              <textarea class="chat-textarea" id="prospInput" placeholder="Fale sobre a sua relação com o dinheiro..." rows="1" onkeydown="handleProspKey(event)" oninput="autoResize(this)"></textarea>
+              <button class="chat-send" id="prospBtn" onclick="sendProspMsg()" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);box-shadow:0 4px 12px rgba(201,169,110,0.3);">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="mentora-sidebar">
+            <div class="msidebar-card">
+              <h4>💰 Como funciona</h4>
+              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;margin-bottom:1rem;">A Prosperidade Sistémica explora a sua relação com o dinheiro através da terapia sistémica e Constelação Familiar — identificando padrões herdados e abrindo caminhos para a abundância.</p>
+            </div>
+            <div class="msidebar-card">
+              <h4>🌳 Temas frequentes</h4>
+              <button class="topic-btn" onclick="sendProsp('Sempre que ganho dinheiro, logo aparece algo para gastar tudo')">🔄 Dinheiro que some</button>
+              <button class="topic-btn" onclick="sendProsp('Na minha família sempre fomos pobres, isso me afeta?')">👨‍👩‍👧 Herança de escassez</button>
+              <button class="topic-btn" onclick="sendProsp('Tenho sabotado minhas oportunidades financeiras')">⚠️ Autossabotagem</button>
+              <button class="topic-btn" onclick="sendProsp('Quero abrir um negócio mas tenho muito medo')">🚀 Medo de empreender</button>
+              <button class="topic-btn" onclick="sendProsp('Como honrar minha família e ainda assim prosperar?')">❤️ Honrar e prosperar</button>
+            </div>
+            <div class="msidebar-card">
+              <h4>🌿 Quer ir mais fundo?</h4>
+              <p style="font-size:0.78rem;color:var(--text-lt);line-height:1.6;margin-bottom:1rem;">A Prosperidade Sistémica complementa mas não substitui o trabalho terapêutico. Agende uma sessão com a Mônica para aprofundar.</p>
+              <button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="width:100%;padding:0.7rem;background:linear-gradient(135deg,#7A5C2E,#C9A96E);color:white;border:none;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;">📅 Sessão com a Mônica</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ORÁCULO DOS SONHOS -->
       <div class="page-content" id="page-oraculo">
         <div class="mentora-layout">
@@ -1306,9 +1366,10 @@
       const adminMenu = document.getElementById('adminMenu');
       if (adminMenu) adminMenu.style.display = 'block';
     }
-    // Load MAVC memory for logged in members
+    // Load memories for logged in members
     if (currentMembro) {
       setTimeout(carregarMemoria, 500);
+      setTimeout(carregarMemoriaProsp, 600);
     }
   }
 
@@ -1356,7 +1417,7 @@
     document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
   }
@@ -1384,6 +1445,44 @@
   function removeTyping() { document.getElementById('typing')?.remove(); }
 
   // Memory functions
+
+  async function carregarMemoriaProsp() {
+    if (!currentMembro) return;
+    try {
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=mensagens`);
+      if (data && data.length > 0 && data[0].mensagens && data[0].mensagens.length > 0) {
+        prospHistory = data[0].mensagens;
+        const msgs = document.getElementById('prospMessages');
+        document.getElementById('prospSugg').style.display = 'none';
+        const recent = prospHistory.slice(-6);
+        recent.forEach(m => addProspMsg(m.role, m.content));
+        const notice = document.createElement('div');
+        notice.style.cssText = 'text-align:center;font-size:0.72rem;color:var(--text-lt);padding:0.5rem;';
+        notice.textContent = '💰 Conversa anterior carregada';
+        msgs.insertBefore(notice, msgs.firstChild);
+      }
+    } catch(e) { console.log('Sem memória anterior de prosperidade'); }
+  }
+
+  async function guardarMemoriaProsp() {
+    if (!currentMembro) return;
+    try {
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=id`);
+      if (data && data.length > 0) {
+        await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade`, 'PATCH', {
+          mensagens: prospHistory.slice(-50),
+          atualizado_em: new Date().toISOString()
+        });
+      } else {
+        await sbFetch('/rest/v1/conversas', 'POST', {
+          membro_id: currentMembro.id,
+          tipo: 'prosperidade',
+          mensagens: prospHistory.slice(-50)
+        });
+      }
+    } catch(e) { console.log('Erro ao guardar memória prosperidade'); }
+  }
+
   async function carregarMemoria() {
     if (!currentMembro) return;
     try {
@@ -1769,6 +1868,97 @@ Responda em português do Brasil.`;
     document.getElementById('socioInput').focus();
   }
 
+
+  // ── PROSPERIDADE SISTÉMICA ──
+  const PROSP_SYSTEM = `Você é a Prosperidade Sistémica — uma assistente especializada em finanças através da lente da terapia sistémica e Constelação Familiar, integrada à plataforma da psicóloga Mônica Alice Voelz (Viva Livre Terapias).
+
+Você acredita que a nossa relação com o dinheiro é profundamente influenciada pela nossa história familiar. Padrões de escassez, abundância, culpa ou medo em relação ao dinheiro muitas vezes vêm de gerações anteriores.
+
+Você pode:
+- Explorar padrões familiares relacionados com dinheiro e prosperidade
+- Identificar lealdades inconscientes à escassez ou ao fracasso financeiro
+- Trabalhar crenças limitantes sobre merecimento e abundância
+- Propor exercícios sistémicos práticos para transformar a relação com o dinheiro
+- Conectar bloqueios financeiros com dinâmicas familiares não resolvidas
+- Ajudar a honrar os ancestrais e ainda assim permitir-se prosperar
+
+Quando relevante, mencione que o curso "Prosperidade e Dinheiro" da Mônica aprofunda este trabalho.
+
+Tom: acolhedor mas direto, como a Mônica — não fica passando panos. Se há um padrão claro, nomeia-o com amor e clareza. Em português do Brasil.
+
+Nunca faça diagnósticos ou aconselhamento financeiro profissional. Foque sempre na dimensão sistémica e emocional da prosperidade.
+
+Sempre que sentir que a pessoa precisa de apoio mais profundo, encaminhe para sessão com a Mônica em vivalivreterapia.com.`;
+
+  let prospHistory = [];
+  let prospBusy = false;
+
+  function handleProspKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendProspMsg();} }
+  function sendProsp(t) { document.getElementById('prospInput').value=t; sendProspMsg(); }
+
+  function addProspMsg(role, text) {
+    const msgs = document.getElementById('prospMessages');
+    const d = document.createElement('div');
+    d.className = `cmsg ${role}`;
+    const av = role==='assistant'
+      ? '<div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>'
+      : '<div class="cmsg-av">👤</div>';
+    d.innerHTML = av + `<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function sendProspMsg() {
+    const input = document.getElementById('prospInput');
+    const text = input.value.trim();
+    if (!text || prospBusy) return;
+    document.getElementById('prospSugg').style.display = 'none';
+    input.value = ''; input.style.height = 'auto';
+    prospBusy = true; document.getElementById('prospBtn').disabled = true;
+    addProspMsg('user', text);
+    prospHistory.push({ role:'user', content:text });
+
+    const msgs = document.getElementById('prospMessages');
+    const typing = document.createElement('div');
+    typing.className = 'cmsg assistant'; typing.id = 'prospTyping';
+    typing.innerHTML = '<div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 1024,
+          system: PROSP_SYSTEM,
+          messages: prospHistory
+        })
+      });
+      const data = await res.json();
+      document.getElementById('prospTyping')?.remove();
+      if (data.content?.[0]) {
+        const reply = data.content[0].text;
+        prospHistory.push({ role:'assistant', content:reply });
+        addProspMsg('assistant', reply);
+        // Save to Supabase
+        if (currentMembro) guardarMemoriaProsp();
+      } else {
+        addProspMsg('assistant', 'Desculpa, tive um problema. Tenta novamente! 💰');
+      }
+    } catch(e) {
+      document.getElementById('prospTyping')?.remove();
+      addProspMsg('assistant', 'Erro de conexão. Verifica a ligação! 💰');
+    }
+    prospBusy = false; document.getElementById('prospBtn').disabled = false;
+    document.getElementById('prospInput').focus();
+  }
+
   // ── ORÁCULO DOS SONHOS ──
   const ORACULO_SYSTEM = `Você é o Oráculo dos Sonhos — um intérprete avançado de sonhos especializado em análise simbólica, emocional e narrativa, integrado à plataforma da psicóloga Mônica Alice Voelz (Viva Livre Terapias).
 
@@ -1977,6 +2167,7 @@ Usa linguagem próxima, acolhedora e sistémica. Em português do Brasil. Máxim
     <button onclick="showPage('maia')" id="mob-maia"><span>🌙</span>Maia</button>
     <button onclick="showPage('materiais')" id="mob-materiais"><span>🗺️</span>Mapa</button>
     <button onclick="showPage('cursos')" id="mob-cursos"><span>🎓</span>Cursos</button>
+    <button onclick="showPage('prosperidade')" id="mob-prosperidade"><span>💰</span>Prósp.</button>
   </div>
 
 </body>
