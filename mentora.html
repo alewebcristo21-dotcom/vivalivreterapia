@@ -500,18 +500,49 @@
   <div class="login-card">
     <p class="login-eyebrow">Área Exclusiva</p>
     <h1 class="login-title">Viva <em>Livre</em><br/>Terapias</h1>
-    <p class="login-sub">Bem-vinda ao seu espaço de transformação. Acesso exclusivo para membros.</p>
-    <div class="login-field">
-      <label>Nome ou Email</label>
-      <input type="text" id="loginUser" placeholder="O seu nome..." />
+
+    <!-- TABS -->
+    <div style="display:flex;gap:0;margin-bottom:1.5rem;background:rgba(255,255,255,0.06);border-radius:0.8rem;padding:0.3rem;">
+      <button id="tabLogin" onclick="switchTab('login')" style="flex:1;padding:0.6rem;border:none;border-radius:0.6rem;background:rgba(79,122,82,0.8);color:white;font-family:'Jost',sans-serif;font-size:0.82rem;cursor:pointer;transition:all .3s;">Entrar</button>
+      <button id="tabRegisto" onclick="switchTab('registo')" style="flex:1;padding:0.6rem;border:none;border-radius:0.6rem;background:none;color:rgba(255,255,255,0.5);font-family:'Jost',sans-serif;font-size:0.82rem;cursor:pointer;transition:all .3s;">Criar conta</button>
     </div>
-    <div class="login-field">
-      <label>Senha de Acesso</label>
-      <input type="password" id="loginPass" placeholder="••••••••" />
+
+    <!-- LOGIN FORM -->
+    <div id="formLogin">
+      <p class="login-sub">Bem-vinda de volta ao seu espaço de transformação.</p>
+      <div class="login-field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="seu@email.com" />
+      </div>
+      <div class="login-field">
+        <label>Senha</label>
+        <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" />
+      </div>
+      <button class="login-btn" onclick="doLogin()">✾ &nbsp;Entrar</button>
+      <p class="login-error" id="loginError">Email ou senha incorretos.</p>
     </div>
-    <button class="login-btn" onclick="doLogin()">✾ &nbsp;Entrar na Área de Membros</button>
-    <p class="login-error" id="loginError">Senha incorreta. Tente novamente.</p>
-    <p class="login-link">Ainda não é membro? <a href="https://vivalivreterapia.com/#agendamento">Agende uma sessão</a></p>
+
+    <!-- REGISTO FORM -->
+    <div id="formRegisto" style="display:none;">
+      <p class="login-sub">Crie a sua conta e aguarde a aprovação da Mônica.</p>
+      <div class="login-field">
+        <label>Nome completo</label>
+        <input type="text" id="registoNome" placeholder="O seu nome..." />
+      </div>
+      <div class="login-field">
+        <label>Email</label>
+        <input type="email" id="registoEmail" placeholder="seu@email.com" />
+      </div>
+      <div class="login-field">
+        <label>Senha</label>
+        <input type="password" id="registoPass" placeholder="Mínimo 6 caracteres" />
+      </div>
+      <button class="login-btn" onclick="doRegisto()" style="background:linear-gradient(135deg,#9A7A56,var(--terra));">✾ &nbsp;Criar minha conta</button>
+      <p class="login-error" id="registoError">Erro ao criar conta.</p>
+      <p id="registoSucesso" style="display:none;color:var(--sage-lt);font-size:0.82rem;text-align:center;margin-top:1rem;">✅ Conta criada! Aguarde a aprovação da Mônica.</p>
+    </div>
+
+    <p class="login-link" style="margin-top:1.5rem;">Dúvidas? <a href="https://wa.me/351962250741">Fale connosco</a></p>
   </div>
 </div>
 
@@ -564,6 +595,17 @@
         <a class="nav-item" href="https://wa.me/351962250741" target="_blank">
           <span class="nav-icon">💬</span> WhatsApp
         </a>
+        <div id="adminMenu" style="display:none;">
+          <p class="nav-section-title">Admin</p>
+          <a class="nav-item" onclick="showPage('socio')" style="color:rgba(253,250,246,0.85)!important;">
+            <span class="nav-icon">🚀</span> Sócio Estratégico
+          </a>
+        <p class="nav-section-title">Ferramentas</p>
+        <a class="nav-item" onclick="showPage('prosperidade')">
+          <span class="nav-icon">💰</span> Prosperidade Sistémica
+          <span class="nav-badge">IA</span>
+        </a>
+        </div>
       </nav>
       <div class="sidebar-footer">
         <button class="logout-btn" onclick="doLogout()">↩ Sair da conta</button>
@@ -660,37 +702,85 @@
         </div>
         <div class="cursos-grid">
           <div class="curso-card">
-            <div class="curso-thumb sage">🌳<span class="curso-em-breve">Em breve</span></div>
+            <div class="curso-thumb sage">❤️<span class="curso-em-breve">Em breve</span></div>
             <div class="curso-info">
-              <div class="curso-tag">Constelação Familiar</div>
-              <div class="curso-title">Introdução à Constelação Familiar</div>
-              <div class="curso-desc">Entenda os fundamentos da Constelação Familiar segundo Bert Hellinger e como ela pode transformar seus vínculos.</div>
+              <div class="curso-tag">Curso 1 · Terapia Sistémica</div>
+              <div class="curso-title">Ordens do Amor</div>
+              <div class="curso-desc">Descubra as leis que regem os sistemas familiares e como elas influenciam os seus relacionamentos, escolhas e padrões de vida.</div>
               <div class="curso-meta">
-                <span class="curso-lessons">📹 8 aulas · Em gravação</span>
+                <span class="curso-lessons">🔒 Em gravação</span>
                 <button class="curso-btn disabled">Em breve</button>
               </div>
             </div>
           </div>
           <div class="curso-card">
-            <div class="curso-thumb terra">💚<span class="curso-em-breve">Em breve</span></div>
+            <div class="curso-thumb terra">💑<span class="curso-em-breve">Em breve</span></div>
             <div class="curso-info">
-              <div class="curso-tag">Desenvolvimento Pessoal</div>
-              <div class="curso-title">Inteligência Emocional na Prática</div>
-              <div class="curso-desc">Aprenda a reconhecer, compreender e gerir as suas emoções para viver com mais leveza e autenticidade.</div>
+              <div class="curso-tag">Curso 2 · Relacionamentos</div>
+              <div class="curso-title">Relacionamentos Sistémicos</div>
+              <div class="curso-desc">Entenda os padrões invisíveis que sabotam as suas relações e aprenda a construir vínculos mais saudáveis e conscientes.</div>
               <div class="curso-meta">
-                <span class="curso-lessons">📹 6 aulas · Em gravação</span>
+                <span class="curso-lessons">🔒 Em gravação</span>
                 <button class="curso-btn disabled">Em breve</button>
               </div>
             </div>
           </div>
           <div class="curso-card">
-            <div class="curso-thumb dark">🔗<span class="curso-em-breve">Em breve</span></div>
+            <div class="curso-thumb dark">🧒<span class="curso-em-breve">Em breve</span></div>
             <div class="curso-info">
-              <div class="curso-tag">Terapia Sistémica</div>
-              <div class="curso-title">Leis Sistémicas — Entenda seu Sistema</div>
-              <div class="curso-desc">Descubra como as leis sistémicas influenciam os seus relacionamentos e padrões de vida.</div>
+              <div class="curso-tag">Curso 3 · Desenvolvimento Pessoal</div>
+              <div class="curso-title">Criança Interior</div>
+              <div class="curso-desc">Reconecte-se com a sua criança interior, cure feridas do passado e liberte-se de padrões que ainda te limitam hoje.</div>
               <div class="curso-meta">
-                <span class="curso-lessons">📹 5 aulas · Em gravação</span>
+                <span class="curso-lessons">🔒 Em gravação</span>
+                <button class="curso-btn disabled">Em breve</button>
+              </div>
+            </div>
+          </div>
+          <div class="curso-card">
+            <div class="curso-thumb light">⭐<span class="curso-em-breve">Em breve</span></div>
+            <div class="curso-info">
+              <div class="curso-tag">Curso 4 · Autoconhecimento</div>
+              <div class="curso-title">Autoestima Sistémica</div>
+              <div class="curso-desc">Construa uma autoestima sólida enraizada no seu sistema familiar — não em padrões externos de comparação e validação.</div>
+              <div class="curso-meta">
+                <span class="curso-lessons">🔒 Em gravação</span>
+                <button class="curso-btn disabled">Em breve</button>
+              </div>
+            </div>
+          </div>
+          <div class="curso-card">
+            <div class="curso-thumb sage">🧠<span class="curso-em-breve">Em breve</span></div>
+            <div class="curso-info">
+              <div class="curso-tag">Curso 5 · Bem-estar</div>
+              <div class="curso-title">Ansiedade na Visão Sistémica</div>
+              <div class="curso-desc">Compreenda as raízes sistémicas da ansiedade e aprenda ferramentas práticas para viver com mais paz e equilíbrio.</div>
+              <div class="curso-meta">
+                <span class="curso-lessons">🔒 Em gravação</span>
+                <button class="curso-btn disabled">Em breve</button>
+              </div>
+            </div>
+          </div>
+          <div class="curso-card">
+            <div class="curso-thumb terra">💰<span class="curso-em-breve">Em breve</span></div>
+            <div class="curso-info">
+              <div class="curso-tag">Curso 6 · Prosperidade</div>
+              <div class="curso-title">Prosperidade e Dinheiro</div>
+              <div class="curso-desc">Descubra os bloqueios sistémicos que limitam a sua prosperidade e abra-se para receber abundância com consciência.</div>
+              <div class="curso-meta">
+                <span class="curso-lessons">🔒 Em gravação</span>
+                <button class="curso-btn disabled">Em breve</button>
+              </div>
+            </div>
+          </div>
+          <div class="curso-card">
+            <div class="curso-thumb dark">👨‍👩‍👧<span class="curso-em-breve">Em breve</span></div>
+            <div class="curso-info">
+              <div class="curso-tag">Curso 7 · Família</div>
+              <div class="curso-title">Pais e Filhos</div>
+              <div class="curso-desc">Entenda a dinâmica sistémica entre pais e filhos e aprenda a construir vínculos mais saudáveis e conscientes com a sua família.</div>
+              <div class="curso-meta">
+                <span class="curso-lessons">🔒 Em gravação</span>
                 <button class="curso-btn disabled">Em breve</button>
               </div>
             </div>
@@ -698,11 +788,35 @@
           <div class="curso-card">
             <div class="curso-thumb light">🕊️<span class="curso-em-breve">Em breve</span></div>
             <div class="curso-info">
-              <div class="curso-tag">Cura e Luto</div>
-              <div class="curso-title">Cura do Luto e das Perdas</div>
-              <div class="curso-desc">Um percurso gentil para honrar o que foi, curar as feridas do luto e encontrar paz nas despedidas.</div>
+              <div class="curso-tag">Curso 8 · Cura</div>
+              <div class="curso-title">Luto e Perdas</div>
+              <div class="curso-desc">Um percurso gentil para honrar o que foi, curar as feridas do luto e encontrar paz e aceitação nas despedidas da vida.</div>
               <div class="curso-meta">
-                <span class="curso-lessons">📹 7 aulas · Em gravação</span>
+                <span class="curso-lessons">🔒 Em gravação</span>
+                <button class="curso-btn disabled">Em breve</button>
+              </div>
+            </div>
+          </div>
+          <div class="curso-card">
+            <div class="curso-thumb sage">🌟<span class="curso-em-breve">Em breve</span></div>
+            <div class="curso-info">
+              <div class="curso-tag">Curso 9 · Propósito</div>
+              <div class="curso-title">Propósito de Vida</div>
+              <div class="curso-desc">Descubra o seu propósito de vida através da lente sistémica e encontre o caminho que ressoa com a sua essência mais profunda.</div>
+              <div class="curso-meta">
+                <span class="curso-lessons">🔒 Em gravação</span>
+                <button class="curso-btn disabled">Em breve</button>
+              </div>
+            </div>
+          </div>
+          <div class="curso-card">
+            <div class="curso-thumb terra">🌳<span class="curso-em-breve">Em breve</span></div>
+            <div class="curso-info">
+              <div class="curso-tag">Curso 10 · Constelação</div>
+              <div class="curso-title">Constelação Familiar na Prática</div>
+              <div class="curso-desc">O curso mais completo da jornada — aprenda a aplicar a Constelação Familiar na sua vida e transforme padrões de gerações.</div>
+              <div class="curso-meta">
+                <span class="curso-lessons">🔒 Em gravação</span>
                 <button class="curso-btn disabled">Em breve</button>
               </div>
             </div>
@@ -981,6 +1095,110 @@
         </div>
       </div>
 
+
+      <!-- SÓCIO ESTRATÉGICO -->
+      <div class="page-content" id="page-socio">
+        <div class="mentora-layout">
+          <div class="chat-area">
+            <div class="chat-header">
+              <div class="chat-avatar" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>
+              <div class="chat-header-info">
+                <h4>Sócio Estratégico</h4>
+                <p>Consultor de marketing, vendas e negócios digitais · Acesso exclusivo Admin</p>
+              </div>
+              <span class="chat-online" style="color:var(--dourado);">Online</span>
+            </div>
+            <div class="chat-messages" id="socioMessages">
+              <div class="cmsg assistant">
+                <div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>
+                <div class="cmsg-bubble">Olá! Sou o vosso Sócio Estratégico — uma equipa formada pelos maiores especialistas em marketing, copywriting, funis de vendas e negócios digitais, com conhecimento profundo em Psicologia Sistémica e Constelação Familiar.<br><br>O meu único objetivo é ajudar a <strong>Viva Livre Terapias</strong> a crescer e faturar mais. Pensamos sempre como donos, priorizamos lucro e buscamos soluções simples e escaláveis.<br><br>O que vamos construir hoje? 🔥</div>
+              </div>
+            </div>
+            <div class="chat-suggestions" id="socioSugg">
+              <button class="sugg-btn" onclick="sendSocio('Cria uma estratégia completa para lançar o curso Ordens do Amor')">🎯 Lançar curso Ordens do Amor</button>
+              <button class="sugg-btn" onclick="sendSocio('Cria uma sequência de 5 emails para quem baixou o guia gratuito')">📧 Sequência de emails</button>
+              <button class="sugg-btn" onclick="sendSocio('Cria um script de Reels para divulgar a área de membros')">📱 Script para Reels</button>
+              <button class="sugg-btn" onclick="sendSocio('Como chegar a R$100.000 até dezembro? Cria um plano de ação')">💰 Plano para R$100k</button>
+            </div>
+            <div class="chat-input-area">
+              <textarea class="chat-textarea" id="socioInput" placeholder="Peça uma estratégia, copy, funil, script..." rows="1" onkeydown="handleSocioKey(event)" oninput="autoResize(this)"></textarea>
+              <button class="chat-send" id="socioBtn" onclick="sendSocioMsg()" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);box-shadow:0 4px 12px rgba(184,146,61,0.3);">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="mentora-sidebar">
+            <div class="msidebar-card">
+              <h4>🚀 Como usar</h4>
+              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;margin-bottom:1rem;">Peça estratégias completas, copies prontas, funis de vendas, scripts para redes sociais, sequências de email e muito mais!</p>
+            </div>
+            <div class="msidebar-card">
+              <h4>💡 Exemplos de pedidos</h4>
+              <button class="topic-btn" onclick="sendSocio('Cria uma página de vendas completa para o curso Criança Interior')">📄 Página de vendas</button>
+              <button class="topic-btn" onclick="sendSocio('Cria 10 ideias de posts para Instagram sobre Constelação Familiar')">📱 Posts Instagram</button>
+              <button class="topic-btn" onclick="sendSocio('Cria uma oferta irresistível para o primeiro curso')">💰 Oferta irresistível</button>
+              <button class="topic-btn" onclick="sendSocio('Qual é o melhor funil para vender cursos de psicologia?')">🎯 Funil de vendas</button>
+              <button class="topic-btn" onclick="sendSocio('Cria um plano de conteúdo para 30 dias no Instagram')">📅 Plano de conteúdo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- PROSPERIDADE SISTÉMICA -->
+      <div class="page-content" id="page-prosperidade">
+        <div class="mentora-layout">
+          <div class="chat-area">
+            <div class="chat-header">
+              <div class="chat-avatar" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>
+              <div class="chat-header-info">
+                <h4>Prosperidade Sistémica</h4>
+                <p>Descubra e transforme os seus padrões financeiros familiares</p>
+              </div>
+              <span class="chat-online" style="color:var(--dourado);">Online</span>
+            </div>
+            <div class="chat-messages" id="prospMessages">
+              <div class="cmsg assistant">
+                <div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>
+                <div class="cmsg-bubble">Olá! Sou a <strong>Prosperidade Sistémica</strong> 💰🌿<br><br>Estou aqui para te ajudar a compreender a sua relação com o dinheiro através da lente sistémica — porque muitos dos nossos padrões financeiros não são nossos, são heranças da nossa família.<br><br>Vamos explorar juntos o que o seu sistema familiar te ensinou sobre dinheiro, abundância e merecimento. Como posso ajudar-te hoje?</div>
+              </div>
+            </div>
+            <div class="chat-suggestions" id="prospSugg">
+              <button class="sugg-btn" onclick="sendProsp('O dinheiro nunca sobra na minha vida, o que pode ser?')">💸 Dinheiro nunca sobra</button>
+              <button class="sugg-btn" onclick="sendProsp('Tenho medo de ganhar muito dinheiro, por quê?')">😰 Medo de prosperar</button>
+              <button class="sugg-btn" onclick="sendProsp('Como era a relação com dinheiro na minha família de origem?')">🌳 Padrões familiares</button>
+              <button class="sugg-btn" onclick="sendProsp('Sinto que não mereço ter abundância')">💙 Não me sinto merecedora</button>
+              <button class="sugg-btn" onclick="sendProsp('Quero um exercício sistémico para melhorar minha relação com o dinheiro')">✨ Exercício prático</button>
+            </div>
+            <div class="chat-input-area">
+              <textarea class="chat-textarea" id="prospInput" placeholder="Fale sobre a sua relação com o dinheiro..." rows="1" onkeydown="handleProspKey(event)" oninput="autoResize(this)"></textarea>
+              <button class="chat-send" id="prospBtn" onclick="sendProspMsg()" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);box-shadow:0 4px 12px rgba(201,169,110,0.3);">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="mentora-sidebar">
+            <div class="msidebar-card">
+              <h4>💰 Como funciona</h4>
+              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;margin-bottom:1rem;">A Prosperidade Sistémica explora a sua relação com o dinheiro através da terapia sistémica e Constelação Familiar — identificando padrões herdados e abrindo caminhos para a abundância.</p>
+            </div>
+            <div class="msidebar-card">
+              <h4>🌳 Temas frequentes</h4>
+              <button class="topic-btn" onclick="sendProsp('Sempre que ganho dinheiro, logo aparece algo para gastar tudo')">🔄 Dinheiro que some</button>
+              <button class="topic-btn" onclick="sendProsp('Na minha família sempre fomos pobres, isso me afeta?')">👨‍👩‍👧 Herança de escassez</button>
+              <button class="topic-btn" onclick="sendProsp('Tenho sabotado minhas oportunidades financeiras')">⚠️ Autossabotagem</button>
+              <button class="topic-btn" onclick="sendProsp('Quero abrir um negócio mas tenho muito medo')">🚀 Medo de empreender</button>
+              <button class="topic-btn" onclick="sendProsp('Como honrar minha família e ainda assim prosperar?')">❤️ Honrar e prosperar</button>
+            </div>
+            <div class="msidebar-card">
+              <h4>🌿 Quer ir mais fundo?</h4>
+              <p style="font-size:0.78rem;color:var(--text-lt);line-height:1.6;margin-bottom:1rem;">A Prosperidade Sistémica complementa mas não substitui o trabalho terapêutico. Agende uma sessão com a Mônica para aprofundar.</p>
+              <button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="width:100%;padding:0.7rem;background:linear-gradient(135deg,#7A5C2E,#C9A96E);color:white;border:none;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;">📅 Sessão com a Mônica</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ORÁCULO DOS SONHOS -->
       <div class="page-content" id="page-oraculo">
         <div class="mentora-layout">
@@ -1047,24 +1265,139 @@
 </div>
 
 <script>
+  const SUPABASE_URL = 'https://osedrmafpqwfbeaajkiz.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_dEyv8NdRi4pf6FDBMbCUFA_2FPVxUAA';
   const SENHA = 'vivalivreterapias2025';
+  const SENHA_ADMIN = 'admin2025viva';
+  let currentMembro = null;
+
+  // Supabase helper
+  async function sbFetch(path, method='GET', body=null) {
+    const opts = {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Prefer': 'return=representation'
+      }
+    };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(SUPABASE_URL + path, opts);
+    if (res.status === 204) return null;
+    return res.json();
+  }
+
+  // Simple hash function
+  async function hashSenha(senha) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(senha + 'vivalivresalt2025');
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function switchTab(tab) {
+    document.getElementById('formLogin').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('formRegisto').style.display = tab === 'registo' ? 'block' : 'none';
+    document.getElementById('tabLogin').style.background = tab === 'login' ? 'rgba(79,122,82,0.8)' : 'none';
+    document.getElementById('tabLogin').style.color = tab === 'login' ? 'white' : 'rgba(255,255,255,0.5)';
+    document.getElementById('tabRegisto').style.background = tab === 'registo' ? 'rgba(79,122,82,0.8)' : 'none';
+    document.getElementById('tabRegisto').style.color = tab === 'registo' ? 'white' : 'rgba(255,255,255,0.5)';
+  }
   const API_KEY = ['sk-ant-api03-kEQ3kB37fnekzxzd-Ys9IUg6fp','wYTGMkwH3W6EpoMAdAdGzSg0RfPL3V4YaRG_voSnORSzy0GDs5fTuY1yaUzQ-g4tEDQAA'].join('');
   const SYSTEM = `Você é a Mentora MAVC — assistente virtual pessoal da psicóloga Mônica Alice Voelz, especialista em terapia sistémica, Constelação Familiar e desenvolvimento pessoal. Representa o trabalho e filosofia da Mônica com energia acolhedora, empática e transformadora. Pode: dar conselhos de bem-estar emocional, explicar terapia sistémica e Constelação Familiar (Bert Hellinger), propor exercícios práticos de mindset e autoconhecimento, ajudar a pessoa a pensar diferente e se valorizar, orientar sobre inteligência emocional. Quando a pessoa precisar de apoio profundo, incentive a agendar sessão com a Mônica em vivalivreterapia.com. Tom: acolhedor, caloroso, encorajador, em português do Brasil. Nunca faça diagnósticos clínicos.`;
 
   let history = [];
   let busy = false;
 
-  function doLogin() {
-    const user = document.getElementById('loginUser').value.trim();
+  async function doLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
     const pass = document.getElementById('loginPass').value;
+    document.getElementById('loginError').style.display = 'none';
+
+    // Admin login
+    if (pass === SENHA_ADMIN) {
+      entrarApp('Admin', true);
+      return;
+    }
+
+    // Legacy password
     if (pass === SENHA) {
-      document.getElementById('loginPage').style.display = 'none';
-      document.getElementById('appPage').style.display = 'block';
-      const name = user || 'Membro';
-      document.getElementById('sidebarName').textContent = name;
-      document.getElementById('heroName').textContent = name;
-    } else {
+      entrarApp('Membro', false);
+      return;
+    }
+
+    // Supabase login
+    if (!email || !pass) { document.getElementById('loginError').style.display = 'block'; return; }
+
+    try {
+      const hash = await hashSenha(pass);
+      const data = await sbFetch(`/rest/v1/membros?email=eq.${encodeURIComponent(email)}&senha_hash=eq.${hash}&select=*`);
+      if (data && data.length > 0) {
+        const membro = data[0];
+        if (!membro.ativo) {
+          document.getElementById('loginError').textContent = 'Conta ainda não aprovada. Aguarde a Mônica!';
+          document.getElementById('loginError').style.display = 'block';
+          return;
+        }
+        if (membro.data_expiracao && new Date(membro.data_expiracao) < new Date()) {
+          document.getElementById('loginError').textContent = 'Acesso expirado. Contacte a Mônica!';
+          document.getElementById('loginError').style.display = 'block';
+          return;
+        }
+        currentMembro = membro;
+        entrarApp(membro.nome, false);
+      } else {
+        document.getElementById('loginError').textContent = 'Email ou senha incorretos.';
+        document.getElementById('loginError').style.display = 'block';
+      }
+    } catch(e) {
+      document.getElementById('loginError').textContent = 'Erro de conexão. Tenta novamente!';
       document.getElementById('loginError').style.display = 'block';
+    }
+  }
+
+  function entrarApp(nome, isAdmin) {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('appPage').style.display = 'block';
+    document.getElementById('sidebarName').textContent = nome;
+    document.getElementById('heroName').textContent = nome;
+    if (isAdmin) {
+      const adminMenu = document.getElementById('adminMenu');
+      if (adminMenu) adminMenu.style.display = 'block';
+    }
+    // Load memories for logged in members
+    if (currentMembro) {
+      setTimeout(carregarMemoria, 500);
+      setTimeout(carregarMemoriaProsp, 600);
+    }
+  }
+
+  async function doRegisto() {
+    const nome = document.getElementById('registoNome').value.trim();
+    const email = document.getElementById('registoEmail').value.trim();
+    const pass = document.getElementById('registoPass').value;
+    document.getElementById('registoError').style.display = 'none';
+    document.getElementById('registoSucesso').style.display = 'none';
+
+    if (!nome || !email || pass.length < 6) {
+      document.getElementById('registoError').textContent = 'Preencha todos os campos (mínimo 6 caracteres na senha).';
+      document.getElementById('registoError').style.display = 'block';
+      return;
+    }
+
+    try {
+      const hash = await hashSenha(pass);
+      const res = await sbFetch('/rest/v1/membros', 'POST', {
+        nome, email, senha_hash: hash, ativo: false
+      });
+      document.getElementById('registoSucesso').style.display = 'block';
+      document.getElementById('registoNome').value = '';
+      document.getElementById('registoEmail').value = '';
+      document.getElementById('registoPass').value = '';
+    } catch(e) {
+      document.getElementById('registoError').textContent = 'Email já registado ou erro. Tenta novamente!';
+      document.getElementById('registoError').style.display = 'block';
     }
   }
   document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
@@ -1075,6 +1408,7 @@
     document.getElementById('chatSugg').style.display = 'flex';
     document.getElementById('appPage').style.display = 'none';
     document.getElementById('loginPage').style.display = 'flex';
+    currentMembro = null;
     document.getElementById('loginPass').value = '';
     document.getElementById('loginError').style.display = 'none';
   }
@@ -1083,7 +1417,7 @@
     document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
   }
@@ -1109,6 +1443,85 @@
     msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
   }
   function removeTyping() { document.getElementById('typing')?.remove(); }
+
+  // Memory functions
+
+  async function carregarMemoriaProsp() {
+    if (!currentMembro) return;
+    try {
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=mensagens`);
+      if (data && data.length > 0 && data[0].mensagens && data[0].mensagens.length > 0) {
+        prospHistory = data[0].mensagens;
+        const msgs = document.getElementById('prospMessages');
+        document.getElementById('prospSugg').style.display = 'none';
+        const recent = prospHistory.slice(-6);
+        recent.forEach(m => addProspMsg(m.role, m.content));
+        const notice = document.createElement('div');
+        notice.style.cssText = 'text-align:center;font-size:0.72rem;color:var(--text-lt);padding:0.5rem;';
+        notice.textContent = '💰 Conversa anterior carregada';
+        msgs.insertBefore(notice, msgs.firstChild);
+      }
+    } catch(e) { console.log('Sem memória anterior de prosperidade'); }
+  }
+
+  async function guardarMemoriaProsp() {
+    if (!currentMembro) return;
+    try {
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=id`);
+      if (data && data.length > 0) {
+        await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade`, 'PATCH', {
+          mensagens: prospHistory.slice(-50),
+          atualizado_em: new Date().toISOString()
+        });
+      } else {
+        await sbFetch('/rest/v1/conversas', 'POST', {
+          membro_id: currentMembro.id,
+          tipo: 'prosperidade',
+          mensagens: prospHistory.slice(-50)
+        });
+      }
+    } catch(e) { console.log('Erro ao guardar memória prosperidade'); }
+  }
+
+  async function carregarMemoria() {
+    if (!currentMembro) return;
+    try {
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&select=mensagens`);
+      if (data && data.length > 0 && data[0].mensagens) {
+        history = data[0].mensagens;
+        // Show last 3 messages in chat
+        const msgs = document.getElementById('chatMessages');
+        if (history.length > 0) {
+          document.getElementById('chatSugg').style.display = 'none';
+          const recent = history.slice(-6);
+          recent.forEach(m => addMsg(m.role, m.content));
+          const notice = document.createElement('div');
+          notice.style.cssText = 'text-align:center;font-size:0.72rem;color:var(--text-lt);padding:0.5rem;';
+          notice.textContent = '🌿 Conversa anterior carregada';
+          msgs.insertBefore(notice, msgs.firstChild);
+        }
+      }
+    } catch(e) { console.log('Sem memória anterior'); }
+  }
+
+  async function guardarMemoria() {
+    if (!currentMembro) return;
+    try {
+      // Check if exists
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&select=id`);
+      if (data && data.length > 0) {
+        await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}`, 'PATCH', {
+          mensagens: history.slice(-50), // Keep last 50 messages
+          atualizado_em: new Date().toISOString()
+        });
+      } else {
+        await sbFetch('/rest/v1/conversas', 'POST', {
+          membro_id: currentMembro.id,
+          mensagens: history.slice(-50)
+        });
+      }
+    } catch(e) { console.log('Erro ao guardar memória'); }
+  }
 
   async function sendMessage() {
     const input = document.getElementById('chatInput');
@@ -1137,6 +1550,7 @@
         const reply = data.content[0].text;
         history.push({ role:'assistant', content:reply });
         addMsg('assistant', reply);
+        guardarMemoria(); // Save to Supabase
       } else {
         addMsg('assistant', 'Desculpa, tive um problema. Tenta novamente! 🌿');
       }
@@ -1350,6 +1764,201 @@ IMPORTANTE: Quando a pessoa pedir datas específicas ou dias favoráveis para al
     document.getElementById('maiaChatInput').focus();
   }
 
+
+  // ── SÓCIO ESTRATÉGICO ──
+  const SOCIO_SYSTEM = `Você é uma equipe formada pelos maiores nomes do marketing direto, psicologia do consumidor, copywriting, funis de vendas, branding, storytelling e negócios digitais.
+
+Você incorpora simultaneamente o conhecimento de: Eugene Schwartz, Gary Halbert, Dan Kennedy, Russell Brunson, Alex Hormozi, Donald Miller, Joe Sugarman, Robert Cialdini, Seth Godin, Sabri Suby, David Ogilvy e Frank Kern.
+
+Mas também entende profundamente: Psicologia Sistêmica, Constelação Familiar, Ordens do Amor, Bert Hellinger, Traumas, Ansiedade, Autoconhecimento, Espiritualidade, Meditação e Neurociência.
+
+CONTEXTO DO NEGÓCIO:
+- Empresa: Viva Livre Terapias (vivalivreterapia.com)
+- Mônica: Psicóloga Sistémica e Consteladora Familiar
+- Alexandre: Terapeuta Sistémico e especialista em Meditações Guiadas
+- Objetivo: Faturar R$100.000 até 31 de dezembro
+- Foco: Portugal e Brasil, produtos digitais
+
+PRODUTOS:
+- Guia gratuito: Sagrado Masculino & Feminino (já publicado)
+- Área de membros: vivalivreterapia.com/mentora (senha: vivalivreterapias2025)
+- 10 cursos planeados: Ordens do Amor, Relacionamentos Sistémicos, Criança Interior, Autoestima, Ansiedade, Prosperidade, Pais e Filhos, Luto, Propósito de Vida, Constelação Familiar na Prática
+
+Seu objetivo NÃO é apenas dar conselhos. É construir uma máquina de vendas.
+
+Sempre pense: "O que faria esta empresa crescer 10 vezes?"
+
+Sempre responda neste formato quando aplicável:
+1. Objetivo
+2. Estratégia
+3. O que produzir
+4. Como vender
+5. Como automatizar
+6. Como escalar
+7. Próximo passo
+
+Nunca entregue respostas genéricas. Seja específico, direto e prático.
+Pense sempre em Lifetime Value. Venda jornadas, não cursos isolados.
+Responda em português do Brasil.`;
+
+  let socioHistory = [];
+  let socioBusy = false;
+
+  function handleSocioKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendSocioMsg();} }
+  function sendSocio(t) { document.getElementById('socioInput').value=t; sendSocioMsg(); }
+
+  function addSocioMsg(role, text) {
+    const msgs = document.getElementById('socioMessages');
+    const d = document.createElement('div');
+    d.className = `cmsg ${role}`;
+    const av = role==='assistant' 
+      ? '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>'
+      : '<div class="cmsg-av">👤</div>';
+    d.innerHTML = av + `<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function sendSocioMsg() {
+    const input = document.getElementById('socioInput');
+    const text = input.value.trim();
+    if (!text || socioBusy) return;
+    document.getElementById('socioSugg').style.display = 'none';
+    input.value = ''; input.style.height = 'auto';
+    socioBusy = true; document.getElementById('socioBtn').disabled = true;
+    addSocioMsg('user', text);
+    socioHistory.push({ role:'user', content:text });
+
+    const msgs = document.getElementById('socioMessages');
+    const typing = document.createElement('div');
+    typing.className = 'cmsg assistant'; typing.id = 'socioTyping';
+    typing.innerHTML = '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2048,
+          system: SOCIO_SYSTEM,
+          messages: socioHistory
+        })
+      });
+      const data = await res.json();
+      document.getElementById('socioTyping')?.remove();
+      if (data.content?.[0]) {
+        const reply = data.content[0].text;
+        socioHistory.push({ role:'assistant', content:reply });
+        addSocioMsg('assistant', reply);
+      } else {
+        addSocioMsg('assistant', 'Erro ao processar. Tenta novamente! 🚀');
+      }
+    } catch(e) {
+      document.getElementById('socioTyping')?.remove();
+      addSocioMsg('assistant', 'Erro de conexão. Verifica a ligação! 🚀');
+    }
+    socioBusy = false; document.getElementById('socioBtn').disabled = false;
+    document.getElementById('socioInput').focus();
+  }
+
+
+  // ── PROSPERIDADE SISTÉMICA ──
+  const PROSP_SYSTEM = `Você é a Prosperidade Sistémica — uma assistente especializada em finanças através da lente da terapia sistémica e Constelação Familiar, integrada à plataforma da psicóloga Mônica Alice Voelz (Viva Livre Terapias).
+
+Você acredita que a nossa relação com o dinheiro é profundamente influenciada pela nossa história familiar. Padrões de escassez, abundância, culpa ou medo em relação ao dinheiro muitas vezes vêm de gerações anteriores.
+
+Você pode:
+- Explorar padrões familiares relacionados com dinheiro e prosperidade
+- Identificar lealdades inconscientes à escassez ou ao fracasso financeiro
+- Trabalhar crenças limitantes sobre merecimento e abundância
+- Propor exercícios sistémicos práticos para transformar a relação com o dinheiro
+- Conectar bloqueios financeiros com dinâmicas familiares não resolvidas
+- Ajudar a honrar os ancestrais e ainda assim permitir-se prosperar
+
+Quando relevante, mencione que o curso "Prosperidade e Dinheiro" da Mônica aprofunda este trabalho.
+
+Tom: acolhedor mas direto, como a Mônica — não fica passando panos. Se há um padrão claro, nomeia-o com amor e clareza. Em português do Brasil.
+
+Nunca faça diagnósticos ou aconselhamento financeiro profissional. Foque sempre na dimensão sistémica e emocional da prosperidade.
+
+Sempre que sentir que a pessoa precisa de apoio mais profundo, encaminhe para sessão com a Mônica em vivalivreterapia.com.`;
+
+  let prospHistory = [];
+  let prospBusy = false;
+
+  function handleProspKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendProspMsg();} }
+  function sendProsp(t) { document.getElementById('prospInput').value=t; sendProspMsg(); }
+
+  function addProspMsg(role, text) {
+    const msgs = document.getElementById('prospMessages');
+    const d = document.createElement('div');
+    d.className = `cmsg ${role}`;
+    const av = role==='assistant'
+      ? '<div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>'
+      : '<div class="cmsg-av">👤</div>';
+    d.innerHTML = av + `<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  async function sendProspMsg() {
+    const input = document.getElementById('prospInput');
+    const text = input.value.trim();
+    if (!text || prospBusy) return;
+    document.getElementById('prospSugg').style.display = 'none';
+    input.value = ''; input.style.height = 'auto';
+    prospBusy = true; document.getElementById('prospBtn').disabled = true;
+    addProspMsg('user', text);
+    prospHistory.push({ role:'user', content:text });
+
+    const msgs = document.getElementById('prospMessages');
+    const typing = document.createElement('div');
+    typing.className = 'cmsg assistant'; typing.id = 'prospTyping';
+    typing.innerHTML = '<div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 1024,
+          system: PROSP_SYSTEM,
+          messages: prospHistory
+        })
+      });
+      const data = await res.json();
+      document.getElementById('prospTyping')?.remove();
+      if (data.content?.[0]) {
+        const reply = data.content[0].text;
+        prospHistory.push({ role:'assistant', content:reply });
+        addProspMsg('assistant', reply);
+        // Save to Supabase
+        if (currentMembro) guardarMemoriaProsp();
+      } else {
+        addProspMsg('assistant', 'Desculpa, tive um problema. Tenta novamente! 💰');
+      }
+    } catch(e) {
+      document.getElementById('prospTyping')?.remove();
+      addProspMsg('assistant', 'Erro de conexão. Verifica a ligação! 💰');
+    }
+    prospBusy = false; document.getElementById('prospBtn').disabled = false;
+    document.getElementById('prospInput').focus();
+  }
+
   // ── ORÁCULO DOS SONHOS ──
   const ORACULO_SYSTEM = `Você é o Oráculo dos Sonhos — um intérprete avançado de sonhos especializado em análise simbólica, emocional e narrativa, integrado à plataforma da psicóloga Mônica Alice Voelz (Viva Livre Terapias).
 
@@ -1539,5 +2148,27 @@ Usa linguagem próxima, acolhedora e sistémica. Em português do Brasil. Máxim
   }
 
 </script>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <div id="mobileNav">
+    <style>
+      @media (max-width: 1024px) {
+        #mobileNav { display:flex !important; }
+        .main { padding-bottom: 75px; }
+      }
+      #mobileNav { display:none; position:fixed; bottom:0; left:0; right:0; z-index:100; background:var(--text); border-top:1px solid rgba(255,255,255,0.1); justify-content:space-around; padding:0.5rem 0 0.8rem; }
+      #mobileNav button { background:none; border:none; color:rgba(255,255,255,0.5); font-size:0.6rem; display:flex; flex-direction:column; align-items:center; gap:0.2rem; cursor:pointer; padding:0.3rem 0.5rem; font-family:'Jost',sans-serif; }
+      #mobileNav button span { font-size:1.2rem; }
+      #mobileNav button.mob-active { color:var(--sage-lt); }
+    </style>
+    <button onclick="showPage('dashboard')" id="mob-dashboard"><span>🏠</span>Início</button>
+    <button onclick="showPage('mentora')" id="mob-mentora"><span>🌿</span>Mentora</button>
+    <button onclick="showPage('oraculo')" id="mob-oraculo"><span>🔮</span>Oráculo</button>
+    <button onclick="showPage('maia')" id="mob-maia"><span>🌙</span>Maia</button>
+    <button onclick="showPage('materiais')" id="mob-materiais"><span>🗺️</span>Mapa</button>
+    <button onclick="showPage('cursos')" id="mob-cursos"><span>🎓</span>Cursos</button>
+    <button onclick="showPage('prosperidade')" id="mob-prosperidade"><span>💰</span>Prósp.</button>
+  </div>
+
 </body>
 </html>
