@@ -44,7 +44,7 @@
     .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.75rem; color: rgba(253,250,246,0.35); }
     .login-link a { color: var(--sage-lt); text-decoration: none; }
     #appPage { display: none; min-height: 100dvh; }
-    .layout { display: flex; height: 100dvh; overflow: hidden; }
+    .layout { display: flex; min-height: 100dvh; }
     .sidebar { width: 280px; flex-shrink: 0; background: var(--text); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; overflow-y: auto; }
     .sidebar-logo { padding: 2rem 1.8rem 1.5rem; border-bottom: 1px solid rgba(253,250,246,0.08); }
     .sidebar-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--white); }
@@ -66,7 +66,7 @@
     .sidebar-footer { padding: 1.2rem 1.8rem; border-top: 1px solid rgba(253,250,246,0.08); }
     .logout-btn { display: flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; color: rgba(253,250,246,0.35); cursor: pointer; background: none; border: none; font-family: 'Jost', sans-serif; transition: color .3s; padding: 0; }
     .logout-btn:hover { color: rgba(253,250,246,0.7); }
-    .main { margin-left: 280px; flex: 1; min-height: 100dvh; overflow-y: auto; height: 100dvh; }
+    .main { margin-left: 280px; flex: 1; min-height: 100dvh; }
     .topbar { background: var(--white); border-bottom: 1px solid var(--sand); padding: 1.2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 40; }
     .topbar-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; }
     .topbar-title em { font-style: italic; color: var(--sage-dk); }
@@ -549,7 +549,11 @@
     document.body.scrollTop = 0;
     document.getElementById('sidebarName').textContent = nome;
     document.getElementById('heroName').textContent = nome;
-    if (isAdmin) { const m = document.getElementById('adminMenu'); if(m) m.style.display = 'block'; setTimeout(carregarMembros, 800); }
+    if (isAdmin) {
+      const m = document.getElementById('adminMenu'); if(m) m.style.display = 'block';
+      const mob = document.getElementById('mob-adminPanel'); if(mob) mob.style.display = 'flex';
+      setTimeout(carregarMembros, 800);
+    }
     if (currentMembro) { setTimeout(carregarMemoria, 500); setTimeout(carregarMemoriaProsp, 600); }
   }
 
@@ -846,7 +850,7 @@
 </script>
 
       <!-- PAINEL ADMIN -->
-      <div class="page-content" id="page-adminPanel" style="max-width:800px;">
+      <div class="page-content" id="page-adminPanel">
         <div class="section-header">
           <h3>Gerir <em>Membros</em></h3>
           <p>Crie e gerencie os acessos dos membros da Viva Livre Terapias.</p>
@@ -855,7 +859,7 @@
         <!-- Criar novo membro -->
         <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;margin-bottom:2rem;">
           <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;margin-bottom:1.5rem;">➕ Criar novo membro</h4>
-          <div style="display:flex;flex-direction:column;gap:1rem;margin-bottom:1rem;">
+          <div style="display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:1rem;max-width:500px;">
             <div>
               <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Nome completo</label>
               <input type="text" id="adminNome" placeholder="Nome do membro" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
@@ -902,6 +906,7 @@
   <button onclick="showPage('materiais')"><span>🗺️</span>Mapa</button>
   <button onclick="showPage('cursos')"><span>🎓</span>Cursos</button>
   <button onclick="showPage('prosperidade')"><span>💰</span>Prósp.</button>
+  <button onclick="showPage('adminPanel')" id="mob-adminPanel" style="display:none;"><span>👥</span>Membros</button>
 </div>
 </body>
 </html>
