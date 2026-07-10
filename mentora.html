@@ -8,479 +8,163 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --cream: #F5EFE6;
-      --sand: #E8DDD0;
-      --sage: #7A9E7E;
-      --sage-dk: #4F7A52;
-      --sage-lt: #B5CCB6;
-      --terra: #C4A882;
-      --terra-dk: #9A7A56;
-      --text: #2E2820;
-      --text-lt: #6B5D52;
-      --white: #FDFAF6;
-      --gold: #C9A96E;
+      --cream: #F5EFE6; --sand: #E8DDD0; --sage: #7A9E7E; --sage-dk: #4F7A52;
+      --sage-lt: #B5CCB6; --terra: #C4A882; --terra-dk: #9A7A56;
+      --text: #2E2820; --text-lt: #6B5D52; --white: #FDFAF6; --gold: #C9A96E;
     }
-
     html { scroll-behavior: smooth; }
-    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
-
-    /* ── LOGIN ── */
+    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100dvh; }
     #loginPage {
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, #2E2820 0%, #3d3028 50%, #4a3a2e 100%);
       position: relative; overflow: hidden; padding: 2rem;
     }
     #loginPage::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: radial-gradient(ellipse at 30% 50%, rgba(79,122,82,0.15) 0%, transparent 60%),
                   radial-gradient(ellipse at 70% 80%, rgba(196,168,130,0.1) 0%, transparent 50%);
     }
-    .login-dandelion {
-      position: absolute; font-size: 20rem; opacity: 0.03;
-      top: -4rem; right: -4rem; line-height: 1; user-select: none;
-      animation: float 8s ease-in-out infinite;
-    }
+    .login-dandelion { position: absolute; font-size: 20rem; opacity: 0.03; top: -4rem; right: -4rem; line-height: 1; user-select: none; animation: float 8s ease-in-out infinite; }
     @keyframes float { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-20px) rotate(5deg)} }
-
-    .login-card {
-      background: rgba(253,250,246,0.04);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(253,250,246,0.1);
-      border-radius: 2rem;
-      padding: 3.5rem 3rem;
-      max-width: 440px; width: 100%;
-      position: relative; z-index: 1;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-    }
-    .login-eyebrow {
-      font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--sage-lt); margin-bottom: 0.5rem;
-      display: flex; align-items: center; gap: 0.8rem;
-    }
-    .login-eyebrow::before, .login-eyebrow::after {
-      content: ''; flex: 1; height: 1px; background: rgba(181,204,182,0.3);
-    }
-    .login-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem; font-weight: 300; line-height: 1.1;
-      color: var(--white); text-align: center; margin-bottom: 0.5rem;
-    }
+    .login-card { background: rgba(253,250,246,0.04); backdrop-filter: blur(20px); border: 1px solid rgba(253,250,246,0.1); border-radius: 2rem; padding: 3.5rem 3rem; max-width: 440px; width: 100%; position: relative; z-index: 1; box-shadow: 0 40px 80px rgba(0,0,0,0.4); }
+    .login-eyebrow { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--sage-lt); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.8rem; }
+    .login-eyebrow::before, .login-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(181,204,182,0.3); }
+    .login-title { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; line-height: 1.1; color: var(--white); text-align: center; margin-bottom: 0.5rem; }
     .login-title em { font-style: italic; color: var(--sage-lt); }
-    .login-sub {
-      font-size: 0.82rem; color: rgba(253,250,246,0.5);
-      text-align: center; line-height: 1.6; margin-bottom: 2.5rem; font-weight: 300;
-    }
+    .login-sub { font-size: 0.82rem; color: rgba(253,250,246,0.5); text-align: center; line-height: 1.6; margin-bottom: 2.5rem; font-weight: 300; }
     .login-field { margin-bottom: 1rem; }
-    .login-field label {
-      display: block; font-size: 0.68rem; letter-spacing: 0.15em;
-      text-transform: uppercase; color: rgba(253,250,246,0.4);
-      margin-bottom: 0.5rem;
-    }
-    .login-field input {
-      width: 100%; padding: 0.9rem 1.2rem;
-      background: rgba(253,250,246,0.06);
-      border: 1px solid rgba(253,250,246,0.12);
-      border-radius: 0.8rem; color: var(--white);
-      font-family: 'Jost', sans-serif; font-size: 0.88rem;
-      outline: none; transition: all .3s;
-    }
-    .login-field input:focus {
-      border-color: var(--sage-lt);
-      background: rgba(253,250,246,0.09);
-      box-shadow: 0 0 0 3px rgba(181,204,182,0.1);
-    }
+    .login-field label { display: block; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(253,250,246,0.4); margin-bottom: 0.5rem; }
+    .login-field input { width: 100%; padding: 0.9rem 1.2rem; background: rgba(253,250,246,0.06); border: 1px solid rgba(253,250,246,0.12); border-radius: 0.8rem; color: var(--white); font-family: 'Jost', sans-serif; font-size: 0.88rem; outline: none; transition: all .3s; }
+    .login-field input:focus { border-color: var(--sage-lt); background: rgba(253,250,246,0.09); box-shadow: 0 0 0 3px rgba(181,204,182,0.1); }
     .login-field input::placeholder { color: rgba(253,250,246,0.25); }
-    .login-btn {
-      width: 100%; padding: 1rem;
-      background: linear-gradient(135deg, var(--sage-dk), #3d6140);
-      color: var(--white); border: none; border-radius: 3rem;
-      font-family: 'Jost', sans-serif; font-size: 0.85rem;
-      font-weight: 500; letter-spacing: 0.12em; cursor: pointer;
-      transition: all .35s; margin-top: 0.5rem;
-      box-shadow: 0 8px 24px rgba(79,122,82,0.3);
-    }
+    .login-btn { width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--sage-dk), #3d6140); color: var(--white); border: none; border-radius: 3rem; font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.12em; cursor: pointer; transition: all .35s; margin-top: 0.5rem; box-shadow: 0 8px 24px rgba(79,122,82,0.3); }
     .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(79,122,82,0.4); }
-    .login-error {
-      color: #e88; font-size: 0.78rem; text-align: center;
-      margin-top: 1rem; display: none;
-    }
-    .login-link {
-      text-align: center; margin-top: 1.5rem;
-      font-size: 0.75rem; color: rgba(253,250,246,0.35);
-    }
+    .login-error { color: #e88; font-size: 0.78rem; text-align: center; margin-top: 1rem; display: none; }
+    .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.75rem; color: rgba(253,250,246,0.35); }
     .login-link a { color: var(--sage-lt); text-decoration: none; }
-
-    /* ── APP ── */
-    #appPage { display: none; min-height: 100vh; }
-
-    /* Sidebar */
-    .layout { display: flex; min-height: 100vh; }
-    .sidebar {
-      width: 280px; flex-shrink: 0;
-      background: var(--text);
-      display: flex; flex-direction: column;
-      position: fixed; top: 0; left: 0; bottom: 0;
-      z-index: 50; overflow-y: auto;
-    }
-    .sidebar-logo {
-      padding: 2rem 1.8rem 1.5rem;
-      border-bottom: 1px solid rgba(253,250,246,0.08);
-    }
-    .sidebar-logo-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-weight: 400; color: var(--white);
-    }
+    #appPage { display: none; min-height: 100dvh; }
+    .layout { display: flex; min-height: 100dvh; }
+    .sidebar { width: 280px; flex-shrink: 0; background: var(--text); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; overflow-y: auto; }
+    .sidebar-logo { padding: 2rem 1.8rem 1.5rem; border-bottom: 1px solid rgba(253,250,246,0.08); }
+    .sidebar-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--white); }
     .sidebar-logo-text em { font-style: italic; color: var(--sage-lt); }
-    .sidebar-badge {
-      display: inline-block; margin-top: 0.4rem;
-      background: rgba(181,204,182,0.15); color: var(--sage-lt);
-      font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
-      padding: 0.25rem 0.8rem; border-radius: 2rem;
-    }
-    .sidebar-user {
-      padding: 1.2rem 1.8rem;
-      border-bottom: 1px solid rgba(253,250,246,0.08);
-      display: flex; align-items: center; gap: 0.8rem;
-    }
-    .sidebar-avatar {
-      width: 38px; height: 38px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--sage), var(--sage-dk));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; flex-shrink: 0;
-    }
+    .sidebar-badge { display: inline-block; margin-top: 0.4rem; background: rgba(181,204,182,0.15); color: var(--sage-lt); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.25rem 0.8rem; border-radius: 2rem; }
+    .sidebar-user { padding: 1.2rem 1.8rem; border-bottom: 1px solid rgba(253,250,246,0.08); display: flex; align-items: center; gap: 0.8rem; }
+    .sidebar-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--sage), var(--sage-dk)); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
     .sidebar-user-info { flex: 1; min-width: 0; }
     .sidebar-user-name { font-size: 0.82rem; font-weight: 500; color: var(--white); }
     .sidebar-user-role { font-size: 0.7rem; color: rgba(253,250,246,0.4); }
-
     .sidebar-nav { padding: 1.2rem 0; flex: 1; }
-    .nav-section-title {
-      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(253,250,246,0.3); padding: 0.8rem 1.8rem 0.4rem;
-    }
-    .nav-item {
-      display: flex; align-items: center; gap: 0.8rem;
-      padding: 0.75rem 1.8rem; cursor: pointer;
-      color: rgba(253,250,246,0.55); font-size: 0.85rem;
-      transition: all .25s; border-left: 3px solid transparent;
-      text-decoration: none;
-    }
+    .nav-section-title { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,250,246,0.3); padding: 0.8rem 1.8rem 0.4rem; }
+    .nav-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.8rem; cursor: pointer; color: rgba(253,250,246,0.55); font-size: 0.85rem; transition: all .25s; border-left: 3px solid transparent; text-decoration: none; }
     .nav-item:hover { color: var(--white); background: rgba(253,250,246,0.05); }
-    .nav-item.active {
-      color: var(--white); background: rgba(79,122,82,0.15);
-      border-left-color: var(--sage);
-    }
+    .nav-item.active { color: var(--white); background: rgba(79,122,82,0.15); border-left-color: var(--sage); }
     .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; flex-shrink: 0; }
-    .nav-badge {
-      margin-left: auto; background: var(--sage-dk);
-      color: var(--white); font-size: 0.62rem;
-      padding: 0.15rem 0.5rem; border-radius: 2rem;
-    }
-    .nav-soon {
-      margin-left: auto; background: rgba(196,168,130,0.2);
-      color: var(--terra); font-size: 0.6rem;
-      padding: 0.15rem 0.5rem; border-radius: 2rem; letter-spacing: 0.05em;
-    }
-
-    .sidebar-footer {
-      padding: 1.2rem 1.8rem;
-      border-top: 1px solid rgba(253,250,246,0.08);
-    }
-    .logout-btn {
-      display: flex; align-items: center; gap: 0.6rem;
-      font-size: 0.78rem; color: rgba(253,250,246,0.35);
-      cursor: pointer; background: none; border: none;
-      font-family: 'Jost', sans-serif; transition: color .3s; padding: 0;
-    }
+    .nav-badge { margin-left: auto; background: var(--sage-dk); color: var(--white); font-size: 0.62rem; padding: 0.15rem 0.5rem; border-radius: 2rem; }
+    .nav-soon { margin-left: auto; background: rgba(196,168,130,0.2); color: var(--terra); font-size: 0.6rem; padding: 0.15rem 0.5rem; border-radius: 2rem; letter-spacing: 0.05em; }
+    .sidebar-footer { padding: 1.2rem 1.8rem; border-top: 1px solid rgba(253,250,246,0.08); }
+    .logout-btn { display: flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; color: rgba(253,250,246,0.35); cursor: pointer; background: none; border: none; font-family: 'Jost', sans-serif; transition: color .3s; padding: 0; }
     .logout-btn:hover { color: rgba(253,250,246,0.7); }
-
-    /* Main content */
-    .main { margin-left: 280px; flex: 1; min-height: 100vh; }
-    .topbar {
-      background: var(--white); border-bottom: 1px solid var(--sand);
-      padding: 1.2rem 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 40;
-    }
+    .main { margin-left: 280px; flex: 1; min-height: 100dvh; }
+    .topbar { background: var(--white); border-bottom: 1px solid var(--sand); padding: 1.2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 40; }
     .topbar-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; }
     .topbar-title em { font-style: italic; color: var(--sage-dk); }
     .topbar-right { display: flex; align-items: center; gap: 1rem; }
-    .topbar-mavc {
-      display: flex; align-items: center; gap: 0.5rem;
-      background: linear-gradient(135deg, var(--sage-dk), #3d6140);
-      color: var(--white); border: none; border-radius: 2rem;
-      padding: 0.5rem 1.2rem; font-size: 0.78rem; font-weight: 500;
-      cursor: pointer; font-family: 'Jost', sans-serif; transition: all .3s;
-      letter-spacing: 0.08em;
-    }
+    .topbar-mavc { display: flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, var(--sage-dk), #3d6140); color: var(--white); border: none; border-radius: 2rem; padding: 0.5rem 1.2rem; font-size: 0.78rem; font-weight: 500; cursor: pointer; font-family: 'Jost', sans-serif; transition: all .3s; letter-spacing: 0.08em; }
     .topbar-mavc:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,122,82,0.3); }
-
     .page-content { padding: 2.5rem; display: none; }
-    .page-content.active { display: block; animation: fadeIn .4s ease; }
-    @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-
-    /* ── DASHBOARD ── */
-    .welcome-hero {
-      background: linear-gradient(135deg, var(--text) 0%, #3d3028 100%);
-      border-radius: 2rem; padding: 3rem;
-      position: relative; overflow: hidden; margin-bottom: 2rem;
-      color: var(--white);
-    }
-    .welcome-hero::before {
-      content: '✾';
-      position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);
-      font-size: 8rem; opacity: 0.06; line-height: 1;
-    }
-    .welcome-hero h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem;
-    }
+    .page-content.active { display: block !important; animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .welcome-hero { background: linear-gradient(135deg, var(--text) 0%, #3d3028 100%); border-radius: 2rem; padding: 3rem; position: relative; overflow: hidden; margin-bottom: 2rem; color: var(--white); }
+    .welcome-hero::before { content: '✾'; position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); font-size: 8rem; opacity: 0.06; line-height: 1; }
+    .welcome-hero h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.5rem; }
     .welcome-hero h2 em { font-style: italic; color: var(--sage-lt); }
     .welcome-hero p { font-size: 0.88rem; opacity: 0.6; font-weight: 300; line-height: 1.7; max-width: 500px; }
-
     .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-bottom: 2rem; }
-    .stat-card {
-      background: var(--white); border-radius: 1.5rem; padding: 1.5rem;
-      border: 1px solid var(--sand);
-    }
+    .stat-card { background: var(--white); border-radius: 1.5rem; padding: 1.5rem; border: 1px solid var(--sand); }
     .stat-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
-    .stat-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem; font-weight: 400; color: var(--text);
-    }
+    .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; color: var(--text); }
     .stat-label { font-size: 0.75rem; color: var(--text-lt); margin-top: 0.2rem; }
-
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .card {
-      background: var(--white); border-radius: 1.5rem;
-      border: 1px solid var(--sand); overflow: hidden;
-    }
-    .card-header {
-      padding: 1.5rem 1.8rem 1rem;
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--sand);
-    }
+    .card { background: var(--white); border-radius: 1.5rem; border: 1px solid var(--sand); overflow: hidden; }
+    .card-header { padding: 1.5rem 1.8rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--sand); }
     .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; }
-    .card-badge {
-      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--terra-dk); background: rgba(196,168,130,0.15);
-      padding: 0.25rem 0.8rem; border-radius: 2rem;
-    }
+    .card-badge { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra-dk); background: rgba(196,168,130,0.15); padding: 0.25rem 0.8rem; border-radius: 2rem; }
     .card-body { padding: 1.5rem 1.8rem; }
-
-    /* Próxima sessão */
-    .session-item {
-      display: flex; align-items: center; gap: 1rem;
-      padding: 1rem; background: var(--cream);
-      border-radius: 1rem; margin-bottom: 0.8rem;
-    }
+    .session-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--cream); border-radius: 1rem; margin-bottom: 0.8rem; }
     .session-icon { font-size: 1.5rem; }
     .session-info { flex: 1; }
     .session-title { font-size: 0.85rem; font-weight: 500; }
     .session-time { font-size: 0.75rem; color: var(--text-lt); margin-top: 0.2rem; }
-    .session-btn {
-      font-size: 0.72rem; background: var(--sage-dk); color: var(--white);
-      padding: 0.4rem 1rem; border-radius: 2rem; border: none;
-      cursor: pointer; font-family: 'Jost', sans-serif; transition: all .3s;
-    }
+    .session-btn { font-size: 0.72rem; background: var(--sage-dk); color: var(--white); padding: 0.4rem 1rem; border-radius: 2rem; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: all .3s; }
     .session-btn:hover { background: var(--terra-dk); }
-
-    /* ── CURSOS ── */
     .section-header { margin-bottom: 2rem; }
     .section-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; }
     .section-header h3 em { font-style: italic; color: var(--sage-dk); }
     .section-header p { font-size: 0.85rem; color: var(--text-lt); margin-top: 0.3rem; font-weight: 300; }
-
     .cursos-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
-    .curso-card {
-      background: var(--white); border-radius: 1.5rem;
-      border: 1px solid var(--sand); overflow: hidden;
-      transition: transform .3s, box-shadow .3s;
-      position: relative;
-    }
+    .curso-card { background: var(--white); border-radius: 1.5rem; border: 1px solid var(--sand); overflow: hidden; transition: transform .3s, box-shadow .3s; position: relative; }
     .curso-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.08); }
-    .curso-thumb {
-      height: 160px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 4rem; position: relative; overflow: hidden;
-    }
+    .curso-thumb { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; }
     .curso-thumb.sage { background: linear-gradient(135deg, #4F7A52, #7A9E7E); }
     .curso-thumb.terra { background: linear-gradient(135deg, #9A7A56, #C4A882); }
     .curso-thumb.dark { background: linear-gradient(135deg, #2E2820, #4a3a2e); }
     .curso-thumb.light { background: linear-gradient(135deg, #E8DDD0, #F5EFE6); }
-    .curso-em-breve {
-      position: absolute; top: 1rem; right: 1rem;
-      background: rgba(0,0,0,0.5); color: white;
-      font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 0.3rem 0.8rem; border-radius: 2rem; backdrop-filter: blur(4px);
-    }
+    .curso-em-breve { position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.5); color: white; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 2rem; backdrop-filter: blur(4px); }
     .curso-info { padding: 1.5rem; }
-    .curso-tag {
-      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--sage-dk); margin-bottom: 0.5rem;
-    }
+    .curso-tag { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage-dk); margin-bottom: 0.5rem; }
     .curso-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 0.4rem; }
     .curso-desc { font-size: 0.82rem; color: var(--text-lt); line-height: 1.6; margin-bottom: 1rem; font-weight: 300; }
     .curso-meta { display: flex; align-items: center; justify-content: space-between; }
     .curso-lessons { font-size: 0.75rem; color: var(--text-lt); }
-    .curso-btn {
-      font-size: 0.75rem; font-family: 'Jost', sans-serif;
-      padding: 0.45rem 1.2rem; border-radius: 2rem; border: none;
-      cursor: pointer; transition: all .3s; font-weight: 500;
-    }
+    .curso-btn { font-size: 0.75rem; font-family: 'Jost', sans-serif; padding: 0.45rem 1.2rem; border-radius: 2rem; border: none; cursor: pointer; transition: all .3s; font-weight: 500; }
     .curso-btn.active { background: var(--sage-dk); color: white; }
-    .curso-btn.active:hover { background: var(--terra-dk); }
     .curso-btn.disabled { background: var(--sand); color: var(--text-lt); cursor: default; }
-
-    /* ── MATERIAIS ── */
-    .materiais-grid { display: flex; flex-direction: column; gap: 1rem; }
-    .material-item {
-      background: var(--white); border-radius: 1.2rem;
-      border: 1px solid var(--sand); padding: 1.2rem 1.5rem;
-      display: flex; align-items: center; gap: 1.2rem;
-      transition: all .3s;
-    }
-    .material-item:hover { border-color: var(--sage-lt); transform: translateX(4px); }
-    .material-icon {
-      width: 48px; height: 48px; border-radius: 1rem; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
-    }
-    .material-icon.pdf { background: rgba(196,168,130,0.15); }
-    .material-icon.video { background: rgba(79,122,82,0.12); }
-    .material-icon.audio { background: rgba(46,40,32,0.08); }
-    .material-info { flex: 1; }
-    .material-title { font-size: 0.88rem; font-weight: 500; margin-bottom: 0.2rem; }
-    .material-meta { font-size: 0.72rem; color: var(--text-lt); }
-    .material-action {
-      font-size: 0.75rem; font-family: 'Jost', sans-serif;
-      padding: 0.4rem 1rem; border-radius: 2rem;
-      border: 1.5px solid var(--sand); background: none;
-      color: var(--text-lt); cursor: pointer; transition: all .3s;
-    }
-    .material-action:hover { border-color: var(--sage); color: var(--sage-dk); }
-    .material-action.em-breve { opacity: 0.5; cursor: default; }
-    .material-action.em-breve:hover { border-color: var(--sand); color: var(--text-lt); }
-
-    /* ── MENTORA ── */
-    .mentora-layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; height: calc(100vh - 160px); }
-    .chat-area {
-      background: var(--white); border-radius: 1.5rem;
-      border: 1px solid var(--sand); display: flex; flex-direction: column;
-      overflow: hidden;
-    }
-    .chat-header {
-      padding: 1.2rem 1.8rem; border-bottom: 1px solid var(--sand);
-      display: flex; align-items: center; gap: 1rem;
-    }
-    .chat-avatar {
-      width: 42px; height: 42px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--sage), var(--sage-dk));
-      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-    }
+    .mentora-layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; height: calc(100dvh - 160px); }
+    .chat-area { background: var(--white); border-radius: 1.5rem; border: 1px solid var(--sand); display: flex; flex-direction: column; overflow: hidden; }
+    .chat-header { padding: 1.2rem 1.8rem; border-bottom: 1px solid var(--sand); display: flex; align-items: center; gap: 1rem; }
+    .chat-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--sage), var(--sage-dk)); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
     .chat-header-info h4 { font-size: 0.9rem; font-weight: 500; }
     .chat-header-info p { font-size: 0.72rem; color: var(--text-lt); }
-    .chat-online {
-      margin-left: auto; display: flex; align-items: center; gap: 0.4rem;
-      font-size: 0.72rem; color: var(--sage-dk);
-    }
+    .chat-online { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--sage-dk); }
     .chat-online::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--sage-dk); }
-
-    .chat-messages {
-      flex: 1; overflow-y: auto; padding: 1.5rem;
-      display: flex; flex-direction: column; gap: 1rem;
-    }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
     .chat-messages::-webkit-scrollbar { width: 4px; }
     .chat-messages::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 2px; }
-
     .cmsg { display: flex; gap: 0.7rem; align-items: flex-start; }
     .cmsg.user { flex-direction: row-reverse; }
-    .cmsg-av {
-      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; font-size: 0.85rem;
-    }
+    .cmsg-av { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
     .cmsg.assistant .cmsg-av { background: linear-gradient(135deg, var(--sage), var(--sage-dk)); }
     .cmsg.user .cmsg-av { background: var(--sand); }
-    .cmsg-bubble {
-      max-width: 75%; padding: 0.9rem 1.1rem;
-      border-radius: 1rem; font-size: 0.87rem; line-height: 1.65;
-    }
-    .cmsg.assistant .cmsg-bubble {
-      background: var(--cream); color: var(--text);
-      border-radius: 0.25rem 1rem 1rem 1rem;
-    }
-    .cmsg.user .cmsg-bubble {
-      background: linear-gradient(135deg, #3d6140, var(--sage-dk));
-      color: white; border-radius: 1rem 0.25rem 1rem 1rem;
-    }
-    .typing-dots {
-      display: flex; gap: 4px; padding: 0.9rem 1.1rem;
-      background: var(--cream); border-radius: 0.25rem 1rem 1rem 1rem; width: fit-content;
-    }
-    .typing-dots span {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--sage); animation: bounce .8s infinite;
-    }
+    .cmsg-bubble { max-width: 75%; padding: 0.9rem 1.1rem; border-radius: 1rem; font-size: 0.87rem; line-height: 1.65; }
+    .cmsg.assistant .cmsg-bubble { background: var(--cream); color: var(--text); border-radius: 0.25rem 1rem 1rem 1rem; }
+    .cmsg.user .cmsg-bubble { background: linear-gradient(135deg, #3d6140, var(--sage-dk)); color: white; border-radius: 1rem 0.25rem 1rem 1rem; }
+    .typing-dots { display: flex; gap: 4px; padding: 0.9rem 1.1rem; background: var(--cream); border-radius: 0.25rem 1rem 1rem 1rem; width: fit-content; }
+    .typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); animation: bounce .8s infinite; }
     .typing-dots span:nth-child(2) { animation-delay:.15s }
     .typing-dots span:nth-child(3) { animation-delay:.3s }
     @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
-
-    .chat-suggestions {
-      padding: 0 1.5rem 1rem;
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-    }
-    .sugg-btn {
-      background: none; border: 1px solid var(--sand); color: var(--text-lt);
-      border-radius: 2rem; padding: 0.4rem 0.9rem; font-size: 0.75rem;
-      cursor: pointer; font-family: 'Jost', sans-serif; transition: all .3s;
-    }
+    .chat-suggestions { padding: 0 1.5rem 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .sugg-btn { background: none; border: 1px solid var(--sand); color: var(--text-lt); border-radius: 2rem; padding: 0.4rem 0.9rem; font-size: 0.75rem; cursor: pointer; font-family: 'Jost', sans-serif; transition: all .3s; }
     .sugg-btn:hover { border-color: var(--sage); color: var(--sage-dk); background: rgba(122,158,126,0.05); }
-
-    .chat-input-area {
-      padding: 1rem 1.5rem; border-top: 1px solid var(--sand);
-      display: flex; gap: 0.8rem; align-items: flex-end;
-    }
-    .chat-textarea {
-      flex: 1; border: 1.5px solid var(--sand); border-radius: 1rem;
-      padding: 0.75rem 1rem; font-family: 'Jost', sans-serif;
-      font-size: 0.87rem; color: var(--text); resize: none;
-      max-height: 100px; min-height: 42px; outline: none;
-      background: var(--cream); transition: border-color .3s;
-    }
+    .chat-input-area { padding: 1rem 1.5rem; border-top: 1px solid var(--sand); display: flex; gap: 0.8rem; align-items: flex-end; }
+    .chat-textarea { flex: 1; border: 1.5px solid var(--sand); border-radius: 1rem; padding: 0.75rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.87rem; color: var(--text); resize: none; max-height: 100px; min-height: 42px; outline: none; background: var(--cream); transition: border-color .3s; }
     .chat-textarea:focus { border-color: var(--sage); }
-    .chat-send {
-      width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, #3d6140, var(--sage-dk));
-      border: none; cursor: pointer; color: white;
-      display: flex; align-items: center; justify-content: center;
-      transition: all .3s; box-shadow: 0 4px 12px rgba(79,122,82,0.3);
-    }
+    .chat-send { width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #3d6140, var(--sage-dk)); border: none; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; transition: all .3s; box-shadow: 0 4px 12px rgba(79,122,82,0.3); }
     .chat-send:hover { transform: scale(1.08); }
     .chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
     .chat-send svg { width: 16px; height: 16px; fill: white; }
-
-    /* Mentora sidebar */
     .mentora-sidebar { display: flex; flex-direction: column; gap: 1.2rem; }
-    .msidebar-card {
-      background: var(--white); border-radius: 1.5rem;
-      border: 1px solid var(--sand); padding: 1.5rem;
-    }
+    .msidebar-card { background: var(--white); border-radius: 1.5rem; border: 1px solid var(--sand); padding: 1.5rem; }
     .msidebar-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; margin-bottom: 1rem; }
-    .topic-btn {
-      width: 100%; text-align: left; padding: 0.7rem 0.9rem;
-      background: var(--cream); border: none; border-radius: 0.8rem;
-      font-family: 'Jost', sans-serif; font-size: 0.8rem; color: var(--text);
-      cursor: pointer; margin-bottom: 0.5rem; transition: all .3s;
-      display: flex; align-items: center; gap: 0.6rem;
-    }
+    .topic-btn { width: 100%; text-align: left; padding: 0.7rem 0.9rem; background: var(--cream); border: none; border-radius: 0.8rem; font-family: 'Jost', sans-serif; font-size: 0.8rem; color: var(--text); cursor: pointer; margin-bottom: 0.5rem; transition: all .3s; display: flex; align-items: center; gap: 0.6rem; }
     .topic-btn:hover { background: var(--sand); }
-
-    /* Responsive */
     @media (max-width: 1024px) {
       .sidebar { transform: translateX(-100%); }
       .main { margin-left: 0; }
       .cursos-grid { grid-template-columns: 1fr; }
-      .mentora-layout { grid-template-columns: 1fr; }
+      .mentora-layout { grid-template-columns: 1fr; height: auto; }
       .mentora-sidebar { display: none; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
       .grid-2 { grid-template-columns: 1fr; }
@@ -493,64 +177,38 @@
   </style>
 </head>
 <body>
-
-<!-- ── LOGIN ── -->
+<!-- LOGIN -->
 <div id="loginPage">
   <div class="login-dandelion">✾</div>
   <div class="login-card">
     <p class="login-eyebrow">Área Exclusiva</p>
     <h1 class="login-title">Viva <em>Livre</em><br/>Terapias</h1>
-
-    <!-- TABS -->
     <div style="display:flex;gap:0;margin-bottom:1.5rem;background:rgba(255,255,255,0.06);border-radius:0.8rem;padding:0.3rem;">
       <button id="tabLogin" onclick="switchTab('login')" style="flex:1;padding:0.6rem;border:none;border-radius:0.6rem;background:rgba(79,122,82,0.8);color:white;font-family:'Jost',sans-serif;font-size:0.82rem;cursor:pointer;transition:all .3s;">Entrar</button>
       <button id="tabRegisto" onclick="switchTab('registo')" style="flex:1;padding:0.6rem;border:none;border-radius:0.6rem;background:none;color:rgba(255,255,255,0.5);font-family:'Jost',sans-serif;font-size:0.82rem;cursor:pointer;transition:all .3s;">Criar conta</button>
     </div>
-
-    <!-- LOGIN FORM -->
     <div id="formLogin">
       <p class="login-sub">Bem-vinda de volta ao seu espaço de transformação.</p>
-      <div class="login-field">
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="seu@email.com" />
-      </div>
-      <div class="login-field">
-        <label>Senha</label>
-        <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" />
-      </div>
+      <div class="login-field"><label>Email</label><input type="email" id="loginEmail" placeholder="seu@email.com" /></div>
+      <div class="login-field"><label>Senha</label><input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" /></div>
       <button class="login-btn" onclick="doLogin()">✾ &nbsp;Entrar</button>
       <p class="login-error" id="loginError">Email ou senha incorretos.</p>
     </div>
-
-    <!-- REGISTO FORM -->
     <div id="formRegisto" style="display:none;">
       <p class="login-sub">Crie a sua conta e aguarde a aprovação da Mônica.</p>
-      <div class="login-field">
-        <label>Nome completo</label>
-        <input type="text" id="registoNome" placeholder="O seu nome..." />
-      </div>
-      <div class="login-field">
-        <label>Email</label>
-        <input type="email" id="registoEmail" placeholder="seu@email.com" />
-      </div>
-      <div class="login-field">
-        <label>Senha</label>
-        <input type="password" id="registoPass" placeholder="Mínimo 6 caracteres" />
-      </div>
+      <div class="login-field"><label>Nome completo</label><input type="text" id="registoNome" placeholder="O seu nome..." /></div>
+      <div class="login-field"><label>Email</label><input type="email" id="registoEmail" placeholder="seu@email.com" /></div>
+      <div class="login-field"><label>Senha</label><input type="password" id="registoPass" placeholder="Mínimo 6 caracteres" /></div>
       <button class="login-btn" onclick="doRegisto()" style="background:linear-gradient(135deg,#9A7A56,var(--terra));">✾ &nbsp;Criar minha conta</button>
       <p class="login-error" id="registoError">Erro ao criar conta.</p>
       <p id="registoSucesso" style="display:none;color:var(--sage-lt);font-size:0.82rem;text-align:center;margin-top:1rem;">✅ Conta criada! Aguarde a aprovação da Mônica.</p>
     </div>
-
     <p class="login-link" style="margin-top:1.5rem;">Dúvidas? <a href="https://wa.me/351962250741">Fale connosco</a></p>
   </div>
 </div>
-
-<!-- ── APP ── -->
+<!-- APP -->
 <div id="appPage">
   <div class="layout">
-
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-logo">
         <div class="sidebar-logo-text">✾ Viva <em>Livre</em></div>
@@ -565,56 +223,27 @@
       </div>
       <nav class="sidebar-nav">
         <p class="nav-section-title">Principal</p>
-        <a class="nav-item active" onclick="showPage('dashboard')">
-          <span class="nav-icon">🏠</span> Início
-        </a>
-        <a class="nav-item" onclick="showPage('mentora')">
-          <span class="nav-icon">🌿</span> Mentora MAVC
-          <span class="nav-badge">IA</span>
-        </a>
-        <a class="nav-item" onclick="showPage('oraculo')">
-          <span class="nav-icon">🔮</span> Oráculo dos Sonhos
-          <span class="nav-badge">IA</span>
-        </a>
-        <a class="nav-item" onclick="showPage('maia')">
-          <span class="nav-icon">🌙</span> Calendário Maia
-          <span class="nav-badge">IA</span>
-        </a>
+        <a class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span> Início</a>
+        <a class="nav-item" onclick="showPage('mentora')"><span class="nav-icon">🌿</span> Mentora MAVC<span class="nav-badge">IA</span></a>
+        <a class="nav-item" onclick="showPage('oraculo')"><span class="nav-icon">🔮</span> Oráculo dos Sonhos<span class="nav-badge">IA</span></a>
+        <a class="nav-item" onclick="showPage('maia')"><span class="nav-icon">🌙</span> Calendário Maia<span class="nav-badge">IA</span></a>
         <p class="nav-section-title">Conteúdo</p>
-        <a class="nav-item" onclick="showPage('cursos')">
-          <span class="nav-icon">🎓</span> Cursos
-          <span class="nav-soon">Em breve</span>
-        </a>
-        <a class="nav-item" onclick="showPage('materiais')">
-          <span class="nav-icon">🗺️</span> Mapa do Momento Presente
-        </a>
+        <a class="nav-item" onclick="showPage('cursos')"><span class="nav-icon">🎓</span> Cursos<span class="nav-soon">Em breve</span></a>
+        <a class="nav-item" onclick="showPage('materiais')"><span class="nav-icon">🗺️</span> Mapa do Momento Presente</a>
+        <p class="nav-section-title">Ferramentas</p>
+        <a class="nav-item" onclick="showPage('prosperidade')"><span class="nav-icon">💰</span> Prosperidade Sistémica<span class="nav-badge">IA</span></a>
         <p class="nav-section-title">Suporte</p>
-        <a class="nav-item" href="https://vivalivreterapia.com/#agendamento" target="_blank">
-          <span class="nav-icon">📅</span> Agendar Sessão
-        </a>
-        <a class="nav-item" href="https://wa.me/351962250741" target="_blank">
-          <span class="nav-icon">💬</span> WhatsApp
-        </a>
-      </a>
+        <a class="nav-item" href="https://vivalivreterapia.com/#agendamento" target="_blank"><span class="nav-icon">📅</span> Agendar Sessão</a>
+        <a class="nav-item" href="https://wa.me/351962250741" target="_blank"><span class="nav-icon">💬</span> WhatsApp</a>
+        <div id="adminMenu" style="display:none;">
+          <p class="nav-section-title">Admin</p>
+          <a class="nav-item" onclick="showPage('socio')"><span class="nav-icon">🚀</span> Sócio Estratégico</a>
         </div>
-        <p class="nav-section-title">Ferramentas</p>
-        <a class="nav-item" onclick="showPage('prosperidade')">
-          <a class="nav-item" onclick="showPage('socio')" style="color:rgba(253,250,246,0.85)!important;">
-            <span class="nav-icon">🚀</span> Sócio Estratégico
-          </a>
-        <p class="nav-section-title">Ferramentas</p>
-        <a class="nav-item" onclick="showPage('prosperidade')">
-          <span class="nav-icon">💰</span> Prosperidade Sistémica
-          <span class="nav-badge">IA</span>
-        </a>
-  
       </nav>
       <div class="sidebar-footer">
         <button class="logout-btn" onclick="doLogout()">↩ Sair da conta</button>
       </div>
     </aside>
-
-    <!-- MAIN -->
     <main class="main">
       <div class="topbar">
         <div class="topbar-title" id="topbarTitle">Início</div>
@@ -622,7 +251,6 @@
           <button class="topbar-mavc" onclick="showPage('mentora')">🌿 Falar com a Mentora</button>
         </div>
       </div>
-
       <!-- DASHBOARD -->
       <div class="page-content active" id="page-dashboard">
         <div class="welcome-hero">
@@ -630,667 +258,247 @@
           <p>Este é o seu espaço de transformação e autoconhecimento. Explore os conteúdos, converse com a Mentora MAVC e agende as suas sessões com a Mônica.</p>
         </div>
         <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon">🎓</div>
-            <div class="stat-value">4</div>
-            <div class="stat-label">Cursos disponíveis em breve</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">📄</div>
-            <div class="stat-value">6</div>
-            <div class="stat-label">Materiais a caminho</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">🌿</div>
-            <div class="stat-value">24/7</div>
-            <div class="stat-label">Mentora MAVC disponível</div>
-          </div>
+          <div class="stat-card"><div class="stat-icon">🎓</div><div class="stat-value">10</div><div class="stat-label">Cursos em preparação</div></div>
+          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value">IA</div><div class="stat-label">Prosperidade Sistémica</div></div>
+          <div class="stat-card"><div class="stat-icon">🌿</div><div class="stat-value">24/7</div><div class="stat-label">Mentora MAVC disponível</div></div>
         </div>
         <div class="grid-2">
           <div class="card">
-            <div class="card-header">
-              <span class="card-title">Próxima Sessão</span>
-              <span class="card-badge">Agendamento</span>
-            </div>
+            <div class="card-header"><span class="card-title">Próxima Sessão</span><span class="card-badge">Agendamento</span></div>
             <div class="card-body">
-              <div class="session-item">
-                <div class="session-icon">📅</div>
-                <div class="session-info">
-                  <div class="session-title">Sessão com Mônica</div>
-                  <div class="session-time">Agende a sua próxima consulta</div>
-                </div>
-                <button class="session-btn" onclick="window.open('https://vivalivreterapia.com/#agendamento')">Agendar</button>
-              </div>
-              <div class="session-item">
-                <div class="session-icon">💬</div>
-                <div class="session-info">
-                  <div class="session-title">Conversar com a Mentora</div>
-                  <div class="session-time">Disponível agora · Resposta imediata</div>
-                </div>
-                <button class="session-btn" onclick="showPage('mentora')">Abrir</button>
-              </div>
+              <div class="session-item"><div class="session-icon">📅</div><div class="session-info"><div class="session-title">Sessão com Mônica</div><div class="session-time">Agende a sua próxima consulta</div></div><button class="session-btn" onclick="window.open('https://vivalivreterapia.com/#agendamento')">Agendar</button></div>
+              <div class="session-item"><div class="session-icon">💬</div><div class="session-info"><div class="session-title">Conversar com a Mentora</div><div class="session-time">Disponível agora · Resposta imediata</div></div><button class="session-btn" onclick="showPage('mentora')">Abrir</button></div>
             </div>
           </div>
           <div class="card">
-            <div class="card-header">
-              <span class="card-title">Em Destaque</span>
-              <span class="card-badge">Novidades</span>
-            </div>
+            <div class="card-header"><span class="card-title">Em Destaque</span><span class="card-badge">Novidades</span></div>
             <div class="card-body">
-              <div class="session-item">
-                <div class="session-icon">🌳</div>
-                <div class="session-info">
-                  <div class="session-title">Curso de Constelação Familiar</div>
-                  <div class="session-time">Em gravação · Disponível em breve</div>
-                </div>
-              </div>
-              <div class="session-item">
-                <div class="session-icon">💚</div>
-                <div class="session-info">
-                  <div class="session-title">Inteligência Emocional</div>
-                  <div class="session-time">Em gravação · Disponível em breve</div>
-                </div>
-              </div>
+              <div class="session-item"><div class="session-icon">💰</div><div class="session-info"><div class="session-title">Prosperidade Sistémica</div><div class="session-time">Nova IA · Descubra padrões financeiros</div></div><button class="session-btn" onclick="showPage('prosperidade')">Abrir</button></div>
+              <div class="session-item"><div class="session-icon">🌳</div><div class="session-info"><div class="session-title">10 Cursos em preparação</div><div class="session-time">Em gravação · Disponível em breve</div></div></div>
             </div>
           </div>
         </div>
       </div>
-
       <!-- CURSOS -->
       <div class="page-content" id="page-cursos">
         <div class="section-header">
           <h3>A nossa <em>Jornada</em> de Cursos</h3>
-          <p>Uma escola online de desenvolvimento humano — cada curso leva naturalmente ao próximo. Desbloqueie o seu próximo nível! 🔒</p>
+          <p>Uma escola online de desenvolvimento humano — cada curso leva naturalmente ao próximo. 🔒</p>
         </div>
         <div class="cursos-grid">
-          <div class="curso-card">
-            <div class="curso-thumb sage">❤️<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 1 · Terapia Sistémica</div>
-              <div class="curso-title">Ordens do Amor</div>
-              <div class="curso-desc">Descubra as leis que regem os sistemas familiares e como elas influenciam os seus relacionamentos, escolhas e padrões de vida.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
-          <div class="curso-card">
-            <div class="curso-thumb terra">💑<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 2 · Relacionamentos</div>
-              <div class="curso-title">Relacionamentos Sistémicos</div>
-              <div class="curso-desc">Entenda os padrões invisíveis que sabotam as suas relações e aprenda a construir vínculos mais saudáveis e conscientes.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
-          <div class="curso-card">
-            <div class="curso-thumb dark">🧒<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 3 · Desenvolvimento Pessoal</div>
-              <div class="curso-title">Criança Interior</div>
-              <div class="curso-desc">Reconecte-se com a sua criança interior, cure feridas do passado e liberte-se de padrões que ainda te limitam hoje.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
-          <div class="curso-card">
-            <div class="curso-thumb light">⭐<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 4 · Autoconhecimento</div>
-              <div class="curso-title">Autoestima Sistémica</div>
-              <div class="curso-desc">Construa uma autoestima sólida enraizada no seu sistema familiar — não em padrões externos de comparação e validação.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
-          <div class="curso-card">
-            <div class="curso-thumb sage">🧠<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 5 · Bem-estar</div>
-              <div class="curso-title">Ansiedade na Visão Sistémica</div>
-              <div class="curso-desc">Compreenda as raízes sistémicas da ansiedade e aprenda ferramentas práticas para viver com mais paz e equilíbrio.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
-          <div class="curso-card">
-            <div class="curso-thumb terra">💰<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 6 · Prosperidade</div>
-              <div class="curso-title">Prosperidade e Dinheiro</div>
-              <div class="curso-desc">Descubra os bloqueios sistémicos que limitam a sua prosperidade e abra-se para receber abundância com consciência.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
-          <div class="curso-card">
-            <div class="curso-thumb dark">👨‍👩‍👧<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 7 · Família</div>
-              <div class="curso-title">Pais e Filhos</div>
-              <div class="curso-desc">Entenda a dinâmica sistémica entre pais e filhos e aprenda a construir vínculos mais saudáveis e conscientes com a sua família.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
-          <div class="curso-card">
-            <div class="curso-thumb light">🕊️<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 8 · Cura</div>
-              <div class="curso-title">Luto e Perdas</div>
-              <div class="curso-desc">Um percurso gentil para honrar o que foi, curar as feridas do luto e encontrar paz e aceitação nas despedidas da vida.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
-          <div class="curso-card">
-            <div class="curso-thumb sage">🌟<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 9 · Propósito</div>
-              <div class="curso-title">Propósito de Vida</div>
-              <div class="curso-desc">Descubra o seu propósito de vida através da lente sistémica e encontre o caminho que ressoa com a sua essência mais profunda.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
-          <div class="curso-card">
-            <div class="curso-thumb terra">🌳<span class="curso-em-breve">Em breve</span></div>
-            <div class="curso-info">
-              <div class="curso-tag">Curso 10 · Constelação</div>
-              <div class="curso-title">Constelação Familiar na Prática</div>
-              <div class="curso-desc">O curso mais completo da jornada — aprenda a aplicar a Constelação Familiar na sua vida e transforme padrões de gerações.</div>
-              <div class="curso-meta">
-                <span class="curso-lessons">🔒 Em gravação</span>
-                <button class="curso-btn disabled">Em breve</button>
-              </div>
-            </div>
-          </div>
+          <div class="curso-card"><div class="curso-thumb sage">❤️<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 1 · Terapia Sistémica</div><div class="curso-title">Ordens do Amor</div><div class="curso-desc">Descubra as leis que regem os sistemas familiares e como elas influenciam os seus relacionamentos, escolhas e padrões de vida.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
+          <div class="curso-card"><div class="curso-thumb terra">💑<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 2 · Relacionamentos</div><div class="curso-title">Relacionamentos Sistémicos</div><div class="curso-desc">Entenda os padrões invisíveis que sabotam as suas relações e aprenda a construir vínculos mais saudáveis.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
+          <div class="curso-card"><div class="curso-thumb dark">🧒<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 3 · Desenvolvimento Pessoal</div><div class="curso-title">Criança Interior</div><div class="curso-desc">Reconecte-se com a sua criança interior, cure feridas do passado e liberte-se de padrões limitantes.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
+          <div class="curso-card"><div class="curso-thumb light">⭐<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 4 · Autoconhecimento</div><div class="curso-title">Autoestima Sistémica</div><div class="curso-desc">Construa uma autoestima sólida enraizada no seu sistema familiar.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
+          <div class="curso-card"><div class="curso-thumb sage">🧠<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 5 · Bem-estar</div><div class="curso-title">Ansiedade na Visão Sistémica</div><div class="curso-desc">Compreenda as raízes sistémicas da ansiedade e aprenda ferramentas práticas.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
+          <div class="curso-card"><div class="curso-thumb terra">💰<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 6 · Prosperidade</div><div class="curso-title">Prosperidade e Dinheiro</div><div class="curso-desc">Descubra os bloqueios sistémicos que limitam a sua prosperidade.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
+          <div class="curso-card"><div class="curso-thumb dark">👨‍👩‍👧<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 7 · Família</div><div class="curso-title">Pais e Filhos</div><div class="curso-desc">Entenda a dinâmica sistémica entre pais e filhos.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
+          <div class="curso-card"><div class="curso-thumb light">🕊️<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 8 · Cura</div><div class="curso-title">Luto e Perdas</div><div class="curso-desc">Um percurso gentil para honrar o que foi e encontrar paz.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
+          <div class="curso-card"><div class="curso-thumb sage">🌟<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 9 · Propósito</div><div class="curso-title">Propósito de Vida</div><div class="curso-desc">Descubra o seu propósito através da lente sistémica.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
+          <div class="curso-card"><div class="curso-thumb terra">🌳<span class="curso-em-breve">Em breve</span></div><div class="curso-info"><div class="curso-tag">Curso 10 · Constelação</div><div class="curso-title">Constelação Familiar na Prática</div><div class="curso-desc">O curso mais completo da jornada.</div><div class="curso-meta"><span class="curso-lessons">🔒 Em gravação</span><button class="curso-btn disabled">Em breve</button></div></div></div>
         </div>
       </div>
-
-      <!-- MATERIAIS / TEIA -->
+      <!-- MAPA -->
       <div class="page-content" id="page-materiais">
         <div class="section-header">
           <h3>Mapa do <em>Momento Presente</em></h3>
-          <p>Exercício de autoconhecimento sistémico. Olha para o teu momento com honestidade e presença.</p>
+          <p>Exercício de autoconhecimento sistémico.</p>
         </div>
         <style>
-          .teia-wrap { max-width: 720px; margin: 0 auto; }
-          .teia-card {
-            background: var(--white); border-radius: 1.5rem;
-            border: 1px solid var(--sand); padding: 2rem;
-            margin-bottom: 1.2rem; transition: box-shadow .3s;
-          }
-          .teia-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
-          .teia-num {
-            font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-            color: var(--sage-dk); margin-bottom: 0.4rem;
-          }
-          .teia-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem; font-weight: 400; margin-bottom: 0.3rem;
-          }
-          .teia-desc { font-size: 0.8rem; color: var(--text-lt); margin-bottom: 1rem; font-weight: 300; }
-          .teia-field {
-            width: 100%; padding: 0.8rem 1rem;
-            background: var(--cream); border: 1.5px solid transparent;
-            border-radius: 0.8rem; font-family: 'Jost', sans-serif;
-            font-size: 0.88rem; color: var(--text); resize: vertical;
-            min-height: 72px; outline: none; transition: border-color .3s, box-shadow .3s;
-            margin-bottom: 0.8rem; line-height: 1.6;
-          }
-          .teia-field:focus { border-color: var(--sage); box-shadow: 0 0 0 3px rgba(122,158,126,0.12); }
-          .teia-field::placeholder { color: var(--text-lt); opacity: 0.6; }
-          .teia-field-sm { min-height: 52px; }
-          .teia-final {
-            background: linear-gradient(135deg, var(--text), #3d3028);
-            border-radius: 1.5rem; padding: 2rem; text-align: center;
-            color: var(--white); margin-bottom: 1.2rem; position: relative; overflow: hidden;
-          }
-          .teia-final::before { content:'✾'; position:absolute; right:1.5rem; top:50%; transform:translateY(-50%); font-size:5rem; opacity:0.06; }
-          .teia-final p { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:300; font-style:italic; line-height:1.5; }
-          .teia-final strong { color:var(--sage-lt); }
-          .teia-actions { display:flex; gap:1rem; justify-content:center; margin-top:1.5rem; flex-wrap:wrap; }
-          .teia-btn {
-            padding:0.8rem 2rem; border-radius:3rem; font-family:'Jost',sans-serif;
-            font-size:0.82rem; font-weight:500; letter-spacing:0.08em; cursor:pointer; transition:all .3s; border:none;
-          }
-          .teia-btn.primary { background:linear-gradient(135deg,#3d6140,var(--sage-dk)); color:white; box-shadow:0 6px 20px rgba(79,122,82,0.3); }
-          .teia-btn.primary:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(79,122,82,0.4); }
-          .teia-btn.secondary { background:none; border:1.5px solid var(--sand); color:var(--text-lt); }
-          .teia-btn.secondary:hover { border-color:var(--sage); color:var(--sage-dk); }
-          .teia-success { display:none; background:rgba(79,122,82,0.08); border:1px solid var(--sage-lt); border-radius:1rem; padding:1rem 1.5rem; text-align:center; margin-top:1rem; font-size:0.85rem; color:var(--sage-dk); }
+          .teia-wrap{max-width:720px;margin:0 auto}.teia-card{background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;margin-bottom:1.2rem}.teia-num{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage-dk);margin-bottom:0.4rem}.teia-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;margin-bottom:0.3rem}.teia-desc{font-size:0.8rem;color:var(--text-lt);margin-bottom:1rem;font-weight:300}.teia-field{width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);resize:vertical;min-height:72px;outline:none;transition:border-color .3s;margin-bottom:0.8rem;line-height:1.6}.teia-field:focus{border-color:var(--sage)}.teia-field-sm{min-height:52px}.teia-final{background:linear-gradient(135deg,var(--text),#3d3028);border-radius:1.5rem;padding:2rem;text-align:center;color:var(--white);margin-bottom:1.2rem}.teia-final p{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;font-style:italic;line-height:1.5}.teia-final strong{color:var(--sage-lt)}.teia-actions{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap}.teia-btn{padding:0.8rem 2rem;border-radius:3rem;font-family:'Jost',sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer;transition:all .3s;border:none}.teia-btn.primary{background:linear-gradient(135deg,#3d6140,var(--sage-dk));color:white;box-shadow:0 6px 20px rgba(79,122,82,0.3)}.teia-btn.secondary{background:none;border:1.5px solid var(--sand);color:var(--text-lt)}.teia-success{display:none;background:rgba(79,122,82,0.08);border:1px solid var(--sage-lt);border-radius:1rem;padding:1rem 1.5rem;text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--sage-dk)}
         </style>
         <div class="teia-wrap">
-
-          <div class="teia-card">
-            <div class="teia-num">1 · O Momento</div>
-            <div class="teia-title">Onde estou agora?</div>
-            <div class="teia-desc">O que está acontecendo na tua vida neste momento? O que chama a tua atenção?</div>
-            <textarea class="teia-field" id="t1" placeholder="Neste momento da minha vida, o que está presente é..."></textarea>
-          </div>
-
-          <div class="teia-card">
-            <div class="teia-num">2 · O Sistema</div>
-            <div class="teia-title">O que eu e meu sistema familiar temos a ver com isso?</div>
-            <div class="teia-desc">Como a tua história familiar pode estar influenciando este momento?</div>
-            <textarea class="teia-field" id="t2" placeholder="Na minha família de origem, este tema aparecia como..."></textarea>
-          </div>
-
-          <div class="teia-card">
-            <div class="teia-num">3 · Os Fios</div>
-            <div class="teia-title">Quem e o quê está conectado a isto?</div>
-            <div class="teia-desc">Observe as pessoas, emoções e padrões que aparecem neste momento.</div>
-            <textarea class="teia-field teia-field-sm" id="t3a" placeholder="As pessoas que fazem parte deste momento são..."></textarea>
-            <textarea class="teia-field teia-field-sm" id="t3b" placeholder="As emoções que sinto quando penso nisto são..."></textarea>
-            <textarea class="teia-field teia-field-sm" id="t3c" placeholder="Este padrão já se repetiu antes quando..."></textarea>
-          </div>
-
-          <div class="teia-card">
-            <div class="teia-num">4 · A Lealdade</div>
-            <div class="teia-title">A quem ou ao quê estou sendo leal?</div>
-            <div class="teia-desc">Na terapia sistémica, muitas vezes repetimos padrões por lealdade inconsciente ao nosso sistema.</div>
-            <textarea class="teia-field" id="t4" placeholder="Ao manter esta situação, talvez esteja sendo leal a..."></textarea>
-          </div>
-
-          <div class="teia-card">
-            <div class="teia-num">5 · A Permissão</div>
-            <div class="teia-title">Tens permissão para mudar?</div>
-            <div class="teia-desc">Às vezes precisamos de nos dar permissão para viver de forma diferente dos nossos ancestrais.</div>
-            <textarea class="teia-field teia-field-sm" id="t5a" placeholder="Escreva aqui as coisas que você quer obter ou realizar..."></textarea>
-            <textarea class="teia-field teia-field-sm" id="t5b" placeholder="Para mudar, precisaria deixar de ser leal a..."></textarea>
-          </div>
-
-          <div class="teia-card">
-            <div class="teia-num">6 · O que está oculto</div>
-            <div class="teia-title">O que ainda não estás a ver claramente?</div>
-            <div class="teia-desc">Com olhos suaves e sem julgamento, o que pode estar escondido neste momento?</div>
-            <textarea class="teia-field" id="t6" placeholder="O que ainda não estou vendo com clareza é..."></textarea>
-          </div>
-
-          <div class="teia-card">
-            <div class="teia-num">7 · O Próximo Passo</div>
-            <div class="teia-title">Qual é o teu próximo passo consciente?</div>
-            <div class="teia-desc">Um pequeno movimento feito com consciência vale mais do que grandes planos. O que farás hoje?</div>
-            <textarea class="teia-field" id="t7" placeholder="O passo consciente que escolho dar hoje é..."></textarea>
-          </div>
-
-          <div class="teia-card">
-            <div class="teia-num">8 · O Reflexo</div>
-            <div class="teia-title">O que mudou depois de agires?</div>
-            <div class="teia-desc">Preenche este campo depois de dar o teu passo consciente. O que observaste?</div>
-            <textarea class="teia-field" id="t8" placeholder="Depois de dar o meu passo consciente, percebi que..."></textarea>
-          </div>
-
-          <div class="teia-final">
-            <p>"Estou presente no meu momento.<br/><strong>Eu escolho caminhar com consciência.</strong>"</p>
-          </div>
-
+          <div class="teia-card"><div class="teia-num">1 · O Momento</div><div class="teia-title">Onde estou agora?</div><div class="teia-desc">O que está acontecendo na tua vida neste momento?</div><textarea class="teia-field" id="t1" placeholder="Neste momento da minha vida, o que está presente é..."></textarea></div>
+          <div class="teia-card"><div class="teia-num">2 · O Sistema</div><div class="teia-title">O que eu e meu sistema familiar temos a ver com isso?</div><div class="teia-desc">Como a tua história familiar pode estar influenciando este momento?</div><textarea class="teia-field" id="t2" placeholder="Na minha família de origem, este tema aparecia como..."></textarea></div>
+          <div class="teia-card"><div class="teia-num">3 · Os Fios</div><div class="teia-title">Quem e o quê está conectado a isto?</div><div class="teia-desc">Observe as pessoas, emoções e padrões que aparecem neste momento.</div><textarea class="teia-field teia-field-sm" id="t3a" placeholder="As pessoas que fazem parte deste momento são..."></textarea><textarea class="teia-field teia-field-sm" id="t3b" placeholder="As emoções que sinto quando penso nisto são..."></textarea><textarea class="teia-field teia-field-sm" id="t3c" placeholder="Este padrão já se repetiu antes quando..."></textarea></div>
+          <div class="teia-card"><div class="teia-num">4 · A Lealdade</div><div class="teia-title">A quem ou ao quê estou sendo leal?</div><div class="teia-desc">Na terapia sistémica, muitas vezes repetimos padrões por lealdade inconsciente.</div><textarea class="teia-field" id="t4" placeholder="Ao manter esta situação, talvez esteja sendo leal a..."></textarea></div>
+          <div class="teia-card"><div class="teia-num">5 · A Permissão</div><div class="teia-title">Tens permissão para mudar?</div><div class="teia-desc">Às vezes precisamos de nos dar permissão para viver de forma diferente dos nossos ancestrais.</div><textarea class="teia-field teia-field-sm" id="t5a" placeholder="Escreva aqui as coisas que você quer obter ou realizar..."></textarea><textarea class="teia-field teia-field-sm" id="t5b" placeholder="Para mudar, precisaria deixar de ser leal a..."></textarea></div>
+          <div class="teia-card"><div class="teia-num">6 · O que está oculto</div><div class="teia-title">O que ainda não estás a ver claramente?</div><div class="teia-desc">Com olhos suaves e sem julgamento.</div><textarea class="teia-field" id="t6" placeholder="O que ainda não estou vendo com clareza é..."></textarea></div>
+          <div class="teia-card"><div class="teia-num">7 · O Próximo Passo</div><div class="teia-title">Qual é o teu próximo passo consciente?</div><div class="teia-desc">Um pequeno movimento feito com consciência vale mais do que grandes planos.</div><textarea class="teia-field" id="t7" placeholder="O passo consciente que escolho dar hoje é..."></textarea></div>
+          <div class="teia-card"><div class="teia-num">8 · O Reflexo</div><div class="teia-title">O que mudou depois de agires?</div><div class="teia-desc">Preenche este campo depois de dar o teu passo consciente.</div><textarea class="teia-field" id="t8" placeholder="Depois de dar o meu passo consciente, percebi que..."></textarea></div>
+          <div class="teia-final"><p>"Estou presente no meu momento.<br/><strong>Eu escolho caminhar com consciência.</strong>"</p></div>
           <div class="teia-actions">
             <button class="teia-btn primary" onclick="saveTeia()">✾ Guardar o meu exercício</button>
-            <button class="teia-btn primary" onclick="getDiagnostico()" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);box-shadow:0 6px 20px rgba(46,40,32,0.3);">🌿 Ver o meu diagnóstico</button>
-            <button class="teia-btn secondary" onclick="printTeia()">🖨️ Imprimir / PDF</button>
+            <button class="teia-btn primary" onclick="getDiagnostico()" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);">🌿 Ver o meu diagnóstico</button>
+            <button class="teia-btn secondary" onclick="printTeia()">🖨️ Imprimir</button>
             <button class="teia-btn secondary" onclick="clearTeia()">↺ Novo exercício</button>
           </div>
           <div class="teia-success" id="teiaSuccess">✅ Exercício guardado! Continue a sua jornada. 🌿</div>
-
-          <!-- DIAGNÓSTICO -->
-          <div id="diagnosticoBox" style="display:none; margin-top:1.5rem;">
-            <div style="background:linear-gradient(135deg,#2E2820,#3d3028); border-radius:1.5rem; padding:2rem; color:white; position:relative; overflow:hidden;">
-              <div style="position:absolute;top:-20px;right:-20px;font-size:8rem;opacity:0.05;line-height:1;">🔮</div>
+          <div id="diagnosticoBox" style="display:none;margin-top:1.5rem;">
+            <div style="background:linear-gradient(135deg,#2E2820,#3d3028);border-radius:1.5rem;padding:2rem;color:white;position:relative;overflow:hidden;">
               <div style="font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(181,204,182,0.7);margin-bottom:0.8rem;">Diagnóstico Sistémico</div>
               <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;margin-bottom:1.2rem;color:white;">O que o teu Mapa revela</h3>
-              <div id="diagnosticoLoading" style="display:flex;gap:4px;margin-bottom:1rem;">
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--sage-lt);animation:bounce .8s infinite;"></div>
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--sage-lt);animation:bounce .8s .15s infinite;"></div>
-                <div style="width:8px;height:8px;border-radius:50%;background:var(--sage-lt);animation:bounce .8s .3s infinite;"></div>
-              </div>
+              <div id="diagnosticoLoading" style="display:flex;gap:4px;margin-bottom:1rem;"><div style="width:8px;height:8px;border-radius:50%;background:var(--sage-lt);animation:bounce .8s infinite;"></div><div style="width:8px;height:8px;border-radius:50%;background:var(--sage-lt);animation:bounce .8s .15s infinite;"></div><div style="width:8px;height:8px;border-radius:50%;background:var(--sage-lt);animation:bounce .8s .3s infinite;"></div></div>
               <div id="diagnosticoTexto" style="font-size:0.9rem;line-height:1.8;color:rgba(253,250,246,0.85);display:none;"></div>
-              <div id="diagnosticoAcao" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(253,250,246,0.1);">
-                <button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="background:var(--sage-dk);color:white;border:none;border-radius:2rem;padding:0.7rem 1.8rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;transition:all .3s;">📅 Aprofundar com a Mônica</button>
-              </div>
+              <div id="diagnosticoAcao" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(253,250,246,0.1);"><button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="background:var(--sage-dk);color:white;border:none;border-radius:2rem;padding:0.7rem 1.8rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;">📅 Aprofundar com a Mônica</button></div>
             </div>
           </div>
         </div>
       </div>
-
       <!-- MENTORA -->
       <div class="page-content" id="page-mentora">
         <div class="mentora-layout">
           <div class="chat-area">
-            <div class="chat-header">
-              <div class="chat-avatar">🌿</div>
-              <div class="chat-header-info">
-                <h4>Mentora MAVC</h4>
-                <p>Assistente virtual da Mônica Alice Voelz</p>
-              </div>
-              <span class="chat-online">Online agora</span>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-              <div class="cmsg assistant">
-                <div class="cmsg-av">🌿</div>
-                <div class="cmsg-bubble">Olá! Sou a Mentora MAVC 🌿 Estou aqui para te acompanhar entre as sessões com a Mônica. Posso ajudar com bem-estar emocional, esclarecer dúvidas sobre terapia sistémica, Constelação Familiar, e propor exercícios práticos. Como posso ajudar-te hoje?</div>
-              </div>
-            </div>
+            <div class="chat-header"><div class="chat-avatar">🌿</div><div class="chat-header-info"><h4>Mentora MAVC</h4><p>Assistente virtual da Mônica Alice Voelz</p></div><span class="chat-online">Online agora</span></div>
+            <div class="chat-messages" id="chatMessages"><div class="cmsg assistant"><div class="cmsg-av">🌿</div><div class="cmsg-bubble">Olá! Sou a Mentora MAVC 🌿 Estou aqui para te acompanhar entre as sessões com a Mônica. Como posso ajudar-te hoje?</div></div></div>
             <div class="chat-suggestions" id="chatSugg">
-              <button class="sugg-btn" onclick="sendSugg('Como posso trabalhar a ansiedade hoje?')">Trabalhar a ansiedade</button>
+              <button class="sugg-btn" onclick="sendSugg('Como posso trabalhar a ansiedade hoje?')">Ansiedade</button>
               <button class="sugg-btn" onclick="sendSugg('O que é a Constelação Familiar?')">Constelação Familiar</button>
-              <button class="sugg-btn" onclick="sendSugg('Preciso de um exercício de mindset')">Exercício prático</button>
+              <button class="sugg-btn" onclick="sendSugg('Preciso de um exercício prático')">Exercício prático</button>
               <button class="sugg-btn" onclick="sendSugg('Estou me sentindo sobrecarregada')">Sobrecarregada</button>
             </div>
             <div class="chat-input-area">
               <textarea class="chat-textarea" id="chatInput" placeholder="Escreve a tua mensagem..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-              <button class="chat-send" id="sendBtn" onclick="sendMessage()">
-                <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
-              </button>
+              <button class="chat-send" id="sendBtn" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
             </div>
           </div>
           <div class="mentora-sidebar">
-            <div class="msidebar-card">
-              <h4>Tópicos sugeridos</h4>
+            <div class="msidebar-card"><h4>Tópicos sugeridos</h4>
               <button class="topic-btn" onclick="sendSugg('Quero entender os padrões que se repetem na minha vida')">🔄 Padrões que se repetem</button>
-              <button class="topic-btn" onclick="sendSugg('Como trabalhar o luto de alguém que perdeu?')">🕊️ Lidar com o luto</button>
-              <button class="topic-btn" onclick="sendSugg('Tenho dificuldade nos meus relacionamentos, o que faço?')">💙 Relacionamentos</button>
+              <button class="topic-btn" onclick="sendSugg('Como trabalhar o luto?')">🕊️ Lidar com o luto</button>
+              <button class="topic-btn" onclick="sendSugg('Tenho dificuldade nos meus relacionamentos')">💙 Relacionamentos</button>
               <button class="topic-btn" onclick="sendSugg('Quero um exercício para me reconectar comigo')">✨ Reconexão pessoal</button>
-              <button class="topic-btn" onclick="sendSugg('O que são as leis sistémicas?')">🌳 Leis sistémicas</button>
             </div>
-            <div class="msidebar-card">
-              <h4>Precisa de mais apoio?</h4>
-              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.6;margin-bottom:1rem;">A Mentora MAVC complementa mas não substitui a terapia. Agende uma sessão com a Mônica.</p>
-              <button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="width:100%;padding:0.7rem;background:var(--sage-dk);color:white;border:none;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;transition:all .3s;" onmouseover="this.style.background='#3d6140'" onmouseout="this.style.background='var(--sage-dk)'">📅 Agendar com a Mônica</button>
+            <div class="msidebar-card"><h4>Precisa de mais apoio?</h4><p style="font-size:0.8rem;color:var(--text-lt);line-height:1.6;margin-bottom:1rem;">A Mentora MAVC complementa mas não substitui a terapia.</p><button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="width:100%;padding:0.7rem;background:var(--sage-dk);color:white;border:none;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;">📅 Agendar com a Mônica</button></div>
+          </div>
+        </div>
+      </div>
+      <!-- ORÁCULO -->
+      <div class="page-content" id="page-oraculo">
+        <div class="mentora-layout">
+          <div class="chat-area">
+            <div class="chat-header"><div class="chat-avatar" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);">🔮</div><div class="chat-header-info"><h4>Oráculo dos Sonhos</h4><p>Interpretação simbólica e emocional dos seus sonhos</p></div><span class="chat-online" style="color:var(--terra-dk);">Disponível</span></div>
+            <div class="chat-messages" id="oraculoMessages"><div class="cmsg assistant"><div class="cmsg-av" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);">🔮</div><div class="cmsg-bubble">Bem-vinda ao <strong>Oráculo dos Sonhos</strong> ✨<br><br>Conta-me o teu sonho com o máximo de detalhes que recordares.</div></div></div>
+            <div class="chat-suggestions" id="oraculoSugg">
+              <button class="sugg-btn" onclick="sendOraculo('Tive um sonho com água')">🌊 Sonho com água</button>
+              <button class="sugg-btn" onclick="sendOraculo('Sonhei com alguém que já faleceu')">👤 Pessoa falecida</button>
+              <button class="sugg-btn" onclick="sendOraculo('Tive um pesadelo')">😰 Pesadelo</button>
+            </div>
+            <div class="chat-input-area">
+              <textarea class="chat-textarea" id="oraculoInput" placeholder="Descreve o teu sonho..." rows="1" onkeydown="handleOraculoKey(event)" oninput="autoResize(this)"></textarea>
+              <button class="chat-send" id="oraculoBtn" onclick="sendOraculoMsg()" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
+            </div>
+          </div>
+          <div class="mentora-sidebar">
+            <div class="msidebar-card"><h4>🌙 Como funciona</h4><p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;">O Oráculo analisa o teu sonho em múltiplas camadas: emoções, símbolos, arquétipos e narrativa.</p></div>
+            <div class="msidebar-card"><h4>🔮 Temas frequentes</h4>
+              <button class="topic-btn" onclick="sendOraculo('Sonhei com a minha casa de infância')">🏠 Casa de infância</button>
+              <button class="topic-btn" onclick="sendOraculo('Tive um sonho recorrente')">🔁 Sonho recorrente</button>
+              <button class="topic-btn" onclick="sendOraculo('Sonhei com o meu ex')">💔 Relação passada</button>
             </div>
           </div>
         </div>
       </div>
-
-
-
       <!-- CALENDÁRIO MAIA -->
       <div class="page-content" id="page-maia">
         <div class="mentora-layout">
           <div class="chat-area">
-            <div class="chat-header">
-              <div class="chat-avatar" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);">🌙</div>
-              <div class="chat-header-info">
-                <h4>Calendário Maia — Kin Solar</h4>
-                <p>Descubra o seu Kin Maia e veja as melhores datas para tomadas de decisões</p>
-              </div>
-              <span class="chat-online" style="color:#9B59B6;">Activo</span>
-            </div>
-
-            <!-- KIN CALCULATOR -->
+            <div class="chat-header"><div class="chat-avatar" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);">🌙</div><div class="chat-header-info"><h4>Calendário Maia — Kin Solar</h4><p>Descubra o seu Kin Maia e veja as melhores datas para decisões</p></div><span class="chat-online" style="color:#9B59B6;">Activo</span></div>
             <div id="maiaCalculator" style="padding:2rem;display:flex;flex-direction:column;gap:1.5rem;flex:1;overflow-y:auto;">
-              <div style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border-radius:1.5rem;padding:2rem;text-align:center;color:white;position:relative;overflow:hidden;">
-                <div style="position:absolute;top:-20px;right:-20px;font-size:8rem;opacity:0.06;">🌙</div>
+              <div style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border-radius:1.5rem;padding:2rem;text-align:center;color:white;">
                 <p style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(155,89,182,0.8);margin-bottom:0.8rem;">Tzolkin · 260 dias</p>
                 <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;margin-bottom:0.5rem;">Descubra o seu <em style="color:#C39BD3;font-style:italic;">Kin Maia</em> e as melhores datas para tomadas de decisões</h3>
-                <p style="font-size:0.85rem;opacity:0.7;line-height:1.7;max-width:400px;margin:0 auto;">O Calendário Maia Tzolkin revela a energia que governava o cosmos no dia do seu nascimento — o seu propósito, o seu desafio e o seu dom.</p>
+                <p style="font-size:0.85rem;opacity:0.7;line-height:1.7;max-width:400px;margin:0 auto;">O Calendário Maia Tzolkin revela a energia que governava o cosmos no dia do seu nascimento.</p>
               </div>
-
               <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;">
                 <label style="display:block;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.8rem;">Data de Nascimento</label>
                 <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-                  <input type="number" id="maiaDay" placeholder="Dia" min="1" max="31" style="flex:1;min-width:80px;padding:0.85rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" />
-                  <input type="number" id="maiaMonth" placeholder="Mês" min="1" max="12" style="flex:1;min-width:80px;padding:0.85rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" />
-                  <input type="number" id="maiaYear" placeholder="Ano" min="1900" max="2030" style="flex:2;min-width:120px;padding:0.85rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" />
+                  <input type="number" id="maiaDay" placeholder="Dia" min="1" max="31" style="flex:1;min-width:80px;padding:0.85rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" />
+                  <input type="number" id="maiaMonth" placeholder="Mês" min="1" max="12" style="flex:1;min-width:80px;padding:0.85rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" />
+                  <input type="number" id="maiaYear" placeholder="Ano" min="1900" max="2030" style="flex:2;min-width:120px;padding:0.85rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" />
                 </div>
-                <button onclick="calculateMaia()" style="width:100%;margin-top:1.2rem;padding:1rem;background:linear-gradient(135deg,#4a1a6e,#9B59B6);color:white;border:none;border-radius:3rem;font-family:'Jost',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.1em;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px rgba(155,89,182,0.3);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">🌙 Revelar o meu Kin Maia</button>
+                <button onclick="calculateMaia()" style="width:100%;margin-top:1.2rem;padding:1rem;background:linear-gradient(135deg,#4a1a6e,#9B59B6);color:white;border:none;border-radius:3rem;font-family:'Jost',sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;">🌙 Revelar o meu Kin Maia</button>
               </div>
-
-              <!-- RESULTADO -->
               <div id="maiaResult" style="display:none;"></div>
-
-              <!-- CHAT APÓS KIN -->
               <div id="maiaChat" style="display:none;">
                 <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);overflow:hidden;">
                   <div style="padding:1rem 1.5rem;border-bottom:1px solid var(--sand);font-size:0.82rem;color:var(--text-lt);">🌙 Aprofunde a sua energia maia com a IA</div>
                   <div id="maiaChatMessages" style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem;max-height:300px;overflow-y:auto;"></div>
                   <div style="padding:1rem 1.5rem;border-top:1px solid var(--sand);display:flex;gap:0.8rem;">
-                    <input type="text" id="maiaChatInput" placeholder="Pergunte sobre a sua energia maia..." style="flex:1;padding:0.75rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.85rem;color:var(--text);outline:none;" onfocus="this.style.borderColor='#9B59B6'" onblur="this.style.borderColor='transparent'" onkeydown="if(event.key==='Enter')sendMaiaChat()" />
-                    <button onclick="sendMaiaChat()" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#4a1a6e,#9B59B6);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
-                    </button>
+                    <input type="text" id="maiaChatInput" placeholder="Pergunte sobre a sua energia maia..." style="flex:1;padding:0.75rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.85rem;color:var(--text);outline:none;" onkeydown="if(event.key==='Enter')sendMaiaChat()" />
+                    <button onclick="sendMaiaChat()" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#4a1a6e,#9B59B6);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
           <div class="mentora-sidebar">
-            <div class="msidebar-card">
-              <h4>🌙 O que é o Kin?</h4>
-              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;">O <strong>Kin</strong> é a sua energia natal no Calendário Maia Tzolkin — uma combinação de um dos 20 <strong>Selos Solares</strong> com um dos 13 <strong>Tons Galácticos</strong>, formando 260 energias únicas.</p>
-            </div>
-            <div class="msidebar-card">
-              <h4>✨ Os 4 Elementos</h4>
-              <div style="display:flex;flex-direction:column;gap:0.5rem;">
-                <div style="background:var(--cream);border-radius:0.8rem;padding:0.7rem;font-size:0.78rem;display:flex;align-items:center;gap:0.5rem;"><span>🔴</span><div><strong>Vermelho</strong> — Iniciar</div></div>
-                <div style="background:var(--cream);border-radius:0.8rem;padding:0.7rem;font-size:0.78rem;display:flex;align-items:center;gap:0.5rem;"><span>⚪</span><div><strong>Branco</strong> — Refinar</div></div>
-                <div style="background:var(--cream);border-radius:0.8rem;padding:0.7rem;font-size:0.78rem;display:flex;align-items:center;gap:0.5rem;"><span>🔵</span><div><strong>Azul</strong> — Transformar</div></div>
-                <div style="background:var(--cream);border-radius:0.8rem;padding:0.7rem;font-size:0.78rem;display:flex;align-items:center;gap:0.5rem;"><span>🟡</span><div><strong>Amarelo</strong> — Amadurecer</div></div>
-              </div>
-            </div>
-            <div class="msidebar-card">
-              <h4>🌿 Conexão Sistémica</h4>
-              <p style="font-size:0.78rem;color:var(--text-lt);line-height:1.6;margin-bottom:1rem;">O Calendário Maia pode revelar padrões que complementam o seu processo terapêutico com a Mônica.</p>
-              <button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="width:100%;padding:0.7rem;background:var(--sage-dk);color:white;border:none;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;">📅 Sessão com a Mônica</button>
-            </div>
+            <div class="msidebar-card"><h4>🌙 O que é o Kin?</h4><p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;">O <strong>Kin</strong> é a sua energia natal no Calendário Maia Tzolkin — uma combinação de um dos 20 Selos Solares com um dos 13 Tons Galácticos.</p></div>
+            <div class="msidebar-card"><h4>🌿 Conexão Sistémica</h4><button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="width:100%;padding:0.7rem;background:var(--sage-dk);color:white;border:none;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;">📅 Sessão com a Mônica</button></div>
           </div>
         </div>
       </div>
-
-
       <!-- SÓCIO ESTRATÉGICO -->
       <div class="page-content" id="page-socio">
         <div class="mentora-layout">
           <div class="chat-area">
-            <div class="chat-header">
-              <div class="chat-avatar" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>
-              <div class="chat-header-info">
-                <h4>Sócio Estratégico</h4>
-                <p>Consultor de marketing, vendas e negócios digitais · Acesso exclusivo Admin</p>
-              </div>
-              <span class="chat-online" style="color:var(--dourado);">Online</span>
-            </div>
-            <div class="chat-messages" id="socioMessages">
-              <div class="cmsg assistant">
-                <div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>
-                <div class="cmsg-bubble">Olá! Sou o vosso Sócio Estratégico — uma equipa formada pelos maiores especialistas em marketing, copywriting, funis de vendas e negócios digitais, com conhecimento profundo em Psicologia Sistémica e Constelação Familiar.<br><br>O meu único objetivo é ajudar a <strong>Viva Livre Terapias</strong> a crescer e faturar mais. Pensamos sempre como donos, priorizamos lucro e buscamos soluções simples e escaláveis.<br><br>O que vamos construir hoje? 🔥</div>
-              </div>
-            </div>
+            <div class="chat-header"><div class="chat-avatar" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div><div class="chat-header-info"><h4>Sócio Estratégico</h4><p>Consultor de marketing, vendas e negócios digitais · Acesso exclusivo Admin</p></div><span class="chat-online" style="color:#B8923D;">Online</span></div>
+            <div class="chat-messages" id="socioMessages"><div class="cmsg assistant"><div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div><div class="cmsg-bubble">Olá! Sou o vosso Sócio Estratégico 🔥<br><br>O meu único objetivo é ajudar a <strong>Viva Livre Terapias</strong> a crescer e faturar mais. O que vamos construir hoje?</div></div></div>
             <div class="chat-suggestions" id="socioSugg">
-              <button class="sugg-btn" onclick="sendSocio('Cria uma estratégia completa para lançar o curso Ordens do Amor')">🎯 Lançar curso Ordens do Amor</button>
-              <button class="sugg-btn" onclick="sendSocio('Cria uma sequência de 5 emails para quem baixou o guia gratuito')">📧 Sequência de emails</button>
-              <button class="sugg-btn" onclick="sendSocio('Cria um script de Reels para divulgar a área de membros')">📱 Script para Reels</button>
-              <button class="sugg-btn" onclick="sendSocio('Como chegar a R$100.000 até dezembro? Cria um plano de ação')">💰 Plano para R$100k</button>
+              <button class="sugg-btn" onclick="sendSocio('Cria uma estratégia para lançar o curso Ordens do Amor')">🎯 Lançar curso</button>
+              <button class="sugg-btn" onclick="sendSocio('Como chegar a R$100.000 até dezembro?')">💰 Plano R$100k</button>
             </div>
             <div class="chat-input-area">
-              <textarea class="chat-textarea" id="socioInput" placeholder="Peça uma estratégia, copy, funil, script..." rows="1" onkeydown="handleSocioKey(event)" oninput="autoResize(this)"></textarea>
-              <button class="chat-send" id="socioBtn" onclick="sendSocioMsg()" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);box-shadow:0 4px 12px rgba(184,146,61,0.3);">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
-              </button>
+              <textarea class="chat-textarea" id="socioInput" placeholder="Peça uma estratégia, copy, funil..." rows="1" onkeydown="handleSocioKey(event)" oninput="autoResize(this)"></textarea>
+              <button class="chat-send" id="socioBtn" onclick="sendSocioMsg()" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);"><svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
             </div>
           </div>
           <div class="mentora-sidebar">
-            <div class="msidebar-card">
-              <h4>🚀 Como usar</h4>
-              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;margin-bottom:1rem;">Peça estratégias completas, copies prontas, funis de vendas, scripts para redes sociais, sequências de email e muito mais!</p>
-            </div>
-            <div class="msidebar-card">
-              <h4>💡 Exemplos de pedidos</h4>
-              <button class="topic-btn" onclick="sendSocio('Cria uma página de vendas completa para o curso Criança Interior')">📄 Página de vendas</button>
-              <button class="topic-btn" onclick="sendSocio('Cria 10 ideias de posts para Instagram sobre Constelação Familiar')">📱 Posts Instagram</button>
-              <button class="topic-btn" onclick="sendSocio('Cria uma oferta irresistível para o primeiro curso')">💰 Oferta irresistível</button>
-              <button class="topic-btn" onclick="sendSocio('Qual é o melhor funil para vender cursos de psicologia?')">🎯 Funil de vendas</button>
-              <button class="topic-btn" onclick="sendSocio('Cria um plano de conteúdo para 30 dias no Instagram')">📅 Plano de conteúdo</button>
+            <div class="msidebar-card"><h4>🚀 Como usar</h4><p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;">Peça estratégias completas, copies, funis de vendas, scripts para redes sociais e muito mais!</p></div>
+            <div class="msidebar-card"><h4>💡 Exemplos</h4>
+              <button class="topic-btn" onclick="sendSocio('Cria uma página de vendas para o curso Criança Interior')">📄 Página de vendas</button>
+              <button class="topic-btn" onclick="sendSocio('Cria 10 ideias de posts para Instagram')">📱 Posts Instagram</button>
+              <button class="topic-btn" onclick="sendSocio('Cria um plano de conteúdo para 30 dias')">📅 Plano de conteúdo</button>
             </div>
           </div>
         </div>
       </div>
-
-
-      <!-- PROSPERIDADE SISTÉMICA -->
+      <!-- PROSPERIDADE -->
       <div class="page-content" id="page-prosperidade">
         <div class="mentora-layout">
           <div class="chat-area">
-            <div class="chat-header">
-              <div class="chat-avatar" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>
-              <div class="chat-header-info">
-                <h4>Prosperidade Sistémica</h4>
-                <p>Descubra e transforme os seus padrões financeiros familiares</p>
-              </div>
-              <span class="chat-online" style="color:var(--dourado);">Online</span>
-            </div>
-            <div class="chat-messages" id="prospMessages">
-              <div class="cmsg assistant">
-                <div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>
-                <div class="cmsg-bubble">Olá! Sou a <strong>Prosperidade Sistémica</strong> 💰🌿<br><br>Estou aqui para te ajudar a compreender a sua relação com o dinheiro através da lente sistémica — porque muitos dos nossos padrões financeiros não são nossos, são heranças da nossa família.<br><br>Vamos explorar juntos o que o seu sistema familiar te ensinou sobre dinheiro, abundância e merecimento. Como posso ajudar-te hoje?</div>
-              </div>
-            </div>
+            <div class="chat-header"><div class="chat-avatar" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div><div class="chat-header-info"><h4>Prosperidade Sistémica</h4><p>Descubra e transforme os seus padrões financeiros familiares</p></div><span class="chat-online" style="color:#C9A96E;">Online</span></div>
+            <div class="chat-messages" id="prospMessages"><div class="cmsg assistant"><div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div><div class="cmsg-bubble">Olá! Sou a <strong>Prosperidade Sistémica</strong> 💰🌿<br><br>Estou aqui para te ajudar a compreender a sua relação com o dinheiro através da lente sistémica. Como posso ajudar-te hoje?</div></div></div>
             <div class="chat-suggestions" id="prospSugg">
               <button class="sugg-btn" onclick="sendProsp('O dinheiro nunca sobra na minha vida, o que pode ser?')">💸 Dinheiro nunca sobra</button>
-              <button class="sugg-btn" onclick="sendProsp('Tenho medo de ganhar muito dinheiro, por quê?')">😰 Medo de prosperar</button>
-              <button class="sugg-btn" onclick="sendProsp('Como era a relação com dinheiro na minha família de origem?')">🌳 Padrões familiares</button>
-              <button class="sugg-btn" onclick="sendProsp('Sinto que não mereço ter abundância')">💙 Não me sinto merecedora</button>
-              <button class="sugg-btn" onclick="sendProsp('Quero um exercício sistémico para melhorar minha relação com o dinheiro')">✨ Exercício prático</button>
+              <button class="sugg-btn" onclick="sendProsp('Tenho medo de ganhar muito dinheiro')">😰 Medo de prosperar</button>
+              <button class="sugg-btn" onclick="sendProsp('Como era a relação com dinheiro na minha família?')">🌳 Padrões familiares</button>
+              <button class="sugg-btn" onclick="sendProsp('Sinto que não mereço abundância')">💙 Merecimento</button>
             </div>
             <div class="chat-input-area">
               <textarea class="chat-textarea" id="prospInput" placeholder="Fale sobre a sua relação com o dinheiro..." rows="1" onkeydown="handleProspKey(event)" oninput="autoResize(this)"></textarea>
-              <button class="chat-send" id="prospBtn" onclick="sendProspMsg()" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);box-shadow:0 4px 12px rgba(201,169,110,0.3);">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
-              </button>
+              <button class="chat-send" id="prospBtn" onclick="sendProspMsg()" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);"><svg viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
             </div>
           </div>
           <div class="mentora-sidebar">
-            <div class="msidebar-card">
-              <h4>💰 Como funciona</h4>
-              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;margin-bottom:1rem;">A Prosperidade Sistémica explora a sua relação com o dinheiro através da terapia sistémica e Constelação Familiar — identificando padrões herdados e abrindo caminhos para a abundância.</p>
-            </div>
-            <div class="msidebar-card">
-              <h4>🌳 Temas frequentes</h4>
+            <div class="msidebar-card"><h4>💰 Como funciona</h4><p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;margin-bottom:1rem;">A Prosperidade Sistémica explora a sua relação com o dinheiro através da terapia sistémica — identificando padrões herdados e abrindo caminhos para a abundância.</p></div>
+            <div class="msidebar-card"><h4>🌳 Temas frequentes</h4>
               <button class="topic-btn" onclick="sendProsp('Sempre que ganho dinheiro, logo aparece algo para gastar tudo')">🔄 Dinheiro que some</button>
-              <button class="topic-btn" onclick="sendProsp('Na minha família sempre fomos pobres, isso me afeta?')">👨‍👩‍👧 Herança de escassez</button>
-              <button class="topic-btn" onclick="sendProsp('Tenho sabotado minhas oportunidades financeiras')">⚠️ Autossabotagem</button>
-              <button class="topic-btn" onclick="sendProsp('Quero abrir um negócio mas tenho muito medo')">🚀 Medo de empreender</button>
+              <button class="topic-btn" onclick="sendProsp('Na minha família sempre fomos pobres')">👨‍👩‍👧 Herança de escassez</button>
+              <button class="topic-btn" onclick="sendProsp('Tenho sabotado minhas oportunidades')">⚠️ Autossabotagem</button>
               <button class="topic-btn" onclick="sendProsp('Como honrar minha família e ainda assim prosperar?')">❤️ Honrar e prosperar</button>
             </div>
-            <div class="msidebar-card">
-              <h4>🌿 Quer ir mais fundo?</h4>
-              <p style="font-size:0.78rem;color:var(--text-lt);line-height:1.6;margin-bottom:1rem;">A Prosperidade Sistémica complementa mas não substitui o trabalho terapêutico. Agende uma sessão com a Mônica para aprofundar.</p>
-              <button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="width:100%;padding:0.7rem;background:linear-gradient(135deg,#7A5C2E,#C9A96E);color:white;border:none;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;">📅 Sessão com a Mônica</button>
-            </div>
+            <div class="msidebar-card"><h4>🌿 Quer ir mais fundo?</h4><button onclick="window.open('https://vivalivreterapia.com/#agendamento')" style="width:100%;padding:0.7rem;background:linear-gradient(135deg,#7A5C2E,#C9A96E);color:white;border:none;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;">📅 Sessão com a Mônica</button></div>
           </div>
         </div>
       </div>
-
-      <!-- ORÁCULO DOS SONHOS -->
-      <div class="page-content" id="page-oraculo">
-        <div class="mentora-layout">
-          <div class="chat-area">
-            <div class="chat-header">
-              <div class="chat-avatar" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);">🔮</div>
-              <div class="chat-header-info">
-                <h4>Oráculo dos Sonhos</h4>
-                <p>Interpretação simbólica e emocional dos seus sonhos</p>
-              </div>
-              <span class="chat-online" style="color:var(--terra-dk);">Disponível</span>
-            </div>
-            <div class="chat-messages" id="oraculoMessages">
-              <div class="cmsg assistant">
-                <div class="cmsg-av" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);">🔮</div>
-                <div class="cmsg-bubble">Bem-vinda ao <strong>Oráculo dos Sonhos</strong> ✨<br><br>Estou aqui para te ajudar a compreender os significados ocultos dos teus sonhos — através de uma interpretação profunda, simbólica e emocionalmente acolhedora.<br><br>Conta-me o teu sonho com o máximo de detalhes que recordares. Como começou? O que sentiste? Quem estava presente?</div>
-              </div>
-            </div>
-            <div class="chat-suggestions" id="oraculoSugg">
-              <button class="sugg-btn" onclick="sendOraculo('Tive um sonho com água e me senti muito tranquila')">🌊 Sonho com água</button>
-              <button class="sugg-btn" onclick="sendOraculo('Sonhei com alguém que já faleceu')">👤 Pessoa falecida</button>
-              <button class="sugg-btn" onclick="sendOraculo('Tive um pesadelo e acordei com medo')">😰 Pesadelo</button>
-              <button class="sugg-btn" onclick="sendOraculo('Sonhei que estava a voar e me sentia livre')">🕊️ Voar no sonho</button>
-            </div>
-            <div class="chat-input-area">
-              <textarea class="chat-textarea" id="oraculoInput" placeholder="Descreve o teu sonho..." rows="1" onkeydown="handleOraculoKey(event)" oninput="autoResize(this)"></textarea>
-              <button class="chat-send" id="oraculoBtn" onclick="sendOraculoMsg()" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);box-shadow:0 4px 12px rgba(46,40,32,0.3);">
-                <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
-              </button>
-            </div>
-          </div>
-          <div class="mentora-sidebar">
-            <div class="msidebar-card">
-              <h4>🌙 Como funciona</h4>
-              <p style="font-size:0.8rem;color:var(--text-lt);line-height:1.7;margin-bottom:1rem;">O Oráculo analisa o teu sonho em múltiplas camadas: emoções, símbolos, arquétipos e narrativa. Quanto mais detalhes deres, mais profunda será a interpretação.</p>
-              <div style="background:var(--cream);border-radius:1rem;padding:1rem;">
-                <p style="font-size:0.75rem;color:var(--text-lt);line-height:1.6;">
-                  ✨ Emoções sentidas no sonho<br>
-                  🔮 Símbolos e imagens<br>
-                  👥 Pessoas presentes<br>
-                  🌍 Lugares e cenários<br>
-                  🎭 Como o sonho terminou
-                </p>
-              </div>
-            </div>
-            <div class="msidebar-card">
-              <h4>🔮 Temas frequentes</h4>
-              <button class="topic-btn" onclick="sendOraculo('Sonhei com a minha casa de infância')">🏠 Casa de infância</button>
-              <button class="topic-btn" onclick="sendOraculo('Tive um sonho recorrente que se repete sempre')">🔁 Sonho recorrente</button>
-              <button class="topic-btn" onclick="sendOraculo('Sonhei com uma perseguição e senti muito medo')">😨 Perseguição</button>
-              <button class="topic-btn" onclick="sendOraculo('Sonhei com o meu ex ou uma relação passada')">💔 Relação passada</button>
-              <button class="topic-btn" onclick="sendOraculo('Sonhei que perdi os dentes')">😬 Perder os dentes</button>
-            </div>
-            <div class="msidebar-card">
-              <h4>⚠️ Importante</h4>
-              <p style="font-size:0.78rem;color:var(--text-lt);line-height:1.6;">As interpretações são possibilidades simbólicas e emocionais — não previsões do futuro nem diagnósticos. Para aprofundar, agende uma sessão com a Mônica.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </main>
   </div>
 </div>
-
 <script>
   const SUPABASE_URL = 'https://osedrmafpqwfbeaajkiz.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_dEyv8NdRi4pf6FDBMbCUFA_2FPVxUAA';
-  const SENHA = 'vivalivreterapias2025';
   const SENHA_ADMIN = 'admin2025viva';
   let currentMembro = null;
 
-  // Supabase helper
   async function sbFetch(path, method='GET', body=null) {
-    const opts = {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer': 'return=representation'
-      }
-    };
+    const opts = { method, headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'return=representation' } };
     if (body) opts.body = JSON.stringify(body);
     const res = await fetch(SUPABASE_URL + path, opts);
     if (res.status === 204) return null;
     return res.json();
   }
 
-  // Simple hash function
   async function hashSenha(senha) {
     const encoder = new TextEncoder();
     const data = encoder.encode(senha + 'vivalivresalt2025');
@@ -1306,73 +514,42 @@
     document.getElementById('tabRegisto').style.background = tab === 'registo' ? 'rgba(79,122,82,0.8)' : 'none';
     document.getElementById('tabRegisto').style.color = tab === 'registo' ? 'white' : 'rgba(255,255,255,0.5)';
   }
-  const API_KEY = ['sk-ant-api03-kEQ3kB37fnekzxzd-Ys9IUg6fp','wYTGMkwH3W6EpoMAdAdGzSg0RfPL3V4YaRG_voSnORSzy0GDs5fTuY1yaUzQ-g4tEDQAA'].join('');
-  const SYSTEM = `Você é a Mentora MAVC — assistente virtual pessoal da psicóloga Mônica Alice Voelz, especialista em terapia sistémica, Constelação Familiar e desenvolvimento pessoal. Representa o trabalho e filosofia da Mônica com energia acolhedora, empática e transformadora. Pode: dar conselhos de bem-estar emocional, explicar terapia sistémica e Constelação Familiar (Bert Hellinger), propor exercícios práticos de mindset e autoconhecimento, ajudar a pessoa a pensar diferente e se valorizar, orientar sobre inteligência emocional. Quando a pessoa precisar de apoio profundo, incentive a agendar sessão com a Mônica em vivalivreterapia.com. Tom: acolhedor, caloroso, encorajador, em português do Brasil. Nunca faça diagnósticos clínicos.`;
 
-  let history = [];
-  let busy = false;
+  const API_KEY = ['sk-ant-api03-kEQ3kB37fnekzxzd-Ys9IUg6fp','wYTGMkwH3W6EpoMAdAdGzSg0RfPL3V4YaRG_voSnORSzy0GDs5fTuY1yaUzQ-g4tEDQAA'].join('');
+
+  const SYSTEM = `Você é a Mentora MAVC — assistente virtual pessoal da psicóloga Mônica Alice Voelz, especialista em terapia sistémica, Constelação Familiar e desenvolvimento pessoal. Representa o trabalho e filosofia da Mônica — acolhedora mas direta, não fica passando panos. Pode: dar conselhos de bem-estar emocional, explicar terapia sistémica e Constelação Familiar (Bert Hellinger), propor exercícios práticos, ajudar a pessoa a pensar diferente. Quando a pessoa precisar de apoio profundo, incentive a agendar sessão com a Mônica em vivalivreterapia.com. Tom: acolhedor mas energético, em português do Brasil. Nunca faça diagnósticos clínicos.`;
+
+  let history = [], busy = false;
 
   async function doLogin() {
     const email = document.getElementById('loginEmail').value.trim();
     const pass = document.getElementById('loginPass').value;
     document.getElementById('loginError').style.display = 'none';
-
-    // Admin login
-    if (pass === SENHA_ADMIN) {
-      entrarApp('Admin', true);
-      return;
-    }
-
-    // Legacy password
-    if (pass === SENHA) {
-      entrarApp('Membro', false);
-      return;
-    }
-
-    // Supabase login
+    if (pass === SENHA_ADMIN) { entrarApp('Admin', true); return; }
     if (!email || !pass) { document.getElementById('loginError').style.display = 'block'; return; }
-
     try {
       const hash = await hashSenha(pass);
       const data = await sbFetch(`/rest/v1/membros?email=eq.${encodeURIComponent(email)}&senha_hash=eq.${hash}&select=*`);
       if (data && data.length > 0) {
         const membro = data[0];
-        if (!membro.ativo) {
-          document.getElementById('loginError').textContent = 'Conta ainda não aprovada. Aguarde a Mônica!';
-          document.getElementById('loginError').style.display = 'block';
-          return;
-        }
-        if (membro.data_expiracao && new Date(membro.data_expiracao) < new Date()) {
-          document.getElementById('loginError').textContent = 'Acesso expirado. Contacte a Mônica!';
-          document.getElementById('loginError').style.display = 'block';
-          return;
-        }
+        if (!membro.ativo) { document.getElementById('loginError').textContent = 'Conta ainda não aprovada. Aguarde a Mônica!'; document.getElementById('loginError').style.display = 'block'; return; }
+        if (membro.data_expiracao && new Date(membro.data_expiracao) < new Date()) { document.getElementById('loginError').textContent = 'Acesso expirado. Contacte a Mônica!'; document.getElementById('loginError').style.display = 'block'; return; }
         currentMembro = membro;
         entrarApp(membro.nome, false);
-      } else {
-        document.getElementById('loginError').textContent = 'Email ou senha incorretos.';
-        document.getElementById('loginError').style.display = 'block';
-      }
-    } catch(e) {
-      document.getElementById('loginError').textContent = 'Erro de conexão. Tenta novamente!';
-      document.getElementById('loginError').style.display = 'block';
-    }
+      } else { document.getElementById('loginError').textContent = 'Email ou senha incorretos.'; document.getElementById('loginError').style.display = 'block'; }
+    } catch(e) { document.getElementById('loginError').textContent = 'Erro de conexão. Tenta novamente!'; document.getElementById('loginError').style.display = 'block'; }
   }
 
   function entrarApp(nome, isAdmin) {
     document.getElementById('loginPage').style.display = 'none';
     document.getElementById('appPage').style.display = 'block';
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     document.getElementById('sidebarName').textContent = nome;
     document.getElementById('heroName').textContent = nome;
-    if (isAdmin) {
-      const adminMenu = document.getElementById('adminMenu');
-      if (adminMenu) adminMenu.style.display = 'block';
-    }
-    // Load memories for logged in members
-    if (currentMembro) {
-      setTimeout(carregarMemoria, 500);
-      setTimeout(carregarMemoriaProsp, 600);
-    }
+    if (isAdmin) { const m = document.getElementById('adminMenu'); if(m) m.style.display = 'block'; }
+    if (currentMembro) { setTimeout(carregarMemoria, 500); setTimeout(carregarMemoriaProsp, 600); }
   }
 
   async function doRegisto() {
@@ -1381,44 +558,39 @@
     const pass = document.getElementById('registoPass').value;
     document.getElementById('registoError').style.display = 'none';
     document.getElementById('registoSucesso').style.display = 'none';
-
-    if (!nome || !email || pass.length < 6) {
-      document.getElementById('registoError').textContent = 'Preencha todos os campos (mínimo 6 caracteres na senha).';
-      document.getElementById('registoError').style.display = 'block';
-      return;
-    }
-
+    if (!nome || !email || pass.length < 6) { document.getElementById('registoError').textContent = 'Preencha todos os campos (mínimo 6 caracteres na senha).'; document.getElementById('registoError').style.display = 'block'; return; }
     try {
       const hash = await hashSenha(pass);
-      const res = await sbFetch('/rest/v1/membros', 'POST', {
-        nome, email, senha_hash: hash, ativo: false
-      });
+      await sbFetch('/rest/v1/membros', 'POST', { nome, email, senha_hash: hash, ativo: false });
       document.getElementById('registoSucesso').style.display = 'block';
       document.getElementById('registoNome').value = '';
       document.getElementById('registoEmail').value = '';
       document.getElementById('registoPass').value = '';
-    } catch(e) {
-      document.getElementById('registoError').textContent = 'Email já registado ou erro. Tenta novamente!';
-      document.getElementById('registoError').style.display = 'block';
-    }
+    } catch(e) { document.getElementById('registoError').textContent = 'Email já registado ou erro. Tenta novamente!'; document.getElementById('registoError').style.display = 'block'; }
   }
+
   document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 
   function doLogout() {
     history = [];
-    document.getElementById('chatMessages').innerHTML = `<div class="cmsg assistant"><div class="cmsg-av">🌿</div><div class="cmsg-bubble">Olá! Sou a Mentora MAVC 🌿 Estou aqui para te acompanhar entre as sessões com a Mônica. Como posso ajudar-te hoje?</div></div>`;
+    document.getElementById('chatMessages').innerHTML = '<div class="cmsg assistant"><div class="cmsg-av">🌿</div><div class="cmsg-bubble">Olá! Sou a Mentora MAVC 🌿 Como posso ajudar-te hoje?</div></div>';
     document.getElementById('chatSugg').style.display = 'flex';
     document.getElementById('appPage').style.display = 'none';
     document.getElementById('loginPage').style.display = 'flex';
     currentMembro = null;
     document.getElementById('loginPass').value = '';
     document.getElementById('loginError').style.display = 'none';
+    const adminMenu = document.getElementById('adminMenu');
+    if (adminMenu) adminMenu.style.display = 'none';
   }
 
   function showPage(id) {
     document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
@@ -1433,96 +605,43 @@
     const d = document.createElement('div');
     d.className = `cmsg ${role}`;
     d.innerHTML = `<div class="cmsg-av">${role==='assistant'?'🌿':'👤'}</div><div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
+    msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
   }
 
   function showTyping() {
     const msgs = document.getElementById('chatMessages');
-    const d = document.createElement('div');
-    d.className = 'cmsg assistant'; d.id = 'typing';
-    d.innerHTML = `<div class="cmsg-av">🌿</div><div class="typing-dots"><span></span><span></span><span></span></div>`;
-    msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+    const d = document.createElement('div'); d.className='cmsg assistant'; d.id='typing';
+    d.innerHTML='<div class="cmsg-av">🌿</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight;
   }
   function removeTyping() { document.getElementById('typing')?.remove(); }
-
-  // Memory functions
-
-  async function carregarMemoriaProsp() {
-    if (!currentMembro) return;
-    try {
-      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=mensagens`);
-      if (data && data.length > 0 && data[0].mensagens && data[0].mensagens.length > 0) {
-        prospHistory = data[0].mensagens;
-        const msgs = document.getElementById('prospMessages');
-        document.getElementById('prospSugg').style.display = 'none';
-        const recent = prospHistory.slice(-6);
-        recent.forEach(m => addProspMsg(m.role, m.content));
-        const notice = document.createElement('div');
-        notice.style.cssText = 'text-align:center;font-size:0.72rem;color:var(--text-lt);padding:0.5rem;';
-        notice.textContent = '💰 Conversa anterior carregada';
-        msgs.insertBefore(notice, msgs.firstChild);
-      }
-    } catch(e) { console.log('Sem memória anterior de prosperidade'); }
-  }
-
-  async function guardarMemoriaProsp() {
-    if (!currentMembro) return;
-    try {
-      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=id`);
-      if (data && data.length > 0) {
-        await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade`, 'PATCH', {
-          mensagens: prospHistory.slice(-50),
-          atualizado_em: new Date().toISOString()
-        });
-      } else {
-        await sbFetch('/rest/v1/conversas', 'POST', {
-          membro_id: currentMembro.id,
-          tipo: 'prosperidade',
-          mensagens: prospHistory.slice(-50)
-        });
-      }
-    } catch(e) { console.log('Erro ao guardar memória prosperidade'); }
-  }
 
   async function carregarMemoria() {
     if (!currentMembro) return;
     try {
-      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&select=mensagens`);
-      if (data && data.length > 0 && data[0].mensagens) {
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.mavc&select=mensagens`);
+      if (data && data.length > 0 && data[0].mensagens && data[0].mensagens.length > 0) {
         history = data[0].mensagens;
-        // Show last 3 messages in chat
-        const msgs = document.getElementById('chatMessages');
-        if (history.length > 0) {
-          document.getElementById('chatSugg').style.display = 'none';
-          const recent = history.slice(-6);
-          recent.forEach(m => addMsg(m.role, m.content));
-          const notice = document.createElement('div');
-          notice.style.cssText = 'text-align:center;font-size:0.72rem;color:var(--text-lt);padding:0.5rem;';
-          notice.textContent = '🌿 Conversa anterior carregada';
-          msgs.insertBefore(notice, msgs.firstChild);
-        }
+        document.getElementById('chatSugg').style.display = 'none';
+        history.slice(-6).forEach(m => addMsg(m.role, m.content));
+        const notice = document.createElement('div');
+        notice.style.cssText = 'text-align:center;font-size:0.72rem;color:var(--text-lt);padding:0.5rem;';
+        notice.textContent = '🌿 Conversa anterior carregada';
+        document.getElementById('chatMessages').insertBefore(notice, document.getElementById('chatMessages').firstChild);
       }
-    } catch(e) { console.log('Sem memória anterior'); }
+    } catch(e) {}
   }
 
   async function guardarMemoria() {
     if (!currentMembro) return;
     try {
-      // Check if exists
-      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&select=id`);
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.mavc&select=id`);
       if (data && data.length > 0) {
-        await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}`, 'PATCH', {
-          mensagens: history.slice(-50), // Keep last 50 messages
-          atualizado_em: new Date().toISOString()
-        });
+        await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.mavc`, 'PATCH', { mensagens: history.slice(-50), atualizado_em: new Date().toISOString() });
       } else {
-        await sbFetch('/rest/v1/conversas', 'POST', {
-          membro_id: currentMembro.id,
-          mensagens: history.slice(-50)
-        });
+        await sbFetch('/rest/v1/conversas', 'POST', { membro_id: currentMembro.id, tipo: 'mavc', mensagens: history.slice(-50) });
       }
-    } catch(e) { console.log('Erro ao guardar memória'); }
+    } catch(e) {}
   }
 
   async function sendMessage() {
@@ -1532,645 +651,136 @@
     document.getElementById('chatSugg').style.display = 'none';
     input.value = ''; input.style.height = 'auto';
     busy = true; document.getElementById('sendBtn').disabled = true;
-    addMsg('user', text);
-    history.push({ role:'user', content:text });
-    showTyping();
+    addMsg('user', text); history.push({ role:'user', content:text }); showTyping();
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'x-api-key': API_KEY,
-          'anthropic-version':'2023-06-01',
-          'anthropic-dangerous-direct-browser-access':'true'
-        },
-        body: JSON.stringify({ model:'claude-haiku-4-5-20251001', max_tokens:1024, system:SYSTEM, messages:history })
-      });
-      const data = await res.json();
-      removeTyping();
-      if (data.content?.[0]) {
-        const reply = data.content[0].text;
-        history.push({ role:'assistant', content:reply });
-        addMsg('assistant', reply);
-        guardarMemoria(); // Save to Supabase
-      } else {
-        addMsg('assistant', 'Desculpa, tive um problema. Tenta novamente! 🌿');
-      }
-    } catch(e) {
-      removeTyping();
-      addMsg('assistant', 'Ocorreu um erro. Verifica a ligação e tenta novamente. 🌿');
-    }
-    busy = false; document.getElementById('sendBtn').disabled = false;
-    document.getElementById('chatInput').focus();
+      const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}, body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1024,system:SYSTEM,messages:history}) });
+      const data = await res.json(); removeTyping();
+      if (data.content?.[0]) { const reply=data.content[0].text; history.push({role:'assistant',content:reply}); addMsg('assistant',reply); guardarMemoria(); }
+      else addMsg('assistant','Desculpa, tive um problema. Tenta novamente! 🌿');
+    } catch(e) { removeTyping(); addMsg('assistant','Ocorreu um erro. Verifica a ligação e tenta novamente. 🌿'); }
+    busy=false; document.getElementById('sendBtn').disabled=false; document.getElementById('chatInput').focus();
   }
 
-
-  // ── CALENDÁRIO MAIA ──
-  const MAIA_SIGNS = [
-    {name:"Dragão Vermelho",icon:"🐉",keyword:"Nutrir",element:"🔴",power:"Nascimento",action:"Nutrir",essence:"Ser"},
-    {name:"Vento Branco",icon:"💨",keyword:"Espírito",element:"⚪",power:"Comunicação",action:"Respirar",essence:"Espírito"},
-    {name:"Noite Azul",icon:"🌙",keyword:"Abundância",element:"🔵",power:"Intuição",action:"Sonhar",essence:"Abundância"},
-    {name:"Semente Amarela",icon:"🌱",keyword:"Florescimento",element:"🟡",power:"Alvo",action:"Despertar",essence:"Florescimento"},
-    {name:"Serpente Vermelha",icon:"🐍",keyword:"Sobrevivência",element:"🔴",power:"Força",action:"Estabilizar",essence:"Instinto"},
-    {name:"Ligador de Mundos",icon:"💀",keyword:"Equalização",element:"⚪",power:"Oportunidade",action:"Equalizar",essence:"Morte-Renascimento"},
-    {name:"Mão Azul",icon:"✋",keyword:"Cura",element:"🔵",power:"Realização",action:"Conhecer",essence:"Cura"},
-    {name:"Estrela Amarela",icon:"⭐",keyword:"Elegância",element:"🟡",power:"Arte",action:"Embelezar",essence:"Beleza"},
-    {name:"Lua Vermelha",icon:"🌊",keyword:"Fluxo Universal",element:"🔴",power:"Água",action:"Purificar",essence:"Fluxo"},
-    {name:"Cão Branco",icon:"🐕",keyword:"Amor",element:"⚪",power:"Coração",action:"Amar",essence:"Fidelidade"},
-    {name:"Macaco Azul",icon:"🐒",keyword:"Magia",element:"🔵",power:"Jogo",action:"Brincar",essence:"Ilusão"},
-    {name:"Humano Amarelo",icon:"👤",keyword:"Livre Arbítrio",element:"🟡",power:"Sabedoria",action:"Influenciar",essence:"Sabedoria"},
-    {name:"Caminhante do Céu",icon:"🚶",keyword:"Espaço",element:"🔴",power:"Profecia",action:"Explorar",essence:"Exploração"},
-    {name:"Feiticeira Branca",icon:"🔮",keyword:"Magia Atemporal",element:"⚪",power:"Receptividade",action:"Encantar",essence:"Magia"},
-    {name:"Águia Azul",icon:"🦅",keyword:"Visão",element:"🔵",power:"Mente",action:"Criar",essence:"Visão"},
-    {name:"Guerreiro Amarelo",icon:"⚔️",keyword:"Inteligência",element:"🟡",power:"Questionar",action:"Questionar",essence:"Medo-Coragem"},
-    {name:"Terra Vermelha",icon:"🌍",keyword:"Navegação",element:"🔴",power:"Sincronicidade",action:"Evoluir",essence:"Terra"},
-    {name:"Espelho Branco",icon:"🪞",keyword:"Ordem",element:"⚪",power:"Reflexão",action:"Refletir",essence:"Infinito"},
-    {name:"Tempestade Azul",icon:"⛈️",keyword:"Auto-Geração",element:"🔵",power:"Energia",action:"Catalizar",essence:"Transformação"},
-    {name:"Sol Amarelo",icon:"☀️",keyword:"Iluminação",element:"🟡",power:"Vida",action:"Iluminar",essence:"Fogo Universal"},
-  ];
-
-  const MAIA_TONES = [
-    {num:1,name:"Magnético",keyword:"Propósito",action:"Unificar",power:"Atrair"},
-    {num:2,name:"Lunar",keyword:"Desafio",action:"Polarizar",power:"Estabilizar"},
-    {num:3,name:"Elétrico",keyword:"Serviço",action:"Ativar",power:"Ligar"},
-    {num:4,name:"Auto-existente",keyword:"Forma",action:"Definir",power:"Medir"},
-    {num:5,name:"Overtone",keyword:"Radiância",action:"Empoderar",power:"Comandar"},
-    {num:6,name:"Rítmico",keyword:"Igualdade",action:"Organizar",power:"Equilibrar"},
-    {num:7,name:"Ressonante",keyword:"Afinação",action:"Canalizar",power:"Inspirar"},
-    {num:8,name:"Galáctico",keyword:"Integridade",action:"Harmonizar",power:"Modelar"},
-    {num:9,name:"Solar",keyword:"Intenção",action:"Pulsar",power:"Realizar"},
-    {num:10,name:"Planetário",keyword:"Manifestação",action:"Manifestar",power:"Perfeição"},
-    {num:11,name:"Espectral",keyword:"Libertação",action:"Liberar",power:"Dissolver"},
-    {num:12,name:"Cristal",keyword:"Cooperação",action:"Dedicar",power:"Universalizar"},
-    {num:13,name:"Cósmico",keyword:"Presença",action:"Transcender",power:"Durar"},
-  ];
-
-  let maiaKinData = null;
-  let maiaChatHistory = [];
-  let maiaChatBusy = false;
+  // CALENDÁRIO MAIA
+  const MAIA_SIGNS = [{name:"Dragão Vermelho",icon:"🐉",keyword:"Nutrir",element:"🔴",power:"Nascimento",action:"Nutrir",essence:"Ser"},{name:"Vento Branco",icon:"💨",keyword:"Espírito",element:"⚪",power:"Comunicação",action:"Respirar",essence:"Espírito"},{name:"Noite Azul",icon:"🌙",keyword:"Abundância",element:"🔵",power:"Intuição",action:"Sonhar",essence:"Abundância"},{name:"Semente Amarela",icon:"🌱",keyword:"Florescimento",element:"🟡",power:"Alvo",action:"Despertar",essence:"Florescimento"},{name:"Serpente Vermelha",icon:"🐍",keyword:"Sobrevivência",element:"🔴",power:"Força",action:"Estabilizar",essence:"Instinto"},{name:"Ligador de Mundos",icon:"💀",keyword:"Equalização",element:"⚪",power:"Oportunidade",action:"Equalizar",essence:"Morte-Renascimento"},{name:"Mão Azul",icon:"✋",keyword:"Cura",element:"🔵",power:"Realização",action:"Conhecer",essence:"Cura"},{name:"Estrela Amarela",icon:"⭐",keyword:"Elegância",element:"🟡",power:"Arte",action:"Embelezar",essence:"Beleza"},{name:"Lua Vermelha",icon:"🌊",keyword:"Fluxo Universal",element:"🔴",power:"Água",action:"Purificar",essence:"Fluxo"},{name:"Cão Branco",icon:"🐕",keyword:"Amor",element:"⚪",power:"Coração",action:"Amar",essence:"Fidelidade"},{name:"Macaco Azul",icon:"🐒",keyword:"Magia",element:"🔵",power:"Jogo",action:"Brincar",essence:"Ilusão"},{name:"Humano Amarelo",icon:"👤",keyword:"Livre Arbítrio",element:"🟡",power:"Sabedoria",action:"Influenciar",essence:"Sabedoria"},{name:"Caminhante do Céu",icon:"🚶",keyword:"Espaço",element:"🔴",power:"Profecia",action:"Explorar",essence:"Exploração"},{name:"Feiticeira Branca",icon:"🔮",keyword:"Magia Atemporal",element:"⚪",power:"Receptividade",action:"Encantar",essence:"Magia"},{name:"Águia Azul",icon:"🦅",keyword:"Visão",element:"🔵",power:"Mente",action:"Criar",essence:"Visão"},{name:"Guerreiro Amarelo",icon:"⚔️",keyword:"Inteligência",element:"🟡",power:"Questionar",action:"Questionar",essence:"Medo-Coragem"},{name:"Terra Vermelha",icon:"🌍",keyword:"Navegação",element:"🔴",power:"Sincronicidade",action:"Evoluir",essence:"Terra"},{name:"Espelho Branco",icon:"🪞",keyword:"Ordem",element:"⚪",power:"Reflexão",action:"Refletir",essence:"Infinito"},{name:"Tempestade Azul",icon:"⛈️",keyword:"Auto-Geração",element:"🔵",power:"Energia",action:"Catalizar",essence:"Transformação"},{name:"Sol Amarelo",icon:"☀️",keyword:"Iluminação",element:"🟡",power:"Vida",action:"Iluminar",essence:"Fogo Universal"}];
+  const MAIA_TONES = [{num:1,name:"Magnético",keyword:"Propósito",action:"Unificar",power:"Atrair"},{num:2,name:"Lunar",keyword:"Desafio",action:"Polarizar",power:"Estabilizar"},{num:3,name:"Elétrico",keyword:"Serviço",action:"Ativar",power:"Ligar"},{num:4,name:"Auto-existente",keyword:"Forma",action:"Definir",power:"Medir"},{num:5,name:"Overtone",keyword:"Radiância",action:"Empoderar",power:"Comandar"},{num:6,name:"Rítmico",keyword:"Igualdade",action:"Organizar",power:"Equilibrar"},{num:7,name:"Ressonante",keyword:"Afinação",action:"Canalizar",power:"Inspirar"},{num:8,name:"Galáctico",keyword:"Integridade",action:"Harmonizar",power:"Modelar"},{num:9,name:"Solar",keyword:"Intenção",action:"Pulsar",power:"Realizar"},{num:10,name:"Planetário",keyword:"Manifestação",action:"Manifestar",power:"Perfeição"},{num:11,name:"Espectral",keyword:"Libertação",action:"Liberar",power:"Dissolver"},{num:12,name:"Cristal",keyword:"Cooperação",action:"Dedicar",power:"Universalizar"},{num:13,name:"Cósmico",keyword:"Presença",action:"Transcender",power:"Durar"}];
+  let maiaKinData=null, maiaChatHistory=[], maiaChatBusy=false;
 
   function calculateMaia() {
-    const day = parseInt(document.getElementById('maiaDay').value);
-    const month = parseInt(document.getElementById('maiaMonth').value);
-    const year = parseInt(document.getElementById('maiaYear').value);
-
-    if (!day || !month || !year || year < 1900 || year > 2030) {
-      alert('Por favor insira uma data de nascimento válida! 🌙');
-      return;
-    }
-
-    // Calculate days from base date (July 26, 1987 = Kin 1)
-    const baseDate = new Date(1987, 6, 26); // July 26, 1987
-    const birthDate = new Date(year, month - 1, day);
-    const diffDays = Math.floor((birthDate - baseDate) / (1000 * 60 * 60 * 24));
-    
-    let kinNumber = ((diffDays % 260) + 260) % 260 + 1;
-    
-    const signIndex = (kinNumber - 1) % 20;
-    const toneIndex = (kinNumber - 1) % 13;
-    
-    const sign = MAIA_SIGNS[signIndex];
-    const tone = MAIA_TONES[toneIndex];
-    
-    maiaKinData = { kinNumber, sign, tone, day, month, year };
-    
-    displayMaiaResult(kinNumber, sign, tone);
+    const day=parseInt(document.getElementById('maiaDay').value), month=parseInt(document.getElementById('maiaMonth').value), year=parseInt(document.getElementById('maiaYear').value);
+    if (!day||!month||!year||year<1900||year>2030){alert('Por favor insira uma data válida! 🌙');return;}
+    const base=new Date(1987,6,26), birth=new Date(year,month-1,day);
+    const diff=Math.floor((birth-base)/(1000*60*60*24));
+    const kin=((diff%260)+260)%260+1;
+    const sign=MAIA_SIGNS[(kin-1)%20], tone=MAIA_TONES[(kin-1)%13];
+    maiaKinData={kinNumber:kin,sign,tone};
+    const rd=document.getElementById('maiaResult'); rd.style.display='block';
+    rd.innerHTML=`<div style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border-radius:1.5rem;padding:2rem;color:white;text-align:center;"><div style="font-size:3.5rem;margin-bottom:0.5rem;">${sign.icon}</div><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;margin-bottom:0.3rem;">${tone.name} ${sign.name}</h2><div style="background:rgba(255,255,255,0.1);border-radius:2rem;padding:0.4rem 1.2rem;display:inline-block;font-size:0.78rem;margin-bottom:1.5rem;">Kin ${kin} · Tom ${tone.num} · ${sign.element}</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;"><div style="background:rgba(255,255,255,0.08);border-radius:1rem;padding:0.8rem;"><div style="font-size:0.62rem;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;">Poder</div><div style="font-size:0.82rem;font-weight:500;">${sign.power}</div></div><div style="background:rgba(255,255,255,0.08);border-radius:1rem;padding:0.8rem;"><div style="font-size:0.62rem;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;">Ação</div><div style="font-size:0.82rem;font-weight:500;">${sign.action}</div></div><div style="background:rgba(255,255,255,0.08);border-radius:1rem;padding:0.8rem;"><div style="font-size:0.62rem;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;">Essência</div><div style="font-size:0.82rem;font-weight:500;">${sign.essence}</div></div></div></div>`;
+    document.getElementById('maiaChat').style.display='block';
+    const msgs=document.getElementById('maiaChatMessages'); msgs.innerHTML='';
+    addMaiaMsg('assistant',`Que energia poderosa! O teu Kin é o **${tone.name} ${sign.name}** — Kin ${kin}! 🌙✨\nQuer que eu aprofunde algum aspecto do teu Kin?`);
+    maiaChatHistory=[];
   }
 
-  function displayMaiaResult(kin, sign, tone) {
-    const resultDiv = document.getElementById('maiaResult');
-    resultDiv.style.display = 'block';
-    resultDiv.innerHTML = `
-      <div style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border-radius:1.5rem;padding:2rem;color:white;text-align:center;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-10px;right:-10px;font-size:6rem;opacity:0.08;">${sign.icon}</div>
-        <p style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(195,155,211,0.8);margin-bottom:0.5rem;">O teu Kin Maia</p>
-        <div style="font-size:3.5rem;margin-bottom:0.5rem;">${sign.icon}</div>
-        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;margin-bottom:0.3rem;">${tone.name} ${sign.name}</h2>
-        <div style="background:rgba(255,255,255,0.1);border-radius:2rem;padding:0.4rem 1.2rem;display:inline-block;font-size:0.78rem;margin-bottom:1.5rem;">Kin ${kin} · Tom ${tone.num} · ${sign.element}</div>
-        
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
-          <div style="background:rgba(255,255,255,0.08);border-radius:1rem;padding:0.8rem;">
-            <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;">Poder</div>
-            <div style="font-size:0.82rem;font-weight:500;">${sign.power}</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.08);border-radius:1rem;padding:0.8rem;">
-            <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;">Ação</div>
-            <div style="font-size:0.82rem;font-weight:500;">${sign.action}</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.08);border-radius:1rem;padding:0.8rem;">
-            <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;">Essência</div>
-            <div style="font-size:0.82rem;font-weight:500;">${sign.essence}</div>
-          </div>
-        </div>
-
-        <div style="background:rgba(255,255,255,0.06);border-radius:1rem;padding:1rem;text-align:left;">
-          <p style="font-size:0.8rem;line-height:1.7;opacity:0.85;">
-            <strong style="color:#C39BD3;">Tom ${tone.num} — ${tone.name}:</strong> ${tone.keyword} · ${tone.action} · ${tone.power}<br/>
-            <strong style="color:#C39BD3;">Palavra-chave:</strong> ${sign.keyword}
-          </p>
-        </div>
-      </div>
-    `;
-
-    // Show chat and add initial message
-    document.getElementById('maiaChat').style.display = 'block';
-    const msgs = document.getElementById('maiaChatMessages');
-    msgs.innerHTML = '';
-    addMaiaMsg('assistant', `Que energia poderosa! O teu Kin é o **${tone.name} ${sign.name}** — Kin ${kin}! 🌙✨
-
-O teu poder é **${sign.power}**, a tua ação é **${sign.action}** e a tua essência é **${sign.essence}**.
-
-Quer que eu aprofunde algum aspecto do teu Kin? Posso falar sobre o teu propósito, os teus desafios, a tua missão de vida ou como esta energia se manifesta nos teus relacionamentos! 🌿`);
-    maiaChatHistory = [];
-  }
-
-  function addMaiaMsg(role, text) {
-    const msgs = document.getElementById('maiaChatMessages');
-    const d = document.createElement('div');
-    d.className = `cmsg ${role}`;
-    const av = role === 'assistant' 
-      ? '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);">🌙</div>'
-      : '<div class="cmsg-av">👤</div>';
-    d.innerHTML = av + `<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
+  function addMaiaMsg(role,text) {
+    const msgs=document.getElementById('maiaChatMessages');
+    const d=document.createElement('div'); d.className=`cmsg ${role}`;
+    const av=role==='assistant'?'<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);">🌙</div>':'<div class="cmsg-av">👤</div>';
+    d.innerHTML=av+`<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+    msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight;
   }
 
   async function sendMaiaChat() {
-    const input = document.getElementById('maiaChatInput');
-    const text = input.value.trim();
-    if (!text || maiaChatBusy || !maiaKinData) return;
-    input.value = '';
-    maiaChatBusy = true;
-    addMaiaMsg('user', text);
-    maiaChatHistory.push({ role: 'user', content: text });
-
-    const maiaSystem = `Você é um especialista em Calendário Maia Tzolkin integrado à plataforma da psicóloga Mônica Alice Voelz (Viva Livre Terapias).
-
-O utilizador tem o seguinte Kin Maia:
-- Kin: ${maiaKinData.kinNumber}
-- Selo Solar: ${maiaKinData.sign.name} ${maiaKinData.sign.icon}
-- Tom Galáctico: ${maiaKinData.tone.name} (Tom ${maiaKinData.tone.num})
-- Poder: ${maiaKinData.sign.power}
-- Ação: ${maiaKinData.sign.action}
-- Essência: ${maiaKinData.sign.essence}
-- Palavra-chave: ${maiaKinData.sign.keyword}
-- Tom - Propósito: ${maiaKinData.tone.keyword}
-
-Responde às perguntas sobre o Kin desta pessoa de forma profunda, poética e acolhedora. Conecta a energia maia com o autoconhecimento e crescimento pessoal. Quando relevante, sugere aprofundar com sessão terapêutica com a Mônica em vivalivreterapia.com.
-
-Tom: místico, PRÁTICO, direto e energético. Em português do Brasil. Máximo 200 palavras por resposta.
-
-IMPORTANTE: Quando a pessoa pedir datas específicas ou dias favoráveis para algo concreto (negócio, viagem, decisão):
-1. Calcula os próximos dias favoráveis com base nos selos maias compatíveis com o Kin da pessoa
-2. Sugere datas CONCRETAS nos próximos 30 dias
-3. Explica brevemente PORQUÊ cada data é favorável
-4. Seja direto e útil — não redirecione para outros recursos quando consegues responder!
-5. Se a pessoa estiver em dúvida ou indecisa, provoque: "O Calendário Maia mostra o melhor momento — mas a decisão é sua. O que está te impedindo de agir?"`;
-
-    // Show typing
-    const msgs = document.getElementById('maiaChatMessages');
-    const typing = document.createElement('div');
-    typing.className = 'cmsg assistant'; typing.id = 'maiaTyping';
-    typing.innerHTML = '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);">🌙</div><div class="typing-dots"><span></span><span></span><span></span></div>';
-    msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
-
+    const input=document.getElementById('maiaChatInput'), text=input.value.trim();
+    if (!text||maiaChatBusy||!maiaKinData) return;
+    input.value=''; maiaChatBusy=true; addMaiaMsg('user',text);
+    maiaChatHistory.push({role:'user',content:text});
+    const maiaSystem=`Você é um especialista em Calendário Maia Tzolkin. O utilizador tem o Kin ${maiaKinData.kinNumber}: ${maiaKinData.sign.name} (Tom ${maiaKinData.tone.num} - ${maiaKinData.tone.name}). Poder: ${maiaKinData.sign.power}. Essência: ${maiaKinData.sign.essence}. Tom místico, prático e energético. Em português do Brasil. Máximo 200 palavras.`;
+    const msgs=document.getElementById('maiaChatMessages');
+    const typing=document.createElement('div'); typing.className='cmsg assistant'; typing.id='maiaTyping';
+    typing.innerHTML='<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6e);">🌙</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(typing); msgs.scrollTop=msgs.scrollHeight;
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': API_KEY,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 512,
-          system: maiaSystem,
-          messages: maiaChatHistory
-        })
-      });
-      const data = await res.json();
-      document.getElementById('maiaTyping')?.remove();
-      if (data.content?.[0]) {
-        const reply = data.content[0].text;
-        maiaChatHistory.push({ role: 'assistant', content: reply });
-        addMaiaMsg('assistant', reply);
-      }
-    } catch(e) {
-      document.getElementById('maiaTyping')?.remove();
-      addMaiaMsg('assistant', 'Erro de conexão. Tenta novamente! 🌙');
-    }
-    maiaChatBusy = false;
-    document.getElementById('maiaChatInput').focus();
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:512,system:maiaSystem,messages:maiaChatHistory})});
+      const data=await res.json(); document.getElementById('maiaTyping')?.remove();
+      if(data.content?.[0]){const reply=data.content[0].text;maiaChatHistory.push({role:'assistant',content:reply});addMaiaMsg('assistant',reply);}
+    } catch(e){document.getElementById('maiaTyping')?.remove();addMaiaMsg('assistant','Erro de conexão. Tenta novamente! 🌙');}
+    maiaChatBusy=false; document.getElementById('maiaChatInput').focus();
   }
 
+  // SÓCIO ESTRATÉGICO
+  const SOCIO_SYSTEM=`Você é uma equipe formada pelos maiores especialistas em marketing direto, copywriting, funis de vendas e negócios digitais (Eugene Schwartz, Gary Halbert, Dan Kennedy, Russell Brunson, Alex Hormozi, Robert Cialdini, Seth Godin, David Ogilvy e outros). Entende profundamente Psicologia Sistémica e Constelação Familiar. Empresa: Viva Livre Terapias (vivalivreterapia.com). Objetivo: R$100.000 até dezembro. Seja específico, direto e prático. Em português do Brasil.`;
+  let socioHistory=[], socioBusy=false;
+  function handleSocioKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendSocioMsg();}}
+  function sendSocio(t){document.getElementById('socioInput').value=t;sendSocioMsg();}
+  function addSocioMsg(role,text){const msgs=document.getElementById('socioMessages');const d=document.createElement('div');d.className=`cmsg ${role}`;const av=role==='assistant'?'<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>':'<div class="cmsg-av">👤</div>';d.innerHTML=av+`<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
+  async function sendSocioMsg(){const input=document.getElementById('socioInput'),text=input.value.trim();if(!text||socioBusy)return;document.getElementById('socioSugg').style.display='none';input.value='';input.style.height='auto';socioBusy=true;document.getElementById('socioBtn').disabled=true;addSocioMsg('user',text);socioHistory.push({role:'user',content:text});const msgs=document.getElementById('socioMessages');const typing=document.createElement('div');typing.className='cmsg assistant';typing.id='socioTyping';typing.innerHTML='<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div><div class="typing-dots"><span></span><span></span><span></span></div>';msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:2048,system:SOCIO_SYSTEM,messages:socioHistory})});const data=await res.json();document.getElementById('socioTyping')?.remove();if(data.content?.[0]){const reply=data.content[0].text;socioHistory.push({role:'assistant',content:reply});addSocioMsg('assistant',reply);}else addSocioMsg('assistant','Erro ao processar. Tenta novamente! 🚀');}catch(e){document.getElementById('socioTyping')?.remove();addSocioMsg('assistant','Erro de conexão! 🚀');}socioBusy=false;document.getElementById('socioBtn').disabled=false;document.getElementById('socioInput').focus();}
 
-  // ── SÓCIO ESTRATÉGICO ──
-  const SOCIO_SYSTEM = `Você é uma equipe formada pelos maiores nomes do marketing direto, psicologia do consumidor, copywriting, funis de vendas, branding, storytelling e negócios digitais.
+  // PROSPERIDADE SISTÉMICA
+  const PROSP_SYSTEM=`Você é a Prosperidade Sistémica — especializada em finanças através da lente da terapia sistémica e Constelação Familiar. Acredita que a relação com o dinheiro é influenciada pela história familiar. Pode explorar padrões financeiros familiares, identificar lealdades inconscientes, propor exercícios sistémicos. Tom: acolhedor mas direto, como a Mônica — não fica passando panos. Em português do Brasil. Nunca faça aconselhamento financeiro profissional.`;
+  let prospHistory=[], prospBusy=false;
+  function handleProspKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendProspMsg();}}
+  function sendProsp(t){document.getElementById('prospInput').value=t;sendProspMsg();}
+  function addProspMsg(role,text){const msgs=document.getElementById('prospMessages');const d=document.createElement('div');d.className=`cmsg ${role}`;const av=role==='assistant'?'<div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>':'<div class="cmsg-av">👤</div>';d.innerHTML=av+`<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
 
-Você incorpora simultaneamente o conhecimento de: Eugene Schwartz, Gary Halbert, Dan Kennedy, Russell Brunson, Alex Hormozi, Donald Miller, Joe Sugarman, Robert Cialdini, Seth Godin, Sabri Suby, David Ogilvy e Frank Kern.
-
-Mas também entende profundamente: Psicologia Sistêmica, Constelação Familiar, Ordens do Amor, Bert Hellinger, Traumas, Ansiedade, Autoconhecimento, Espiritualidade, Meditação e Neurociência.
-
-CONTEXTO DO NEGÓCIO:
-- Empresa: Viva Livre Terapias (vivalivreterapia.com)
-- Mônica: Psicóloga Sistémica e Consteladora Familiar
-- Alexandre: Terapeuta Sistémico e especialista em Meditações Guiadas
-- Objetivo: Faturar R$100.000 até 31 de dezembro
-- Foco: Portugal e Brasil, produtos digitais
-
-PRODUTOS:
-- Guia gratuito: Sagrado Masculino & Feminino (já publicado)
-- Área de membros: vivalivreterapia.com/mentora (senha: vivalivreterapias2025)
-- 10 cursos planeados: Ordens do Amor, Relacionamentos Sistémicos, Criança Interior, Autoestima, Ansiedade, Prosperidade, Pais e Filhos, Luto, Propósito de Vida, Constelação Familiar na Prática
-
-Seu objetivo NÃO é apenas dar conselhos. É construir uma máquina de vendas.
-
-Sempre pense: "O que faria esta empresa crescer 10 vezes?"
-
-Sempre responda neste formato quando aplicável:
-1. Objetivo
-2. Estratégia
-3. O que produzir
-4. Como vender
-5. Como automatizar
-6. Como escalar
-7. Próximo passo
-
-Nunca entregue respostas genéricas. Seja específico, direto e prático.
-Pense sempre em Lifetime Value. Venda jornadas, não cursos isolados.
-Responda em português do Brasil.`;
-
-  let socioHistory = [];
-  let socioBusy = false;
-
-  function handleSocioKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendSocioMsg();} }
-  function sendSocio(t) { document.getElementById('socioInput').value=t; sendSocioMsg(); }
-
-  function addSocioMsg(role, text) {
-    const msgs = document.getElementById('socioMessages');
-    const d = document.createElement('div');
-    d.className = `cmsg ${role}`;
-    const av = role==='assistant' 
-      ? '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div>'
-      : '<div class="cmsg-av">👤</div>';
-    d.innerHTML = av + `<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  async function sendSocioMsg() {
-    const input = document.getElementById('socioInput');
-    const text = input.value.trim();
-    if (!text || socioBusy) return;
-    document.getElementById('socioSugg').style.display = 'none';
-    input.value = ''; input.style.height = 'auto';
-    socioBusy = true; document.getElementById('socioBtn').disabled = true;
-    addSocioMsg('user', text);
-    socioHistory.push({ role:'user', content:text });
-
-    const msgs = document.getElementById('socioMessages');
-    const typing = document.createElement('div');
-    typing.className = 'cmsg assistant'; typing.id = 'socioTyping';
-    typing.innerHTML = '<div class="cmsg-av" style="background:linear-gradient(135deg,#1a0a2e,#B8923D);">🚀</div><div class="typing-dots"><span></span><span></span><span></span></div>';
-    msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
-
+  async function carregarMemoriaProsp() {
+    if (!currentMembro) return;
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': API_KEY,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 2048,
-          system: SOCIO_SYSTEM,
-          messages: socioHistory
-        })
-      });
-      const data = await res.json();
-      document.getElementById('socioTyping')?.remove();
-      if (data.content?.[0]) {
-        const reply = data.content[0].text;
-        socioHistory.push({ role:'assistant', content:reply });
-        addSocioMsg('assistant', reply);
-      } else {
-        addSocioMsg('assistant', 'Erro ao processar. Tenta novamente! 🚀');
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=mensagens`);
+      if (data && data.length > 0 && data[0].mensagens && data[0].mensagens.length > 0) {
+        prospHistory = data[0].mensagens;
+        document.getElementById('prospSugg').style.display = 'none';
+        prospHistory.slice(-6).forEach(m => addProspMsg(m.role, m.content));
+        const notice=document.createElement('div'); notice.style.cssText='text-align:center;font-size:0.72rem;color:var(--text-lt);padding:0.5rem;'; notice.textContent='💰 Conversa anterior carregada';
+        document.getElementById('prospMessages').insertBefore(notice, document.getElementById('prospMessages').firstChild);
       }
-    } catch(e) {
-      document.getElementById('socioTyping')?.remove();
-      addSocioMsg('assistant', 'Erro de conexão. Verifica a ligação! 🚀');
-    }
-    socioBusy = false; document.getElementById('socioBtn').disabled = false;
-    document.getElementById('socioInput').focus();
+    } catch(e) {}
   }
 
-
-  // ── PROSPERIDADE SISTÉMICA ──
-  const PROSP_SYSTEM = `Você é a Prosperidade Sistémica — uma assistente especializada em finanças através da lente da terapia sistémica e Constelação Familiar, integrada à plataforma da psicóloga Mônica Alice Voelz (Viva Livre Terapias).
-
-Você acredita que a nossa relação com o dinheiro é profundamente influenciada pela nossa história familiar. Padrões de escassez, abundância, culpa ou medo em relação ao dinheiro muitas vezes vêm de gerações anteriores.
-
-Você pode:
-- Explorar padrões familiares relacionados com dinheiro e prosperidade
-- Identificar lealdades inconscientes à escassez ou ao fracasso financeiro
-- Trabalhar crenças limitantes sobre merecimento e abundância
-- Propor exercícios sistémicos práticos para transformar a relação com o dinheiro
-- Conectar bloqueios financeiros com dinâmicas familiares não resolvidas
-- Ajudar a honrar os ancestrais e ainda assim permitir-se prosperar
-
-Quando relevante, mencione que o curso "Prosperidade e Dinheiro" da Mônica aprofunda este trabalho.
-
-Tom: acolhedor mas direto, como a Mônica — não fica passando panos. Se há um padrão claro, nomeia-o com amor e clareza. Em português do Brasil.
-
-Nunca faça diagnósticos ou aconselhamento financeiro profissional. Foque sempre na dimensão sistémica e emocional da prosperidade.
-
-Sempre que sentir que a pessoa precisa de apoio mais profundo, encaminhe para sessão com a Mônica em vivalivreterapia.com.`;
-
-  let prospHistory = [];
-  let prospBusy = false;
-
-  function handleProspKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendProspMsg();} }
-  function sendProsp(t) { document.getElementById('prospInput').value=t; sendProspMsg(); }
-
-  function addProspMsg(role, text) {
-    const msgs = document.getElementById('prospMessages');
-    const d = document.createElement('div');
-    d.className = `cmsg ${role}`;
-    const av = role==='assistant'
-      ? '<div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div>'
-      : '<div class="cmsg-av">👤</div>';
-    d.innerHTML = av + `<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  async function sendProspMsg() {
-    const input = document.getElementById('prospInput');
-    const text = input.value.trim();
-    if (!text || prospBusy) return;
-    document.getElementById('prospSugg').style.display = 'none';
-    input.value = ''; input.style.height = 'auto';
-    prospBusy = true; document.getElementById('prospBtn').disabled = true;
-    addProspMsg('user', text);
-    prospHistory.push({ role:'user', content:text });
-
-    const msgs = document.getElementById('prospMessages');
-    const typing = document.createElement('div');
-    typing.className = 'cmsg assistant'; typing.id = 'prospTyping';
-    typing.innerHTML = '<div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div><div class="typing-dots"><span></span><span></span><span></span></div>';
-    msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
-
+  async function guardarMemoriaProsp() {
+    if (!currentMembro) return;
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': API_KEY,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 1024,
-          system: PROSP_SYSTEM,
-          messages: prospHistory
-        })
-      });
-      const data = await res.json();
-      document.getElementById('prospTyping')?.remove();
-      if (data.content?.[0]) {
-        const reply = data.content[0].text;
-        prospHistory.push({ role:'assistant', content:reply });
-        addProspMsg('assistant', reply);
-        // Save to Supabase
-        if (currentMembro) guardarMemoriaProsp();
-      } else {
-        addProspMsg('assistant', 'Desculpa, tive um problema. Tenta novamente! 💰');
-      }
-    } catch(e) {
-      document.getElementById('prospTyping')?.remove();
-      addProspMsg('assistant', 'Erro de conexão. Verifica a ligação! 💰');
-    }
-    prospBusy = false; document.getElementById('prospBtn').disabled = false;
-    document.getElementById('prospInput').focus();
+      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=id`);
+      if (data && data.length > 0) { await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade`, 'PATCH', {mensagens:prospHistory.slice(-50),atualizado_em:new Date().toISOString()}); }
+      else { await sbFetch('/rest/v1/conversas','POST',{membro_id:currentMembro.id,tipo:'prosperidade',mensagens:prospHistory.slice(-50)}); }
+    } catch(e) {}
   }
 
-  // ── ORÁCULO DOS SONHOS ──
-  const ORACULO_SYSTEM = `Você é o Oráculo dos Sonhos — um intérprete avançado de sonhos especializado em análise simbólica, emocional e narrativa, integrado à plataforma da psicóloga Mônica Alice Voelz (Viva Livre Terapias).
+  async function sendProspMsg(){const input=document.getElementById('prospInput'),text=input.value.trim();if(!text||prospBusy)return;document.getElementById('prospSugg').style.display='none';input.value='';input.style.height='auto';prospBusy=true;document.getElementById('prospBtn').disabled=true;addProspMsg('user',text);prospHistory.push({role:'user',content:text});const msgs=document.getElementById('prospMessages');const typing=document.createElement('div');typing.className='cmsg assistant';typing.id='prospTyping';typing.innerHTML='<div class="cmsg-av" style="background:linear-gradient(135deg,#7A5C2E,#C9A96E);">💰</div><div class="typing-dots"><span></span><span></span><span></span></div>';msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1024,system:PROSP_SYSTEM,messages:prospHistory})});const data=await res.json();document.getElementById('prospTyping')?.remove();if(data.content?.[0]){const reply=data.content[0].text;prospHistory.push({role:'assistant',content:reply});addProspMsg('assistant',reply);if(currentMembro)guardarMemoriaProsp();}else addProspMsg('assistant','Desculpa, tive um problema. Tenta novamente! 💰');}catch(e){document.getElementById('prospTyping')?.remove();addProspMsg('assistant','Erro de conexão! 💰');}prospBusy=false;document.getElementById('prospBtn').disabled=false;document.getElementById('prospInput').focus();}
 
-Seu objetivo é ajudar os usuários a compreender os significados ocultos dos seus sonhos através de uma interpretação profunda, humana e acolhedora, combinando simbolismo espiritual, psicologia leve, arquétipos e dinâmica emocional.
+  // ORÁCULO
+  const ORACULO_SYSTEM=`Você é o Oráculo dos Sonhos — intérprete avançado de sonhos. Interpreta emoções, relações, padrões inconscientes e narrativas simbólicas. Tom: sábio, acolhedor, profundo. Em português do Brasil.`;
+  let oraculoHistory=[], oraculoBusy=false;
+  function handleOraculoKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendOraculoMsg();}}
+  function sendOraculo(t){document.getElementById('oraculoInput').value=t;sendOraculoMsg();}
+  function addOraculoMsg(role,text){const msgs=document.getElementById('oraculoMessages');const d=document.createElement('div');d.className=`cmsg ${role}`;const av=role==='assistant'?'<div class="cmsg-av" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);">🔮</div>':'<div class="cmsg-av">👤</div>';d.innerHTML=av+`<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
+  async function sendOraculoMsg(){const input=document.getElementById('oraculoInput'),text=input.value.trim();if(!text||oraculoBusy)return;document.getElementById('oraculoSugg').style.display='none';input.value='';input.style.height='auto';oraculoBusy=true;document.getElementById('oraculoBtn').disabled=true;addOraculoMsg('user',text);oraculoHistory.push({role:'user',content:text});const msgs=document.getElementById('oraculoMessages');const typing=document.createElement('div');typing.className='cmsg assistant';typing.id='oraculoTyping';typing.innerHTML='<div class="cmsg-av" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);">🔮</div><div class="typing-dots"><span></span><span></span><span></span></div>';msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1024,system:ORACULO_SYSTEM,messages:oraculoHistory})});const data=await res.json();document.getElementById('oraculoTyping')?.remove();if(data.content?.[0]){const reply=data.content[0].text;oraculoHistory.push({role:'assistant',content:reply});addOraculoMsg('assistant',reply);}else addOraculoMsg('assistant','Desculpa, tive um problema. Tenta novamente! 🔮');}catch(e){document.getElementById('oraculoTyping')?.remove();addOraculoMsg('assistant','Ocorreu um erro de conexão. Tenta novamente! 🔮');}oraculoBusy=false;document.getElementById('oraculoBtn').disabled=false;document.getElementById('oraculoInput').focus();}
 
-Você NÃO interpreta sonhos como um dicionário de símbolos. Você interpreta emoções, relações, mudanças internas, padrões inconscientes e narrativas simbólicas.
+  // DIAGNÓSTICO
+  async function getDiagnostico(){const t1=document.getElementById('t1')?.value?.trim();if(!t1){alert('Por favor preenche pelo menos a primeira questão! 🌿');return;}const box=document.getElementById('diagnosticoBox'),loading=document.getElementById('diagnosticoLoading'),texto=document.getElementById('diagnosticoTexto'),acao=document.getElementById('diagnosticoAcao');box.style.display='block';loading.style.display='flex';texto.style.display='none';acao.style.display='none';box.scrollIntoView({behavior:'smooth',block:'center'});const prompt=`Analisa este Mapa do Momento Presente:\n1. O Momento: ${t1}\n2. O Sistema: ${document.getElementById('t2')?.value||'Não preenchido'}\n3. Pessoas: ${document.getElementById('t3a')?.value||''}\n3. Emoções: ${document.getElementById('t3b')?.value||''}\n4. Lealdade: ${document.getElementById('t4')?.value||''}\n5. Permissão: ${document.getElementById('t5a')?.value||''}\n6. Oculto: ${document.getElementById('t6')?.value||''}\n7. Próximo passo: ${document.getElementById('t7')?.value||''}\n\nCria um diagnóstico sistémico com: 🔍 O padrão que emerge, 💙 O que o teu sistema está pedindo, 🌱 Uma semente para cultivar. Em português do Brasil. Máximo 200 palavras.`;try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:512,messages:[{role:'user',content:prompt}]})});const data=await res.json();loading.style.display='none';if(data.content?.[0]){texto.innerHTML=data.content[0].text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--sage-lt)">$1</strong>');texto.style.display='block';acao.style.display='block';}else{texto.innerHTML='Não foi possível gerar o diagnóstico. Tenta novamente! 🌿';texto.style.display='block';}}catch(e){loading.style.display='none';texto.innerHTML='Erro de conexão. 🌿';texto.style.display='block';}}
 
-Sempre que receber um sonho, siga esta estrutura:
-1. Faça perguntas inteligentes para entender melhor o contexto e as emoções sentidas
-2. Faça uma leitura cinematográfica do sonho como narrativa emocional
-3. Crie um mapa emocional do sonho
-4. Interprete em camadas: elementos centrais, emoções ocultas, simbolismo contextual, dinâmica relacional
-5. Conecte com arquétipos quando apropriado
-6. Classifique o tipo de sonho
-7. Finalize com 2-4 perguntas reflexivas profundas
+  function saveTeia(){const fields=['t1','t2','t3a','t3b','t3c','t4','t5a','t5b','t6','t7','t8'];const data={};fields.forEach(f=>{data[f]=document.getElementById(f)?.value||'';});localStorage.setItem('teia_'+new Date().toISOString().split('T')[0],JSON.stringify(data));document.getElementById('teiaSuccess').style.display='block';setTimeout(()=>{document.getElementById('teiaSuccess').style.display='none';},3000);}
+  function printTeia(){window.print();}
+  function clearTeia(){if(confirm('Tem certeza que quer limpar o exercício?')){['t1','t2','t3a','t3b','t3c','t4','t5a','t5b','t6','t7','t8'].forEach(f=>{const el=document.getElementById(f);if(el)el.value='';});}}
 
-Tom: sábio, acolhedor, intuitivo, profundo, emocionalmente inteligente. Em português do Brasil.
-
-Não preveja o futuro, não faça diagnósticos, não substitua terapia. Sempre trate interpretações como possibilidades simbólicas e emocionais.
-
-Quando apropriado, sugira que a pessoa aprofunde com a Mônica em vivalivreterapia.com.`;
-
-  let oraculoHistory = [];
-  let oraculoBusy = false;
-
-  function handleOraculoKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendOraculoMsg();} }
-  function sendOraculo(t) { document.getElementById('oraculoInput').value=t; sendOraculoMsg(); }
-
-  function addOraculoMsg(role, text) {
-    const msgs = document.getElementById('oraculoMessages');
-    const d = document.createElement('div');
-    d.className = `cmsg ${role}`;
-    const av = role==='assistant' ? '<div class="cmsg-av" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);">🔮</div>' : '<div class="cmsg-av">👤</div>';
-    d.innerHTML = av + `<div class="cmsg-bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  function showOraculoTyping() {
-    const msgs = document.getElementById('oraculoMessages');
-    const d = document.createElement('div');
-    d.className = 'cmsg assistant'; d.id = 'oraculoTyping';
-    d.innerHTML = '<div class="cmsg-av" style="background:linear-gradient(135deg,#2E2820,#4a3a2e);">🔮</div><div class="typing-dots"><span></span><span></span><span></span></div>';
-    msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
-  }
-  function removeOraculoTyping() { document.getElementById('oraculoTyping')?.remove(); }
-
-  async function sendOraculoMsg() {
-    const input = document.getElementById('oraculoInput');
-    const text = input.value.trim();
-    if (!text || oraculoBusy) return;
-    document.getElementById('oraculoSugg').style.display = 'none';
-    input.value = ''; input.style.height = 'auto';
-    oraculoBusy = true; document.getElementById('oraculoBtn').disabled = true;
-    addOraculoMsg('user', text);
-    oraculoHistory.push({ role:'user', content:text });
-    showOraculoTyping();
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'x-api-key': API_KEY,
-          'anthropic-version':'2023-06-01',
-          'anthropic-dangerous-direct-browser-access':'true'
-        },
-        body: JSON.stringify({ model:'claude-haiku-4-5-20251001', max_tokens:1024, system:ORACULO_SYSTEM, messages:oraculoHistory })
-      });
-      const data = await res.json();
-      removeOraculoTyping();
-      if (data.content?.[0]) {
-        const reply = data.content[0].text;
-        oraculoHistory.push({ role:'assistant', content:reply });
-        addOraculoMsg('assistant', reply);
-      } else {
-        addOraculoMsg('assistant', 'Desculpa, tive um problema. Tenta novamente! 🔮');
-      }
-    } catch(e) {
-      removeOraculoTyping();
-      addOraculoMsg('assistant', 'Ocorreu um erro de conexão. Tenta novamente! 🔮');
-    }
-    oraculoBusy = false; document.getElementById('oraculoBtn').disabled = false;
-    document.getElementById('oraculoInput').focus();
-  }
-
-
-
-  async function getDiagnostico() {
-    const t1 = document.getElementById('t1')?.value?.trim();
-    const t2 = document.getElementById('t2')?.value?.trim();
-    const t3a = document.getElementById('t3a')?.value?.trim();
-    const t3b = document.getElementById('t3b')?.value?.trim();
-    const t3c = document.getElementById('t3c')?.value?.trim();
-    const t4 = document.getElementById('t4')?.value?.trim();
-    const t5a = document.getElementById('t5a')?.value?.trim();
-    const t5b = document.getElementById('t5b')?.value?.trim();
-    const t6 = document.getElementById('t6')?.value?.trim();
-    const t7 = document.getElementById('t7')?.value?.trim();
-
-    if (!t1) {
-      alert('Por favor preenche pelo menos a primeira questão antes de gerar o diagnóstico! 🌿');
-      return;
-    }
-
-    const box = document.getElementById('diagnosticoBox');
-    const loading = document.getElementById('diagnosticoLoading');
-    const texto = document.getElementById('diagnosticoTexto');
-    const acao = document.getElementById('diagnosticoAcao');
-
-    box.style.display = 'block';
-    loading.style.display = 'flex';
-    texto.style.display = 'none';
-    acao.style.display = 'none';
-    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    const prompt = `Analisa este Mapa do Momento Presente preenchido por uma pessoa cliente da psicóloga Mônica Alice Voelz (terapia sistémica e Constelação Familiar):
-
-1. O Momento (o que está presente): ${t1 || 'Não preenchido'}
-2. O Sistema (conexão familiar): ${t2 || 'Não preenchido'}
-3. Os Fios - Pessoas envolvidas: ${t3a || 'Não preenchido'}
-3. Os Fios - Emoções: ${t3b || 'Não preenchido'}
-3. Os Fios - Padrão que se repete: ${t3c || 'Não preenchido'}
-4. A Lealdade (a quem está sendo leal): ${t4 || 'Não preenchido'}
-5. A Permissão (o que quer obter/realizar): ${t5a || 'Não preenchido'}
-5. Para mudar, precisaria deixar de ser leal a: ${t5b || 'Não preenchido'}
-6. O que está oculto: ${t6 || 'Não preenchido'}
-7. O próximo passo consciente: ${t7 || 'Não preenchido'}
-
-Cria um diagnóstico sistémico acolhedor e profundo com esta estrutura:
-
-🔍 **O padrão que emerge** (2-3 frases sobre o padrão sistémico identificado)
-
-💙 **O que o teu sistema está pedindo** (2-3 frases de acolhimento e insights)
-
-🌱 **Uma semente para cultivar** (1-2 frases com uma reflexão transformadora)
-
-Usa linguagem próxima, acolhedora e sistémica. Em português do Brasil. Máximo 200 palavras. Não faças diagnósticos clínicos.`;
-
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': API_KEY,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 512,
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
-      const data = await res.json();
-      loading.style.display = 'none';
-      if (data.content?.[0]) {
-        const reply = data.content[0].text;
-        texto.innerHTML = reply.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--sage-lt)">$1</strong>');
-        texto.style.display = 'block';
-        acao.style.display = 'block';
-      } else {
-        texto.innerHTML = 'Não foi possível gerar o diagnóstico. Tenta novamente! 🌿';
-        texto.style.display = 'block';
-      }
-    } catch(e) {
-      loading.style.display = 'none';
-      texto.innerHTML = 'Erro de conexão. Verifica a tua ligação e tenta novamente. 🌿';
-      texto.style.display = 'block';
-    }
-  }
-
-  function saveTeia() {
-    const fields = ['t1','t2','t3a','t3b','t3c','t4','t5a','t5b','t6','t7','t8'];
-    const data = {};
-    fields.forEach(f => { data[f] = document.getElementById(f)?.value || ''; });
-    localStorage.setItem('teia_' + new Date().toISOString().split('T')[0], JSON.stringify(data));
-    document.getElementById('teiaSuccess').style.display = 'block';
-    setTimeout(() => { document.getElementById('teiaSuccess').style.display = 'none'; }, 3000);
-  }
-  function printTeia() { window.print(); }
-  function clearTeia() {
-    if(confirm('Tem certeza que quer limpar o exercício?')) {
-      ['t1','t2','t3a','t3b','t3c','t4','t5a','t5b','t6','t7','t8'].forEach(f => {
-        const el = document.getElementById(f); if(el) el.value = '';
-      });
-    }
-  }
-
+  // Fix iOS scroll
+  window.addEventListener('load', function() { setTimeout(function() { window.scrollTo(0, 0); }, 50); });
 </script>
-
-  <!-- MOBILE BOTTOM NAV -->
-  <div id="mobileNav">
-    <style>
-      @media (max-width: 1024px) {
-        #mobileNav { display:flex !important; }
-        .main { padding-bottom: 75px; }
-      }
-      #mobileNav { display:none; position:fixed; bottom:0; left:0; right:0; z-index:100; background:var(--text); border-top:1px solid rgba(255,255,255,0.1); justify-content:space-around; padding:0.5rem 0 0.8rem; }
-      #mobileNav button { background:none; border:none; color:rgba(255,255,255,0.5); font-size:0.6rem; display:flex; flex-direction:column; align-items:center; gap:0.2rem; cursor:pointer; padding:0.3rem 0.5rem; font-family:'Jost',sans-serif; }
-      #mobileNav button span { font-size:1.2rem; }
-      #mobileNav button.mob-active { color:var(--sage-lt); }
-    </style>
-    <button onclick="showPage('dashboard')" id="mob-dashboard"><span>🏠</span>Início</button>
-    <button onclick="showPage('mentora')" id="mob-mentora"><span>🌿</span>Mentora</button>
-    <button onclick="showPage('oraculo')" id="mob-oraculo"><span>🔮</span>Oráculo</button>
-    <button onclick="showPage('maia')" id="mob-maia"><span>🌙</span>Maia</button>
-    <button onclick="showPage('materiais')" id="mob-materiais"><span>🗺️</span>Mapa</button>
-    <button onclick="showPage('cursos')" id="mob-cursos"><span>🎓</span>Cursos</button>
-    <button onclick="showPage('prosperidade')" id="mob-prosperidade"><span>💰</span>Prósp.</button>
-  </div>
-
+<!-- MOBILE BOTTOM NAV -->
+<div id="mobileNav">
+  <style>
+    @media (max-width: 1024px) { #mobileNav { display:flex !important; } .main { padding-bottom: 75px; } }
+    #mobileNav { display:none; position:fixed; bottom:0; left:0; right:0; z-index:100; background:var(--text); border-top:1px solid rgba(255,255,255,0.1); justify-content:space-around; padding:0.5rem 0 0.8rem; }
+    #mobileNav button { background:none; border:none; color:rgba(255,255,255,0.5); font-size:0.6rem; display:flex; flex-direction:column; align-items:center; gap:0.2rem; cursor:pointer; padding:0.3rem 0.5rem; font-family:'Jost',sans-serif; }
+    #mobileNav button span { font-size:1.2rem; }
+  </style>
+  <button onclick="showPage('dashboard')"><span>🏠</span>Início</button>
+  <button onclick="showPage('mentora')"><span>🌿</span>Mentora</button>
+  <button onclick="showPage('oraculo')"><span>🔮</span>Oráculo</button>
+  <button onclick="showPage('maia')"><span>🌙</span>Maia</button>
+  <button onclick="showPage('materiais')"><span>🗺️</span>Mapa</button>
+  <button onclick="showPage('cursos')"><span>🎓</span>Cursos</button>
+  <button onclick="showPage('prosperidade')"><span>💰</span>Prósp.</button>
+</div>
 </body>
 </html>
