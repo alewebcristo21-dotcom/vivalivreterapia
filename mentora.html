@@ -22,12 +22,11 @@
     }
 
     html { scroll-behavior: smooth; }
-    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; min-height: 100dvh; }
+    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
 
     /* ── LOGIN ── */
     #loginPage {
       min-height: 100vh;
-      min-height: 100dvh;
       display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, #2E2820 0%, #3d3028 50%, #4a3a2e 100%);
       position: relative; overflow: hidden; padding: 2rem;
@@ -114,10 +113,10 @@
     .login-link a { color: var(--sage-lt); text-decoration: none; }
 
     /* ── APP ── */
-    #appPage { display: none; min-height: 100vh; min-height: 100dvh; }
+    #appPage { display: none; min-height: 100vh; }
 
     /* Sidebar */
-    .layout { display: flex; min-height: 100vh; min-height: 100dvh; }
+    .layout { display: flex; min-height: 100vh; }
     .sidebar {
       width: 280px; flex-shrink: 0;
       background: var(--text);
@@ -197,7 +196,7 @@
     .logout-btn:hover { color: rgba(253,250,246,0.7); }
 
     /* Main content */
-    .main { margin-left: 280px; flex: 1; min-height: 100vh; min-height: 100dvh; }
+    .main { margin-left: 280px; flex: 1; min-height: 100vh; }
     .topbar {
       background: var(--white); border-bottom: 1px solid var(--sand);
       padding: 1.2rem 2.5rem;
@@ -218,8 +217,8 @@
     .topbar-mavc:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,122,82,0.3); }
 
     .page-content { padding: 2.5rem; display: none; }
-    .page-content.active { display: block !important; animation: fadeIn .4s ease; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .page-content.active { display: block; animation: fadeIn .4s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
     /* ── DASHBOARD ── */
     .welcome-hero {
@@ -364,7 +363,7 @@
     .material-action.em-breve:hover { border-color: var(--sand); color: var(--text-lt); }
 
     /* ── MENTORA ── */
-    .mentora-layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; height: calc(100vh - 160px); height: calc(100dvh - 160px); }
+    .mentora-layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; height: calc(100vh - 160px); }
     .chat-area {
       background: var(--white); border-radius: 1.5rem;
       border: 1px solid var(--sand); display: flex; flex-direction: column;
@@ -656,8 +655,8 @@
       <!-- CURSOS -->
       <div class="page-content" id="page-cursos">
         <div class="section-header">
-          <h3>Os nossos <em>Cursos</em></h3>
-          <p>Conteúdo exclusivo criado pela Mônica para o seu processo de transformação.</p>
+          <h3>A nossa <em>Jornada</em> de Cursos</h3>
+          <p>Uma escola online de desenvolvimento humano — cada curso leva naturalmente ao próximo. Desbloqueie o seu próximo nível! 🔒</p>
         </div>
         <div class="cursos-grid">
           <div class="curso-card">
@@ -1064,9 +1063,6 @@
       const name = user || 'Membro';
       document.getElementById('sidebarName').textContent = name;
       document.getElementById('heroName').textContent = name;
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
     } else {
       document.getElementById('loginError').style.display = 'block';
     }
@@ -1081,16 +1077,12 @@
     document.getElementById('loginPage').style.display = 'flex';
     document.getElementById('loginPass').value = '';
     document.getElementById('loginError').style.display = 'none';
-    window.scrollTo(0, 0);
   }
 
   function showPage(id) {
     document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
-    window.scrollTo({top: 0, behavior: 'instant'});
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
     const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
@@ -1311,13 +1303,14 @@ O utilizador tem o seguinte Kin Maia:
 
 Responde às perguntas sobre o Kin desta pessoa de forma profunda, poética e acolhedora. Conecta a energia maia com o autoconhecimento e crescimento pessoal. Quando relevante, sugere aprofundar com sessão terapêutica com a Mônica em vivalivreterapia.com.
 
-Tom: místico mas PRÁTICO e direto. Em português do Brasil. Máximo 200 palavras por resposta.
+Tom: místico, PRÁTICO, direto e energético. Em português do Brasil. Máximo 200 palavras por resposta.
 
 IMPORTANTE: Quando a pessoa pedir datas específicas ou dias favoráveis para algo concreto (negócio, viagem, decisão):
 1. Calcula os próximos dias favoráveis com base nos selos maias compatíveis com o Kin da pessoa
 2. Sugere datas CONCRETAS nos próximos 30 dias
 3. Explica brevemente PORQUÊ cada data é favorável
-4. Seja direto e útil — não redirecione para outros recursos quando consegues responder!`;
+4. Seja direto e útil — não redirecione para outros recursos quando consegues responder!
+5. Se a pessoa estiver em dúvida ou indecisa, provoque: "O Calendário Maia mostra o melhor momento — mas a decisão é sua. O que está te impedindo de agir?"`;
 
     // Show typing
     const msgs = document.getElementById('maiaChatMessages');
