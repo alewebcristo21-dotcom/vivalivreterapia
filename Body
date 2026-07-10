@@ -22,11 +22,11 @@
     }
 
     html { scroll-behavior: smooth; }
-    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; min-height: 100dvh; }
 
     /* ── LOGIN ── */
     #loginPage {
-      min-height: 100vh;
+     min-height: 100dvh;
       display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, #2E2820 0%, #3d3028 50%, #4a3a2e 100%);
       position: relative; overflow: hidden; padding: 2rem;
@@ -196,7 +196,7 @@
     .logout-btn:hover { color: rgba(253,250,246,0.7); }
 
     /* Main content */
-    .main { margin-left: 280px; flex: 1; min-height: 100vh; }
+    .main { min-height: 100dvh; }
     .topbar {
       background: var(--white); border-bottom: 1px solid var(--sand);
       padding: 1.2rem 2.5rem;
