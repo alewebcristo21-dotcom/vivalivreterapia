@@ -73,7 +73,7 @@
     .topbar-right { display: flex; align-items: center; gap: 1rem; }
     .topbar-mavc { display: flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, var(--sage-dk), #3d6140); color: var(--white); border: none; border-radius: 2rem; padding: 0.5rem 1.2rem; font-size: 0.78rem; font-weight: 500; cursor: pointer; font-family: 'Jost', sans-serif; transition: all .3s; letter-spacing: 0.08em; }
     .topbar-mavc:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,122,82,0.3); }
-    .page-content { padding: 2.5rem; display: none; }
+    .page-content { padding: 2.5rem; display: none; scroll-margin-top: 0; }
     .page-content.active { display: block !important; animation: fadeIn .3s ease; }
     @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
     .welcome-hero { background: linear-gradient(135deg, var(--text) 0%, #3d3028 100%); border-radius: 2rem; padding: 3rem; position: relative; overflow: hidden; margin-bottom: 2rem; color: var(--white); }
@@ -592,6 +592,8 @@
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
+    document.querySelector('.main')?.scrollTo(0, 0);
+    document.querySelector('.topbar')?.scrollIntoView({block:'start'});
     const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', adminPanel:'Gerir Membros 👥' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
@@ -855,7 +857,7 @@
         <!-- Criar novo membro -->
         <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;margin-bottom:2rem;">
           <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;margin-bottom:1.5rem;">➕ Criar novo membro</h4>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-bottom:1rem;">
             <div>
               <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Nome completo</label>
               <input type="text" id="adminNome" placeholder="Nome do membro" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
