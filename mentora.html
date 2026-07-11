@@ -483,6 +483,48 @@
           </div>
         </div>
       </div>
+
+      <!-- PAINEL ADMIN -->
+      <div class="page-content" id="page-adminPanel">
+        <div class="section-header">
+          <h3>Gerir <em>Membros</em></h3>
+          <p>Crie e gerencie os acessos dos membros da Viva Livre Terapias.</p>
+        </div>
+
+        <!-- Criar novo membro -->
+        <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;margin-bottom:2rem;">
+          <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;margin-bottom:1.5rem;">➕ Criar novo membro</h4>
+          <div style="display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:1rem;max-width:500px;">
+            <div>
+              <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Nome completo</label>
+              <input type="text" id="adminNome" placeholder="Nome do membro" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
+            </div>
+            <div>
+              <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Email</label>
+              <input type="email" id="adminEmail" placeholder="email@exemplo.com" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
+            </div>
+            <div>
+              <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Senha</label>
+              <input type="text" id="adminSenha" placeholder="Senha para o membro" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
+            </div>
+            <div>
+              <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Acesso até (opcional)</label>
+              <input type="date" id="adminExpiracao" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
+            </div>
+          </div>
+          <button onclick="criarMembro()" style="background:linear-gradient(135deg,#3d6140,var(--sage-dk));color:white;border:none;border-radius:3rem;padding:0.9rem 2rem;font-family:'Jost',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;">✾ Criar membro</button>
+          <p id="adminMsg" style="display:none;margin-top:1rem;font-size:0.85rem;padding:0.8rem 1rem;border-radius:0.8rem;"></p>
+        </div>
+
+        <!-- Lista de membros -->
+        <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+            <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;">👥 Membros registados</h4>
+            <button onclick="carregarMembros()" style="background:var(--cream);border:1.5px solid var(--sand);border-radius:2rem;padding:0.5rem 1.2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;color:var(--text-lt);">🔄 Atualizar</button>
+          </div>
+          <div id="adminMembros" style="font-size:0.85rem;color:var(--text-lt);">A carregar...</div>
+        </div>
+      </div>
     </main>
   </div>
 </div>
@@ -848,48 +890,6 @@
   // Fix iOS scroll
   window.addEventListener('load', function() { setTimeout(function() { window.scrollTo(0, 0); }, 50); });
 </script>
-
-      <!-- PAINEL ADMIN -->
-      <div class="page-content" id="page-adminPanel">
-        <div class="section-header">
-          <h3>Gerir <em>Membros</em></h3>
-          <p>Crie e gerencie os acessos dos membros da Viva Livre Terapias.</p>
-        </div>
-
-        <!-- Criar novo membro -->
-        <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;margin-bottom:2rem;">
-          <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;margin-bottom:1.5rem;">➕ Criar novo membro</h4>
-          <div style="display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:1rem;max-width:500px;">
-            <div>
-              <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Nome completo</label>
-              <input type="text" id="adminNome" placeholder="Nome do membro" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
-            </div>
-            <div>
-              <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Email</label>
-              <input type="email" id="adminEmail" placeholder="email@exemplo.com" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
-            </div>
-            <div>
-              <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Senha</label>
-              <input type="text" id="adminSenha" placeholder="Senha para o membro" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
-            </div>
-            <div>
-              <label style="display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:0.5rem;">Acesso até (opcional)</label>
-              <input type="date" id="adminExpiracao" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
-            </div>
-          </div>
-          <button onclick="criarMembro()" style="background:linear-gradient(135deg,#3d6140,var(--sage-dk));color:white;border:none;border-radius:3rem;padding:0.9rem 2rem;font-family:'Jost',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;">✾ Criar membro</button>
-          <p id="adminMsg" style="display:none;margin-top:1rem;font-size:0.85rem;padding:0.8rem 1rem;border-radius:0.8rem;"></p>
-        </div>
-
-        <!-- Lista de membros -->
-        <div style="background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
-            <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;">👥 Membros registados</h4>
-            <button onclick="carregarMembros()" style="background:var(--cream);border:1.5px solid var(--sand);border-radius:2rem;padding:0.5rem 1.2rem;font-family:'Jost',sans-serif;font-size:0.8rem;cursor:pointer;color:var(--text-lt);">🔄 Atualizar</button>
-          </div>
-          <div id="adminMembros" style="font-size:0.85rem;color:var(--text-lt);">A carregar...</div>
-        </div>
-      </div>
 
 <!-- MOBILE BOTTOM NAV -->
 <div id="mobileNav">
