@@ -399,8 +399,13 @@
             <label for="email">E-mail</label>
             <input type="email" id="email" name="email" autocomplete="email" placeholder="seu@email.com" required>
           </div>
+          <div class="field" style="flex-direction:row;align-items:flex-start;gap:10px;">
+            <input type="checkbox" id="consentimento" required style="margin-top:3px;width:16px;height:16px;flex-shrink:0;accent-color:var(--sage-dk);">
+            <label for="consentimento" style="font-size:0.78rem;color:var(--text-lt);text-transform:none;letter-spacing:normal;font-weight:300;line-height:1.5;">Li e aceito a <a href="/privacidade" target="_blank" style="color:var(--sage-dk);">Política de Privacidade</a> e autorizo o envio do guia e de comunicações por email.</label>
+          </div>
           <button type="submit" class="btn" id="btn-enviar">✾ Quero meu guia gratuito</button>
           <p id="erro-envio">Não foi possível enviar agora. Tente novamente em instantes.</p>
+          <p id="erro-consentimento" style="display:none;color:#c0392b;font-size:0.85rem;">Por favor aceite a Política de Privacidade para continuar.</p>
           <p class="form-nota">Sem spam. Você pode cancelar quando quiser.</p>
         </form>
         <div id="mensagem-sucesso">
@@ -415,7 +420,7 @@
 </section>
 
 <footer>
-  ✾ Viva Livre Terapias · Mônica Alice Voelz · <a href="https://vivalivreterapia.com">vivalivreterapia.com</a>
+  ✾ Viva Livre Terapias · Mônica Alice Voelz · <a href="https://vivalivreterapia.com">vivalivreterapia.com</a> · <a href="/privacidade">Política de Privacidade</a>
 </footer>
 
 <script>
@@ -452,9 +457,12 @@
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
     erro.classList.remove('ativo');
+    document.getElementById('erro-consentimento').style.display = 'none';
     const nome = document.getElementById('nome').value.trim();
     const email = document.getElementById('email').value.trim();
+    const consentiu = document.getElementById('consentimento').checked;
     if (!nome || !email) return;
+    if (!consentiu) { document.getElementById('erro-consentimento').style.display = 'block'; return; }
 
     btn.disabled = true;
     btn.textContent = 'Enviando...';

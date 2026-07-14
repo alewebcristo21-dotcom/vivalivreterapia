@@ -6,13 +6,20 @@
   <title>Viva Livre Terapias | Psicóloga Online Portugal e São Paulo | Mônica Alice Voelz</title>
   <meta name="description" content="Psicóloga e terapeuta sistémica online para brasileiros em Portugal e no Brasil. Constelação Familiar, terapia emocional e terapia integrativa. Mônica Alice Voelz · CRP-07/29472" />
   <meta name="keywords" content="psicóloga online, psicóloga para brasileiros em Portugal, psicóloga brasileira Portugal, psicóloga São Paulo, constelação familiar online, terapia sistémica, terapeuta sistémico Portugal, terapia emocional online, terapia integrativa, brasileiros em Portugal, brasileiros nos EUA, brasileiros Estados Unidos, Viva Livre Terapias, Mônica Alice Voelz" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WVRR17Z88D"></script>
+  <!-- Google Analytics: só carrega depois do consentimento de cookies (ver banner no fim da página) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-WVRR17Z88D');
+    window.__loadGA = function(){
+      if (window.__gaLoaded) return;
+      window.__gaLoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-WVRR17Z88D';
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', 'G-WVRR17Z88D');
+    };
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
@@ -869,6 +876,7 @@
         <li><a href="https://www.youtube.com/@vivalivreterapias" target="_blank">YouTube: @vivalivreterapias</a></li>
         <li><a href="#">Vila Nova de Gaia, Porto</a></li>
         <li><a href="#">Portugal 🇵🇹</a></li>
+        <li><a href="/privacidade">Política de Privacidade</a></li>
       </ul>
     </div>
   </div>
@@ -922,6 +930,75 @@
       document.getElementById('navLinks').classList.remove('open');
       document.getElementById('hamburger').classList.remove('active');
     }
+  </script>
+
+  <!-- ── COOKIE CONSENT BANNER ── -->
+  <style>
+    #cookieBanner{
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 9999;
+      background: var(--text, #2E2820); color: #fff;
+      padding: 1.1rem 1.5rem; display: none;
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+    }
+    #cookieBanner.show{ display: flex; }
+    #cookieBanner{ flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: space-between; font-family:'Jost',sans-serif; }
+    #cookieBanner p{ margin: 0; font-size: 0.85rem; line-height: 1.6; color: rgba(255,255,255,0.88); max-width: 640px; }
+    #cookieBanner a{ color: #C9A96E; text-decoration: underline; }
+    #cookieBtns{ display:flex; gap: 0.6rem; flex-wrap: wrap; }
+    #cookieBtns button{
+      font-family:'Jost',sans-serif; font-size: 0.82rem; font-weight: 500;
+      padding: 0.65rem 1.4rem; border-radius: 999px; cursor: pointer; border: none;
+      letter-spacing: 0.03em;
+    }
+    #cookieAccept{ background: linear-gradient(135deg,#3d6140,#4F7A52); color: #fff; }
+    #cookieReject{ background: none; border: 1.5px solid rgba(255,255,255,0.35); color: #fff; }
+    @media (max-width: 640px){ #cookieBanner{ flex-direction: column; align-items: flex-start; } }
+  </style>
+  <div id="cookieBanner">
+    <p>🍪 Utilizamos cookies essenciais ao funcionamento do site e, com o seu consentimento, cookies de análise (Google Analytics) para entender como o site é utilizado. Pode escolher livremente. Saiba mais na <a href="/privacidade">Política de Privacidade</a>.</p>
+    <div id="cookieBtns">
+      <button id="cookieReject" onclick="window.__cookieChoice(false)">Rejeitar</button>
+      <button id="cookieAccept" onclick="window.__cookieChoice(true)">Aceitar</button>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var KEY = 'vlt_cookie_consent';
+      var SIX_MONTHS = 1000 * 60 * 60 * 24 * 30 * 6;
+
+      function getConsent(){
+        try{
+          var raw = localStorage.getItem(KEY);
+          if(!raw) return null;
+          var data = JSON.parse(raw);
+          if(Date.now() - data.ts > SIX_MONTHS) return null;
+          return data.choice;
+        }catch(e){ return null; }
+      }
+      function setConsent(choice){
+        try{ localStorage.setItem(KEY, JSON.stringify({choice: choice, ts: Date.now()})); }catch(e){}
+      }
+
+      window.__cookieChoice = function(accepted){
+        setConsent(accepted);
+        document.getElementById('cookieBanner').classList.remove('show');
+        if(accepted && window.__loadGA) window.__loadGA();
+      };
+
+      window.resetCookieConsent = function(){
+        try{ localStorage.removeItem(KEY); }catch(e){}
+        window.location.href = '/';
+      };
+
+      document.addEventListener('DOMContentLoaded', function(){
+        var consent = getConsent();
+        if(consent === null){
+          document.getElementById('cookieBanner').classList.add('show');
+        } else if(consent === true && window.__loadGA){
+          window.__loadGA();
+        }
+      });
+    })();
   </script>
 </body>
 </html>
