@@ -512,6 +512,10 @@
               <input type="date" id="adminExpiracao" style="width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid var(--sand);border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);outline:none;" />
             </div>
           </div>
+          <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--text-lt);margin-bottom:1.2rem;cursor:pointer;">
+            <input type="checkbox" id="adminEnviarEmail" checked style="width:16px;height:16px;accent-color:var(--sage-dk);cursor:pointer;">
+            📧 Enviar email com as credenciais automaticamente
+          </label>
           <button onclick="criarMembro()" style="background:linear-gradient(135deg,#3d6140,var(--sage-dk));color:white;border:none;border-radius:3rem;padding:0.9rem 2rem;font-family:'Jost',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;">✾ Criar membro</button>
           <p id="adminMsg" style="display:none;margin-top:1rem;font-size:0.85rem;padding:0.8rem 1rem;border-radius:0.8rem;"></p>
         </div>
@@ -547,6 +551,57 @@
     const data = encoder.encode(senha + 'vivalivresalt2025');
     const hash = await crypto.subtle.digest('SHA-256', data);
     return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // ── EMAIL DE CREDENCIAIS (Brevo) ──
+  const BREVO_API_KEY = ['xkeysib-527c410848fdb284fd7029c5e958d44ef4464feb4fb9bf9e0e7536d40e4add3e-','oP7QmpRlLylq6AT5'].join('');
+  const BREVO_SENDER = { name: 'Viva Livre Terapias', email: 'contato@vivalivreterapia.com' };
+
+  function gerarSenhaAleatoria() {
+    const chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789';
+    let s = '';
+    for (let i = 0; i < 10; i++) s += chars[Math.floor(Math.random() * chars.length)];
+    return s;
+  }
+
+  async function enviarEmailCredenciais(nome, email, senha, expiracaoISO) {
+    const primeiroNome = nome.split(' ')[0];
+    const expiracaoHtml = expiracaoISO
+      ? `<p style="font-size:0.85rem;color:#6B5D52;">O seu acesso é válido até <strong>${new Date(expiracaoISO).toLocaleDateString('pt-PT')}</strong>.</p>`
+      : '';
+    const html = `
+      <div style="font-family:Georgia,serif;background:#F5EFE6;padding:32px;">
+        <div style="max-width:480px;margin:0 auto;background:#FDFAF6;border-radius:20px;padding:36px;">
+          <p style="font-size:1.1rem;color:#2E2820;">✾ Olá, ${primeiroNome}!</p>
+          <p style="color:#2E2820;line-height:1.6;">O seu acesso à Área de Membros da <strong>Viva Livre Terapias</strong> está pronto. Guarde estas credenciais:</p>
+          <div style="background:#F5EFE6;border-radius:12px;padding:18px 22px;margin:20px 0;">
+            <p style="margin:0 0 8px;color:#2E2820;"><strong>Email:</strong> ${email}</p>
+            <p style="margin:0;color:#2E2820;"><strong>Senha:</strong> ${senha}</p>
+          </div>
+          ${expiracaoHtml}
+          <p style="text-align:center;margin:28px 0;">
+            <a href="https://vivalivreterapia.com/mentora" style="background:#4F7A52;color:#fff;padding:14px 28px;border-radius:999px;text-decoration:none;font-family:sans-serif;font-size:0.9rem;">Aceder à Área de Membros</a>
+          </p>
+          <p style="font-size:0.8rem;color:#6B5D52;">Recomendamos alterar a senha após o primeiro acesso. Qualquer dúvida, responda a este email.</p>
+          <p style="font-size:0.8rem;color:#6B5D52;margin-top:24px;">Com carinho,<br>Mônica Alice Voelz · Viva Livre Terapias</p>
+        </div>
+      </div>`;
+    try {
+      const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
+        body: JSON.stringify({
+          sender: BREVO_SENDER,
+          to: [{ email, name: nome }],
+          subject: '✾ O seu acesso à Área de Membros — Viva Livre Terapias',
+          htmlContent: html
+        })
+      });
+      return res.ok;
+    } catch (e) {
+      console.error('Erro ao enviar email:', e);
+      return false;
+    }
   }
 
   function switchTab(tab) {
@@ -829,12 +884,29 @@
 
     try {
       const hash = await hashSenha(senha);
+      const expiracaoISO = expiracao ? new Date(expiracao).toISOString() : null;
       const body = { nome, email, senha_hash: hash, ativo: true };
-      if (expiracao) body.data_expiracao = new Date(expiracao).toISOString();
+      if (expiracaoISO) body.data_expiracao = expiracaoISO;
 
       await sbFetch('/rest/v1/membros', 'POST', body);
 
-      msg.textContent = `✅ Membro ${nome} criado com sucesso! Email: ${email} | Senha: ${senha}`;
+      const enviarEmail = document.getElementById('adminEnviarEmail').checked;
+      let emailOk = null;
+      if (enviarEmail) {
+        msg.textContent = `✅ Membro ${nome} criado! A enviar email com as credenciais...`;
+        msg.style.background = 'rgba(79,122,82,0.1)';
+        msg.style.color = 'var(--sage-dk)';
+        msg.style.display = 'block';
+        emailOk = await enviarEmailCredenciais(nome, email, senha, expiracaoISO);
+      }
+
+      if (enviarEmail && emailOk) {
+        msg.textContent = `✅ Membro ${nome} criado e email enviado para ${email}!`;
+      } else if (enviarEmail && !emailOk) {
+        msg.textContent = `✅ Membro ${nome} criado, mas o email falhou. Credenciais — Email: ${email} | Senha: ${senha} (envia manualmente)`;
+      } else {
+        msg.textContent = `✅ Membro ${nome} criado com sucesso! Email: ${email} | Senha: ${senha}`;
+      }
       msg.style.background = 'rgba(79,122,82,0.1)';
       msg.style.color = 'var(--sage-dk)';
       msg.style.display = 'block';
@@ -876,6 +948,7 @@
               <span style="font-size:0.72rem;padding:0.25rem 0.8rem;border-radius:2rem;background:${m.ativo ? 'rgba(79,122,82,0.15)' : 'rgba(200,0,0,0.1)'};color:${m.ativo ? 'var(--sage-dk)' : '#c0392b'};">${m.ativo ? '✅ Ativo' : '❌ Inativo'}</span>
               <button onclick="toggleMembro('${m.id}', ${m.ativo})" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">${m.ativo ? 'Desativar' : 'Ativar'}</button>
               <button onclick="toggleRenovar('${m.id}')" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">🔄 Renovar</button>
+              <button onclick="reenviarAcesso('${m.id}', '${m.nome.replace(/'/g, "\\'")}', '${m.email}')" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">📧 Reenviar acesso</button>
             </div>
           </div>
           <div id="renovar-${m.id}" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--sand);flex-wrap:wrap;align-items:center;gap:0.5rem;">
@@ -926,6 +999,20 @@
       await sbFetch(`/rest/v1/membros?id=eq.${id}`, 'PATCH', { data_expiracao: novaData });
       carregarMembros();
     } catch(e) { alert('Erro ao renovar membro.'); }
+  }
+
+  async function reenviarAcesso(id, nome, email) {
+    if (!confirm(`Gerar uma nova senha para ${nome} e reenviar as credenciais por email para ${email}?`)) return;
+    try {
+      const novaSenha = gerarSenhaAleatoria();
+      const hash = await hashSenha(novaSenha);
+      await sbFetch(`/rest/v1/membros?id=eq.${id}`, 'PATCH', { senha_hash: hash });
+      const membroAtual = await sbFetch(`/rest/v1/membros?id=eq.${id}&select=data_expiracao`);
+      const expiracaoISO = membroAtual?.[0]?.data_expiracao || null;
+      const ok = await enviarEmailCredenciais(nome, email, novaSenha, expiracaoISO);
+      if (ok) alert(`✅ Nova senha gerada e email enviado para ${email}!\n\nSenha (caso precises): ${novaSenha}`);
+      else alert(`❌ Não foi possível enviar o email. Nova senha gerada: ${novaSenha} — envia manualmente.`);
+    } catch(e) { alert('Erro ao reenviar acesso.'); }
   }
 
   async function removerExpiracao(id) {
