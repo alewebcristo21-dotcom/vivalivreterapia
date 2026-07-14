@@ -861,20 +861,34 @@
       const data = await sbFetch('/rest/v1/membros?select=*&order=criado_em.desc');
       if (!data || data.length === 0) { container.innerHTML = '<p>Nenhum membro registado ainda.</p>'; return; }
 
-      container.innerHTML = data.map(m => `
-        <div style="display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--cream);border-radius:1rem;margin-bottom:0.8rem;flex-wrap:wrap;">
-          <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dk));display:flex;align-items:center;justify-content:center;color:white;font-size:0.85rem;flex-shrink:0;">${m.nome.charAt(0).toUpperCase()}</div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-weight:500;font-size:0.88rem;">${m.nome}</div>
-            <div style="font-size:0.75rem;color:var(--text-lt);">${m.email}</div>
-            ${m.data_expiracao ? `<div style="font-size:0.72rem;color:var(--terra-dk);">Expira: ${new Date(m.data_expiracao).toLocaleDateString('pt-PT')}</div>` : ''}
+      container.innerHTML = data.map(m => {
+        const expIso = m.data_expiracao ? new Date(m.data_expiracao).toISOString().split('T')[0] : '';
+        return `
+        <div style="padding:1rem;background:var(--cream);border-radius:1rem;margin-bottom:0.8rem;">
+          <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dk));display:flex;align-items:center;justify-content:center;color:white;font-size:0.85rem;flex-shrink:0;">${m.nome.charAt(0).toUpperCase()}</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-weight:500;font-size:0.88rem;">${m.nome}</div>
+              <div style="font-size:0.75rem;color:var(--text-lt);">${m.email}</div>
+              ${m.data_expiracao ? `<div style="font-size:0.72rem;color:var(--terra-dk);">Expira: ${new Date(m.data_expiracao).toLocaleDateString('pt-PT')}</div>` : `<div style="font-size:0.72rem;color:var(--text-lt);">Sem data de expiração</div>`}
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+              <span style="font-size:0.72rem;padding:0.25rem 0.8rem;border-radius:2rem;background:${m.ativo ? 'rgba(79,122,82,0.15)' : 'rgba(200,0,0,0.1)'};color:${m.ativo ? 'var(--sage-dk)' : '#c0392b'};">${m.ativo ? '✅ Ativo' : '❌ Inativo'}</span>
+              <button onclick="toggleMembro('${m.id}', ${m.ativo})" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">${m.ativo ? 'Desativar' : 'Ativar'}</button>
+              <button onclick="toggleRenovar('${m.id}')" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">🔄 Renovar</button>
+            </div>
           </div>
-          <div style="display:flex;align-items:center;gap:0.5rem;">
-            <span style="font-size:0.72rem;padding:0.25rem 0.8rem;border-radius:2rem;background:${m.ativo ? 'rgba(79,122,82,0.15)' : 'rgba(200,0,0,0.1)'};color:${m.ativo ? 'var(--sage-dk)' : '#c0392b'};">${m.ativo ? '✅ Ativo' : '❌ Inativo'}</span>
-            <button onclick="toggleMembro('${m.id}', ${m.ativo})" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">${m.ativo ? 'Desativar' : 'Ativar'}</button>
+          <div id="renovar-${m.id}" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--sand);flex-wrap:wrap;align-items:center;gap:0.5rem;">
+            <input type="date" id="renovarData-${m.id}" value="${expIso}" style="font-family:'Jost',sans-serif;font-size:0.8rem;padding:0.4rem 0.6rem;border-radius:0.6rem;border:1.5px solid var(--sand);background:var(--white);">
+            <button onclick="renovarRapido('${m.id}', 30)" style="font-size:0.7rem;padding:0.3rem 0.6rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">+30d</button>
+            <button onclick="renovarRapido('${m.id}', 90)" style="font-size:0.7rem;padding:0.3rem 0.6rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">+90d</button>
+            <button onclick="renovarRapido('${m.id}', 365)" style="font-size:0.7rem;padding:0.3rem 0.6rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">+1 ano</button>
+            <button onclick="renovarMembro('${m.id}')" style="font-size:0.72rem;padding:0.3rem 0.9rem;border-radius:2rem;border:none;background:var(--sage-dk);color:white;cursor:pointer;font-family:'Jost',sans-serif;">Guardar</button>
+            <button onclick="removerExpiracao('${m.id}')" style="font-size:0.7rem;padding:0.3rem 0.6rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;color:var(--text-lt);">Remover data</button>
+            <button onclick="toggleRenovar('${m.id}')" style="font-size:0.7rem;padding:0.3rem 0.6rem;border-radius:2rem;border:none;background:none;cursor:pointer;font-family:'Jost',sans-serif;color:var(--text-lt);">Cancelar</button>
           </div>
         </div>
-      `).join('');
+      `;}).join('');
     } catch(e) {
       container.innerHTML = '<p style="color:#c0392b;">Erro ao carregar membros.</p>';
     }
@@ -885,6 +899,41 @@
       await sbFetch(`/rest/v1/membros?id=eq.${id}`, 'PATCH', { ativo: !ativoAtual });
       carregarMembros();
     } catch(e) { alert('Erro ao atualizar membro.'); }
+  }
+
+  function toggleRenovar(id) {
+    const row = document.getElementById(`renovar-${id}`);
+    if (!row) return;
+    const isOpen = row.style.display === 'flex';
+    document.querySelectorAll('[id^="renovar-"]').forEach(el => el.style.display = 'none');
+    row.style.display = isOpen ? 'none' : 'flex';
+  }
+
+  function renovarRapido(id, dias) {
+    const input = document.getElementById(`renovarData-${id}`);
+    if (!input) return;
+    const base = input.value ? new Date(input.value + 'T00:00:00') : new Date();
+    const partida = base < new Date() ? new Date() : base;
+    partida.setDate(partida.getDate() + dias);
+    input.value = partida.toISOString().split('T')[0];
+  }
+
+  async function renovarMembro(id) {
+    const input = document.getElementById(`renovarData-${id}`);
+    if (!input || !input.value) { alert('Escolhe uma data primeiro!'); return; }
+    try {
+      const novaData = new Date(input.value + 'T23:59:59').toISOString();
+      await sbFetch(`/rest/v1/membros?id=eq.${id}`, 'PATCH', { data_expiracao: novaData });
+      carregarMembros();
+    } catch(e) { alert('Erro ao renovar membro.'); }
+  }
+
+  async function removerExpiracao(id) {
+    if (!confirm('Remover a data de expiração deste membro (acesso passa a não expirar)?')) return;
+    try {
+      await sbFetch(`/rest/v1/membros?id=eq.${id}`, 'PATCH', { data_expiracao: null });
+      carregarMembros();
+    } catch(e) { alert('Erro ao remover data de expiração.'); }
   }
 
   // Fix iOS scroll
