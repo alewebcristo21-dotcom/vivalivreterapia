@@ -307,7 +307,14 @@
         </div>
         <style>
           .teia-wrap{max-width:720px;margin:0 auto}.teia-card{background:var(--white);border-radius:1.5rem;border:1px solid var(--sand);padding:2rem;margin-bottom:1.2rem}.teia-num{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage-dk);margin-bottom:0.4rem}.teia-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;margin-bottom:0.3rem}.teia-desc{font-size:0.8rem;color:var(--text-lt);margin-bottom:1rem;font-weight:300}.teia-field{width:100%;padding:0.8rem 1rem;background:var(--cream);border:1.5px solid transparent;border-radius:0.8rem;font-family:'Jost',sans-serif;font-size:0.88rem;color:var(--text);resize:vertical;min-height:72px;outline:none;transition:border-color .3s;margin-bottom:0.8rem;line-height:1.6}.teia-field:focus{border-color:var(--sage)}.teia-field-sm{min-height:52px}.teia-final{background:linear-gradient(135deg,var(--text),#3d3028);border-radius:1.5rem;padding:2rem;text-align:center;color:var(--white);margin-bottom:1.2rem}.teia-final p{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;font-style:italic;line-height:1.5}.teia-final strong{color:var(--sage-lt)}.teia-actions{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap}.teia-btn{padding:0.8rem 2rem;border-radius:3rem;font-family:'Jost',sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer;transition:all .3s;border:none}.teia-btn.primary{background:linear-gradient(135deg,#3d6140,var(--sage-dk));color:white;box-shadow:0 6px 20px rgba(79,122,82,0.3)}.teia-btn.secondary{background:none;border:1.5px solid var(--sand);color:var(--text-lt)}.teia-success{display:none;background:rgba(79,122,82,0.08);border:1px solid var(--sage-lt);border-radius:1rem;padding:1rem 1.5rem;text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--sage-dk)}
+          #printSheet{display:none;}
+          @media print{
+            body *{visibility:hidden !important;}
+            #printSheet, #printSheet *{visibility:visible !important;}
+            #printSheet{display:block !important;position:absolute;left:0;top:0;width:100%;padding:1.5rem 2rem;}
+          }
         </style>
+        <div id="printSheet"></div>
         <div class="teia-wrap">
           <div class="teia-card"><div class="teia-num">1 · O Momento</div><div class="teia-title">Onde estou agora?</div><div class="teia-desc">O que está acontecendo na tua vida neste momento?</div><textarea class="teia-field" id="t1" placeholder="Neste momento da minha vida, o que está presente é..."></textarea></div>
           <div class="teia-card"><div class="teia-num">2 · O Sistema</div><div class="teia-title">O que eu e meu sistema familiar temos a ver com isso?</div><div class="teia-desc">Como a tua história familiar pode estar influenciando este momento?</div><textarea class="teia-field" id="t2" placeholder="Na minha família de origem, este tema aparecia como..."></textarea></div>
@@ -862,7 +869,41 @@
   async function getDiagnostico(){const t1=document.getElementById('t1')?.value?.trim();if(!t1){alert('Por favor preenche pelo menos a primeira questão! 🌿');return;}const box=document.getElementById('diagnosticoBox'),loading=document.getElementById('diagnosticoLoading'),texto=document.getElementById('diagnosticoTexto'),acao=document.getElementById('diagnosticoAcao');box.style.display='block';loading.style.display='flex';texto.style.display='none';acao.style.display='none';box.scrollIntoView({behavior:'smooth',block:'center'});const prompt=`Analisa este Mapa do Momento Presente:\n1. O Momento: ${t1}\n2. O Sistema: ${document.getElementById('t2')?.value||'Não preenchido'}\n3. Pessoas: ${document.getElementById('t3a')?.value||''}\n3. Emoções: ${document.getElementById('t3b')?.value||''}\n4. Lealdade: ${document.getElementById('t4')?.value||''}\n5. Permissão: ${document.getElementById('t5a')?.value||''}\n6. Oculto: ${document.getElementById('t6')?.value||''}\n7. Próximo passo: ${document.getElementById('t7')?.value||''}\n\nCria um diagnóstico sistémico com: 🔍 O padrão que emerge, 💙 O que o teu sistema está pedindo, 🌱 Uma semente para cultivar. Em português do Brasil. Máximo 200 palavras.`;try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:512,messages:[{role:'user',content:prompt}]})});const data=await res.json();loading.style.display='none';if(data.content?.[0]){texto.innerHTML=data.content[0].text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--sage-lt)">$1</strong>');texto.style.display='block';acao.style.display='block';}else{texto.innerHTML='Não foi possível gerar o diagnóstico. Tenta novamente! 🌿';texto.style.display='block';}}catch(e){loading.style.display='none';texto.innerHTML='Erro de conexão. 🌿';texto.style.display='block';}}
 
   function saveTeia(){const fields=['t1','t2','t3a','t3b','t3c','t4','t5a','t5b','t6','t7','t8'];const data={};fields.forEach(f=>{data[f]=document.getElementById(f)?.value||'';});localStorage.setItem('teia_'+new Date().toISOString().split('T')[0],JSON.stringify(data));document.getElementById('teiaSuccess').style.display='block';setTimeout(()=>{document.getElementById('teiaSuccess').style.display='none';},3000);}
-  function printTeia(){window.print();}
+  function escapeHtml(str){
+    return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function printTeia(){
+    const perguntas = [
+      {id:'t1', num:'1 · O Momento', titulo:'Onde estou agora?'},
+      {id:'t2', num:'2 · O Sistema', titulo:'O que eu e meu sistema familiar temos a ver com isso?'},
+      {id:'t3a', num:'3 · Os Fios', titulo:'As pessoas envolvidas neste momento'},
+      {id:'t3b', num:'', titulo:'As emoções envolvidas'},
+      {id:'t3c', num:'', titulo:'O padrão que já se repetiu antes'},
+      {id:'t4', num:'4 · A Lealdade', titulo:'A quem ou ao quê estou sendo leal?'},
+      {id:'t5a', num:'5 · A Permissão', titulo:'O que quero obter ou realizar'},
+      {id:'t5b', num:'', titulo:'A quem precisaria deixar de ser leal para mudar'},
+      {id:'t6', num:'6 · O que está oculto', titulo:'O que ainda não estás a ver claramente?'},
+      {id:'t7', num:'7 · O Próximo Passo', titulo:'Qual é o teu próximo passo consciente?'},
+      {id:'t8', num:'8 · O Reflexo', titulo:'O que mudou depois de agires?'}
+    ];
+    let html = '<div style="font-family:Georgia,serif;max-width:700px;margin:0 auto;color:#2E2820;">';
+    html += '<h1 style="font-family:Georgia,serif;font-weight:400;font-size:1.6rem;margin-bottom:0.2rem;">✾ Mapa do Momento Presente</h1>';
+    html += `<p style="color:#6B5D52;margin-bottom:1.6rem;font-size:0.82rem;">Viva Livre Terapias · ${new Date().toLocaleDateString('pt-PT')}</p>`;
+    perguntas.forEach(p => {
+      const val = document.getElementById(p.id)?.value?.trim();
+      if (!val) return;
+      html += '<div style="margin-bottom:1.3rem;page-break-inside:avoid;">';
+      if (p.num) html += `<div style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:#4F7A52;margin-bottom:0.2rem;">${escapeHtml(p.num)}</div>`;
+      html += `<div style="font-weight:600;margin-bottom:0.35rem;font-size:0.92rem;">${escapeHtml(p.titulo)}</div>`;
+      html += `<div style="white-space:pre-wrap;line-height:1.65;font-size:0.9rem;">${escapeHtml(val)}</div>`;
+      html += '</div>';
+    });
+    html += '</div>';
+    const sheet = document.getElementById('printSheet');
+    sheet.innerHTML = html;
+    window.print();
+  }
   function clearTeia(){if(confirm('Tem certeza que quer limpar o exercício?')){['t1','t2','t3a','t3b','t3c','t4','t5a','t5b','t6','t7','t8'].forEach(f=>{const el=document.getElementById(f);if(el)el.value='';});}}
 
 
