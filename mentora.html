@@ -230,6 +230,7 @@
         <p class="nav-section-title">Conteúdo</p>
         <a class="nav-item" onclick="showPage('cursos')"><span class="nav-icon">🎓</span> Cursos<span class="nav-soon">Em breve</span></a>
         <a class="nav-item" onclick="showPage('materiais')"><span class="nav-icon">🗺️</span> Mapa do Momento Presente</a>
+        <a class="nav-item" onclick="showPage('encontro')"><span class="nav-icon">🎥</span> Encontro Semanal</a>
         <p class="nav-section-title">Ferramentas</p>
         <a class="nav-item" onclick="showPage('prosperidade')"><span class="nav-icon">💰</span> Prosperidade Sistémica<span class="nav-badge">IA</span></a>
         <p class="nav-section-title">Suporte</p>
@@ -343,8 +344,41 @@
           </div>
         </div>
       </div>
-      <!-- MENTORA -->
-      <div class="page-content" id="page-mentora">
+      <!-- ENCONTRO SEMANAL -->
+      <div class="page-content" id="page-encontro">
+        <style>
+          .enc-wrap{max-width:760px;margin:0 auto}
+          .enc-live{background:linear-gradient(135deg,var(--text),#3d3028);border-radius:1.8rem;padding:2.4rem 2rem;text-align:center;color:var(--white);margin-bottom:2rem;}
+          .enc-live .enc-eyebrow{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sage-lt);margin-bottom:0.6rem;}
+          .enc-live h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;margin-bottom:0.4rem;}
+          .enc-live .enc-quando{font-size:0.88rem;color:rgba(253,250,246,0.75);margin-bottom:1.6rem;}
+          .enc-live .enc-btn{display:inline-flex;align-items:center;gap:0.6rem;background:linear-gradient(135deg,#3d6140,var(--sage-dk));color:white;text-decoration:none;padding:0.9rem 2.2rem;border-radius:3rem;font-family:'Jost',sans-serif;font-size:0.88rem;font-weight:500;box-shadow:0 6px 20px rgba(79,122,82,0.35);}
+          .enc-rec-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;margin-bottom:1rem;}
+          .enc-rec-card{background:var(--white);border:1px solid var(--sand);border-radius:1.2rem;padding:1.2rem 1.4rem;margin-bottom:0.9rem;}
+          .enc-rec-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;cursor:pointer;}
+          .enc-rec-info .enc-rec-titulo{font-weight:500;font-size:0.92rem;}
+          .enc-rec-info .enc-rec-data{font-size:0.75rem;color:var(--text-lt);}
+          .enc-rec-play{font-size:0.78rem;padding:0.4rem 1rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;color:var(--text-lt);white-space:nowrap;}
+          .enc-rec-video{display:none;margin-top:1rem;}
+          .enc-rec-video iframe{width:100%;aspect-ratio:16/9;border:none;border-radius:0.8rem;}
+          .enc-empty{color:var(--text-lt);font-size:0.88rem;text-align:center;padding:1rem;}
+        </style>
+        <div class="section-header">
+          <h3>Encontro <em>Semanal</em></h3>
+          <p>Um espaço ao vivo para se reunirem, partilharem e caminharem juntas.</p>
+        </div>
+        <div class="enc-wrap">
+          <div class="enc-live">
+            <div class="enc-eyebrow">Ao vivo · Google Meet</div>
+            <h3 id="encontroQuando">A carregar...</h3>
+            <div class="enc-quando">Liga-te na hora — não precisas de marcar nada, é sempre o mesmo link.</div>
+            <a class="enc-btn" id="encontroLink" href="#" target="_blank" rel="noopener">🎥 Entrar no encontro</a>
+          </div>
+          <div class="enc-rec-title">Encontros anteriores</div>
+          <div id="encontroGravacoes"></div>
+        </div>
+      </div>
+
         <div class="mentora-layout">
           <div class="chat-area">
             <div class="chat-header"><div class="chat-avatar">🌿</div><div class="chat-header-info"><h4>Mentora MAVC</h4><p>Assistente virtual da Mônica Alice Voelz</p></div><span class="chat-online">Online agora</span></div>
@@ -611,6 +645,60 @@
     }
   }
 
+  // ── ENCONTRO SEMANAL ──
+  // Link fixo do Meet (recorrente — não muda toda semana). Editar aqui se um dia mudar.
+  const ENCONTRO_LINK = 'https://meet.google.com/czj-zbeg-jee';
+  const ENCONTRO_QUANDO = 'Toda terça-feira, às 21h (Portugal) · 17h (Brasil)';
+
+  // Gravações anteriores. Para adicionar uma nova gravação:
+  // 1. No Google Drive, clica com o botão direito no vídeo → Partilhar → "Qualquer pessoa com o link" pode Ver
+  // 2. Copia o link — vai ser algo tipo: https://drive.google.com/file/d/ESTE_CODIGO_AQUI/view?usp=sharing
+  // 3. Copia só o código entre /d/ e /view, e adiciona uma linha nova aqui em baixo (a mais recente primeiro).
+  const ENCONTRO_GRAVACOES = [
+    { titulo: 'Encontro de 28 de julho', data: '28/07/2026', driveId: '1plAcV6zxoFc64g4-tyq1r1nupIhnPifB' },
+    { titulo: 'Encontro de 21 de julho', data: '21/07/2026', driveId: '1RkybUwuGz5Ay1Yd8T9254fT6JSaLUmsI' },
+    { titulo: 'Encontro de 14 de julho', data: '14/07/2026', driveId: '1qs7KqJkGq8M15Oc03rz0pWariUiudUEB' },
+    { titulo: 'Encontro de 12 de julho', data: '12/07/2026', driveId: '1aczkK88_I9Ar5QIjzkFE2oKL4ndAm-uA' },
+    { titulo: 'Encontro de 07 de julho', data: '07/07/2026', driveId: '1HJDcSyrLINIJtUENOQxlUTiMz0v9g95a' },
+    { titulo: 'Encontro de 30 de junho', data: '30/06/2026', driveId: '1qvNR7hIhbkkb3twr2VtGF9ik1YrI-i-t' },
+  ];
+
+  function initEncontro() {
+    const linkEl = document.getElementById('encontroLink');
+    const quandoEl = document.getElementById('encontroQuando');
+    if (linkEl) linkEl.href = ENCONTRO_LINK;
+    if (quandoEl) quandoEl.textContent = ENCONTRO_QUANDO;
+
+    const container = document.getElementById('encontroGravacoes');
+    if (!container) return;
+    if (!ENCONTRO_GRAVACOES.length) {
+      container.innerHTML = '<div class="enc-empty">Ainda sem gravações disponíveis. 🌿</div>';
+      return;
+    }
+    container.innerHTML = ENCONTRO_GRAVACOES.map((g, i) => `
+      <div class="enc-rec-card">
+        <div class="enc-rec-head" onclick="toggleGravacao(${i})">
+          <div class="enc-rec-info">
+            <div class="enc-rec-titulo">${g.titulo}</div>
+            <div class="enc-rec-data">${g.data}</div>
+          </div>
+          <button class="enc-rec-play">▶ Assistir</button>
+        </div>
+        <div class="enc-rec-video" id="encVideo-${i}">
+          <iframe src="https://drive.google.com/file/d/${g.driveId}/preview" allow="autoplay" allowfullscreen></iframe>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function toggleGravacao(i) {
+    const el = document.getElementById(`encVideo-${i}`);
+    if (!el) return;
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  }
+
+  document.addEventListener('DOMContentLoaded', initEncontro);
+
   function switchTab(tab) {
     document.getElementById('formLogin').style.display = tab === 'login' ? 'block' : 'none';
     document.getElementById('formRegisto').style.display = tab === 'registo' ? 'block' : 'none';
@@ -700,7 +788,7 @@
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', adminPanel:'Gerir Membros 👥' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', adminPanel:'Gerir Membros 👥' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
   }
@@ -1081,6 +1169,7 @@
   <button onclick="showPage('oraculo')"><span>🔮</span>Oráculo</button>
   <button onclick="showPage('maia')"><span>🌙</span>Maia</button>
   <button onclick="showPage('materiais')"><span>🗺️</span>Mapa</button>
+  <button onclick="showPage('encontro')"><span>🎥</span>Encontro</button>
   <button onclick="showPage('cursos')"><span>🎓</span>Cursos</button>
   <button onclick="showPage('prosperidade')"><span>💰</span>Prósp.</button>
   <button onclick="showPage('adminPanel')" id="mob-adminPanel" style="display:none;"><span>👥</span>Membros</button>
