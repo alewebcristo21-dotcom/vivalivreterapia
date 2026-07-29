@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sagrado Masculino & Sagrado Feminino — Guia Gratuito | Viva Livre Terapias</title>
+<meta name="description" content="Um guia gratuito para reconectar suas energias masculina e feminina, pela abordagem sistêmica e da Constelação Familiar.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --cream: #F5EFE6;
+    --sand: #E8DDD0;
+    --sage: #7A9E7E;
+    --sage-dk: #4F7A52;
+    --terra: #C4A882;
+    --terra-dk: #9A7A56;
+    --text: #2E2820;
+    --text-lt: #6B5D52;
+    --white: #FDFAF6;
+    --dourado: #C9A96E;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.15;
+  }
+  .container{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* NAV */
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+  }
+  .logo{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:400;
+    font-size: 1.2rem;
+  }
+  .logo em{ font-style: italic; color: var(--sage-dk); }
+  nav .ig{
+    font-size: 0.82rem;
+    color: var(--text-lt);
+    text-decoration:none;
+    border-bottom: 1px solid transparent;
+    transition: border-color .2s ease;
+  }
+  nav .ig:hover{ border-color: var(--text-lt); }
+
+  /* HERO */
+  .hero{ padding: 56px 0 40px; }
+  .hero .container{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage-dk);
+    font-weight: 500;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width: 22px; height: 1px;
+    background: var(--sage-dk);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--sage-dk);
+  }
+  .hero p.lead{
+    font-size: 1rem;
+    color: var(--text-lt);
+    max-width: 46ch;
+    margin-bottom: 30px;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap: 10px;
+    background: linear-gradient(135deg, #3d6140, var(--sage-dk));
+    color: var(--white);
+    border: none;
+    padding: 15px 28px;
+    border-radius: 999px;
+    font-family:'Jost', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    text-decoration:none;
+    transition: transform .18s ease, box-shadow .18s ease;
+    box-shadow: 0 6px 20px rgba(79,122,82,0.3);
+  }
+  .btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 28px rgba(79,122,82,0.4); }
+
+  /* Visual */
+  .signature{
+    position:relative;
+    aspect-ratio: 1 / 1.05;
+    border-radius: 28px;
+    overflow:hidden;
+    background: var(--sand);
+  }
+  .signature svg{ width:100%; height:100%; display:block; }
+  .signature .label{
+    position:absolute;
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+  .signature .label.masc{ top: 34px; left: 30px; color: var(--white); }
+  .signature .label.fem{ bottom: 34px; right: 30px; color: var(--text); }
+
+  /* SECOES */
+  .secao{ padding: 64px 0; }
+  .secao-titulo{
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    max-width: 20ch;
+    margin-bottom: 12px;
+    font-weight: 300;
+  }
+  .secao-sub{
+    color: var(--text-lt);
+    max-width: 56ch;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  .cards{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card{
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 18px;
+    padding: 28px 26px;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .card:hover{ transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.07); }
+  .card .num{
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--dourado);
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    display:block;
+    letter-spacing: 0.05em;
+  }
+  .card h3{ font-size: 1.1rem; margin-bottom: 10px; font-weight: 400; }
+  .card p{ color: var(--text-lt); font-size: 0.9rem; font-weight: 300; }
+
+  /* PARA QUEM */
+  .para-quem{
+    background: linear-gradient(135deg, var(--text), #3d3028);
+    color: var(--white);
+    border-radius: 28px;
+    padding: 56px;
+  }
+  .para-quem .secao-titulo{ color: var(--white); }
+  .para-quem .secao-sub{ color: rgba(253,250,246,0.6); }
+  .lista-sinais{
+    list-style:none;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 40px;
+  }
+  .lista-sinais li{
+    display:flex;
+    gap:12px;
+    font-size: 0.95rem;
+    align-items:flex-start;
+    color: rgba(253,250,246,0.85);
+    font-weight: 300;
+  }
+  .lista-sinais li::before{
+    content:"✾";
+    color: var(--dourado);
+    flex-shrink:0;
+    margin-top: 2px;
+  }
+
+  /* FORM */
+  .form-section{ padding: 72px 0 90px; }
+  .form-card{
+    background: var(--white);
+    border-radius: 28px;
+    padding: 56px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items:center;
+    box-shadow: 0 30px 60px -30px rgba(46,40,32,0.2);
+  }
+  .form-card h2{ font-size: 1.7rem; margin-bottom: 14px; font-weight: 300; }
+  .form-card p{ color: var(--text-lt); font-weight: 300; }
+
+  form{ display:flex; flex-direction:column; gap: 14px; }
+  .field{ display:flex; flex-direction:column; gap: 6px; }
+  .field label{ font-size: 0.75rem; color: var(--text-lt); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+  .field input{
+    font-family:'Jost', sans-serif;
+    font-size: 0.95rem;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1.5px solid transparent;
+    background: var(--cream);
+    color: var(--text);
+    outline: none;
+    transition: border-color .3s;
+  }
+  .field input:focus{ border-color: var(--sage); }
+  form .btn{
+    justify-content:center;
+    margin-top: 6px;
+  }
+  .form-nota{
+    font-size: 0.75rem;
+    color: var(--text-lt);
+    text-align:center;
+    margin-top: 4px;
+    font-weight: 300;
+  }
+  #mensagem-sucesso{
+    display:none;
+    text-align:center;
+    padding: 20px;
+  }
+  #mensagem-sucesso.ativo{ display:block; }
+  #mensagem-sucesso h3{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+  #mensagem-sucesso h3 em{ font-style: italic; color: var(--sage-dk); }
+  #erro-envio{ display:none; color: #c0392b; font-size: 0.85rem; }
+  #erro-envio.ativo{ display:block; }
+
+  /* FOOTER */
+  footer{
+    padding: 32px 0 48px;
+    text-align:center;
+    color: var(--text-lt);
+    font-size: 0.82rem;
+    font-weight: 300;
+  }
+  footer a{ color: var(--sage-dk); text-decoration: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 860px){
+    .hero .container{ grid-template-columns: 1fr; }
+    .signature{ order:-1; max-width: 340px; margin: 0 auto; }
+    .cards{ grid-template-columns: 1fr; }
+    .para-quem{ padding: 40px 26px; }
+    .lista-sinais{ grid-template-columns: 1fr; }
+    .form-card{ grid-template-columns: 1fr; padding: 36px 26px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">✾ Viva <em>Livre</em> Terapias</div>
+  <a class="ig" href="https://instagram.com/monica.vivalivreterapias" target="_blank" rel="noopener">@monica.vivalivreterapias</a>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div>
+      <span class="eyebrow">Guia gratuito</span>
+      <h1>Você vive mais no <em>fazer</em>, ou mais no <em>sentir</em>?</h1>
+      <p class="lead">
+        Um guia gratuito para reconhecer como sua energia masculina e feminina se formaram
+        na sua história — e começar, com a abordagem sistêmica, um caminho de equilíbrio
+        entre as duas.
+      </p>
+      <a href="#form" class="btn">✾ Quero receber o guia</a>
+    </div>
+
+    <div class="signature" aria-hidden="true">
+      <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gMasc" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#37453f"/>
+            <stop offset="1" stop-color="#4A5D45"/>
+          </linearGradient>
+          <linearGradient id="gFem" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stop-color="#9A7A56"/>
+            <stop offset="1" stop-color="#C4A882"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="420" fill="#E8DDD0"/>
+        <path d="M0,0 H400 V210 C 300,150 260,260 180,220 C 100,180 90,80 0,120 Z" fill="url(#gMasc)"/>
+        <path d="M0,420 H400 V210 C 300,270 260,160 180,200 C 100,240 90,340 0,300 Z" fill="url(#gFem)"/>
+        <path d="M0,120 C90,80 100,180 180,220 C260,260 300,150 400,210" fill="none" stroke="#C9A96E" stroke-width="2"/>
+      </svg>
+      <span class="label masc">masculino</span>
+      <span class="label fem">feminino</span>
+    </div>
+  </div>
+</header>
+
+<section class="secao">
+  <div class="container">
+    <h2 class="secao-titulo">Um material feito pra ser vivido, não só lido</h2>
+    <p class="secao-sub">9 módulos guiando você da raiz sistêmica até a integração prática, com uma pergunta de reflexão em cada etapa.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="num">Raiz</span>
+        <h3>De onde vieram seus padrões</h3>
+        <p>Como a dinâmica da sua família moldou sua relação com força e sensibilidade — e por que isso não é "culpa sua".</p>
+      </div>
+      <div class="card">
+        <span class="num">Reconhecimento</span>
+        <h3>Feminino e masculino feridos</h3>
+        <p>Os sinais de desequilíbrio mais comuns em cada energia, para você identificar onde está hoje.</p>
+      </div>
+      <div class="card">
+        <span class="num">Caminho</span>
+        <h3>Práticas de reconexão</h3>
+        <p>Ferramentas simples — respiração, escrita, ritual, Constelação Familiar — para aplicar no seu dia a dia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container">
+    <div class="para-quem">
+      <h2 class="secao-titulo">Esse guia é pra você se...</h2>
+      <p class="secao-sub">Alguns sinais de que vale a pena separar um tempo pra essa leitura:</p>
+      <ul class="lista-sinais">
+        <li>Sente que cuida de todo mundo e esquece de si mesma</li>
+        <li>Tem dificuldade de descansar sem sentir culpa</li>
+        <li>Vive travada entre agir demais ou não sair do lugar</li>
+        <li>Repete, nas relações, um padrão que reconhece na própria família</li>
+        <li>Sente que perdeu contato com a própria intuição</li>
+        <li>Quer entender a si mesma antes de buscar terapia</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="form-section" id="form">
+  <div class="container">
+    <div class="form-card">
+      <div>
+        <h2>Receba o guia completo, gratuito, no seu e-mail</h2>
+        <p>9 módulos em PDF para ler no seu ritmo — e um convite, ao final, caso você queira ir mais fundo com acompanhamento terapêutico.</p>
+      </div>
+      <div id="form-wrapper">
+        <form id="lead-form" novalidate>
+          <div class="field">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" autocomplete="name" placeholder="O seu nome" required>
+          </div>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="seu@email.com" required>
+          </div>
+          <div class="field" style="flex-direction:row;align-items:flex-start;gap:10px;">
+            <input type="checkbox" id="consentimento" required style="margin-top:3px;width:16px;height:16px;flex-shrink:0;accent-color:var(--sage-dk);">
+            <label for="consentimento" style="font-size:0.78rem;color:var(--text-lt);text-transform:none;letter-spacing:normal;font-weight:300;line-height:1.5;">Li e aceito a <a href="/privacidade" target="_blank" style="color:var(--sage-dk);">Política de Privacidade</a> e autorizo o envio do guia e de comunicações por email.</label>
+          </div>
+          <button type="submit" class="btn" id="btn-enviar">✾ Quero meu guia gratuito</button>
+          <p id="erro-envio">Não foi possível enviar agora. Tente novamente em instantes.</p>
+          <p id="erro-consentimento" style="display:none;color:#c0392b;font-size:0.85rem;">Por favor aceite a Política de Privacidade para continuar.</p>
+          <p class="form-nota">Sem spam. Você pode cancelar quando quiser.</p>
+        </form>
+        <div id="mensagem-sucesso">
+          <h3>Prontinho <em>✾</em></h3>
+          <p style="margin-bottom:1.5rem;color:var(--text-lt);font-weight:300;">O seu guia está pronto para download!</p>
+          <a class="btn" id="link-download" href="https://drive.google.com/uc?export=download&id=1dRqYeuux9eSTd4AwDaEN122HJbedJVKa" download>🌿 Baixar o PDF agora</a>
+          <p style="margin-top:1rem;font-size:0.78rem;color:var(--text-lt);">Aproveite também para agendar uma sessão com a Mônica em <a href="https://vivalivreterapia.com/#agendamento" style="color:var(--sage-dk);">vivalivreterapia.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  ✾ Viva Livre Terapias · Mônica Alice Voelz · <a href="https://vivalivreterapia.com">vivalivreterapia.com</a> · <a href="/privacidade">Política de Privacidade</a>
+</footer>
+
+<script>
+  const BREVO_API_KEY = ['xkeysib-527c410848fdb284fd7029c5e958d44ef4464feb4fb9bf9e0e7536d40e4add3e-','oP7QmpRlLylq6AT5'].join('');
+  const PDF_URL = 'https://drive.google.com/uc?export=download&id=1dRqYeuux9eSTd4AwDaEN122HJbedJVKa';
+
+  const form = document.getElementById('lead-form');
+  const btn = document.getElementById('btn-enviar');
+  const erro = document.getElementById('erro-envio');
+  const sucesso = document.getElementById('mensagem-sucesso');
+
+  async function salvarLead(nome, email) {
+    try {
+      const res = await fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': BREVO_API_KEY
+        },
+        body: JSON.stringify({
+          email: email,
+          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-sagrado' },
+          listIds: [2],
+          updateEnabled: true
+        })
+      });
+      return res.ok || res.status === 204;
+    } catch(e) {
+      console.error('Erro:', e);
+      return false;
+    }
+  }
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    erro.classList.remove('ativo');
+    document.getElementById('erro-consentimento').style.display = 'none';
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const consentiu = document.getElementById('consentimento').checked;
+    if (!nome || !email) return;
+    if (!consentiu) { document.getElementById('erro-consentimento').style.display = 'block'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    const ok = await salvarLead(nome, email);
+    btn.disabled = false;
+    btn.textContent = 'Quero meu guia gratuito';
+
+    if (!ok) { erro.classList.add('ativo'); return; }
+
+    form.style.display = 'none';
+    sucesso.classList.add('ativo');
+
+    const a = document.createElement('a');
+    a.href = PDF_URL;
+    a.download = 'Sagrado_Masculino_e_Feminino.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+</script>
+
+</body>
+</html>

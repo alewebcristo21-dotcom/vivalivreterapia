@@ -3,6 +3,7 @@
     { "source": "/mentora", "destination": "/mentora.html" },
     { "source": "/guia", "destination": "/guia.html" },
     { "source": "/guia2", "destination": "/guia2.html" },
+    { "source": "/sagrado", "destination": "/sagrado.html" },
     { "source": "/privacidade", "destination": "/privacidade.html" }
   ]
 }
