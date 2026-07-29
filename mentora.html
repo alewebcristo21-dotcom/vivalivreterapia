@@ -239,6 +239,7 @@
         <div id="adminMenu" style="display:none;">
           <p class="nav-section-title">Admin</p>
           <a class="nav-item" onclick="showPage('socio')"><span class="nav-icon">🚀</span> Sócio Estratégico</a>
+          <a class="nav-item" onclick="showPage('porta')"><span class="nav-icon">🌱</span> Método P.O.R.T.A.</a>
           <a class="nav-item" onclick="showPage('adminPanel')"><span class="nav-icon">👥</span> Gerir Membros</a>
         </div>
       </nav>
@@ -527,6 +528,91 @@
         </div>
       </div>
 
+      <!-- MÉTODO P.O.R.T.A. (só admin) -->
+      <div class="page-content" id="page-porta">
+        <style>
+          .porta-wrap{max-width:620px;margin:0 auto}
+          .porta-intro{font-size:0.85rem;color:var(--text-lt);line-height:1.6;margin-bottom:2rem;}
+          .porta-card{background:var(--white);border:1px solid var(--sand);border-radius:1.2rem;padding:1.2rem 1.4rem;margin-bottom:0.9rem;display:flex;gap:0.9rem;align-items:flex-start;}
+          .porta-badge{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dk));display:flex;align-items:center;justify-content:center;}
+          .porta-badge span{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--white);font-weight:600;}
+          .porta-badge-lg{width:36px;height:36px;}
+          .porta-badge-lg span{font-size:1.05rem;}
+          .porta-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--text);margin:0 0 0.35rem;line-height:1.4;}
+          .porta-question{font-size:0.85rem;color:var(--sage-dk);margin:0 0 0.5rem;font-style:italic;line-height:1.5;}
+          .porta-note{font-size:0.78rem;color:var(--text-lt);margin:0;line-height:1.5;}
+          .porta-h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--text);margin:2.2rem 0 0.8rem;}
+          .porta-h2 em{font-style:italic;color:var(--sage-dk);}
+          .porta-section-intro{font-size:0.8rem;color:var(--text-lt);margin:0 0 0.9rem;line-height:1.5;}
+          .porta-coringa-card{background:var(--white);border:1px solid var(--sand);border-radius:1.2rem;padding:1.2rem 1.4rem;margin-bottom:1.5rem;}
+          .porta-coringa-item{font-size:0.85rem;color:var(--sage-dk);margin:0 0 0.6rem;padding-left:0.9rem;border-left:2px solid var(--sage-lt);line-height:1.4;}
+          .porta-master{background:linear-gradient(135deg,var(--text),#3d3028);border-radius:1.4rem;padding:1.6rem 1.7rem;margin-bottom:1.5rem;color:var(--white);}
+          .porta-master .porta-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage-lt);margin:0 0 0.5rem;}
+          .porta-master .porta-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;color:var(--white);margin:0 0 0.6rem;line-height:1.35;}
+          .porta-master .porta-desc{font-size:0.8rem;color:rgba(253,250,246,0.75);margin:0 0 0.9rem;line-height:1.5;}
+          .porta-example{background:rgba(253,250,246,0.08);border-radius:0.9rem;padding:1rem 1.1rem;}
+          .porta-example p{font-size:0.8rem;color:var(--white);margin:0 0 0.5rem;line-height:1.5;}
+          .porta-example p.porta-result{color:var(--sage-lt);margin:0;}
+          .porta-master .porta-closing{font-size:0.8rem;color:var(--sage-lt);margin:0.9rem 0 0;line-height:1.5;}
+        </style>
+        <div class="section-header">
+          <h3>Método <em>P.O.R.T.A.</em></h3>
+          <p>Investigação Sistémica de 5 Minutos — guia rápido de consulta, uso interno.</p>
+        </div>
+        <div class="porta-wrap">
+          <p class="porta-intro">O objetivo não é descobrir toda a história da pessoa, mas encontrar a porta de entrada da sessão. A partir dessa porta, a própria pessoa começa a revelar o que realmente está por trás da queixa.</p>
+
+          <div class="porta-card"><div class="porta-badge"><span>1</span></div><div><p class="porta-title">O que te trouxe aqui hoje?</p><p class="porta-question">"O que está acontecendo que fez você procurar ajuda justamente agora?"</p><p class="porta-note">Descobre a dor atual.</p></div></div>
+          <div class="porta-card"><div class="porta-badge"><span>2</span></div><div><p class="porta-title">O que mais dói nisso?</p><p class="porta-question">"O que mais te machuca nessa situação?"</p><p class="porta-note">A pessoa sai do racional e entra na emoção.</p></div></div>
+          <div class="porta-card"><div class="porta-badge"><span>3</span></div><div><p class="porta-title">Desde quando você se sente assim?</p><p class="porta-question">"Você lembra quando começou a sentir isso pela primeira vez?"</p><p class="porta-note">Se responder "sempre": "Qual é a primeira lembrança que você tem de sentir isso?" Aqui normalmente aparecem pai, mãe ou infância.</p></div></div>
+          <div class="porta-card"><div class="porta-badge"><span>4</span></div><div><p class="porta-title">Isso te lembra alguém?</p><p class="porta-question">"Quem, na sua família, viveu ou vive algo parecido?"</p><p class="porta-note">Se responder "ninguém": "Quem mais sofria na sua casa?"</p></div></div>
+          <div class="porta-card"><div class="porta-badge"><span>5</span></div><div><p class="porta-title">Onde isso aparece?</p><p class="porta-question">"Além dessa situação, em que outras áreas da sua vida você percebe esse mesmo padrão?"</p><p class="porta-note">Relacionamento, dinheiro, trabalho, saúde, filhos, autoestima. Você identifica se é um padrão sistémico e não um evento isolado.</p></div></div>
+          <div class="porta-card"><div class="porta-badge"><span>6</span></div><div><p class="porta-title">O que você acredita que aconteceria se isso fosse resolvido hoje?</p><p class="porta-question">"O que você acredita que aconteceria se isso fosse resolvido hoje?"</p><p class="porta-note">Aqui aparecem as lealdades invisíveis: "Eu teria que me separar." / "Meu pai ficaria sozinho." / "Minha mãe não precisaria mais de mim." / "Eu teria medo de decepcionar minha família."</p></div></div>
+
+          <h2 class="porta-h2">Perguntas <em>Coringa</em></h2>
+          <p class="porta-section-intro">Essas eu deixaria anotadas para usar quando sentir que a conversa travou. Fazem a pessoa aprofundar sem sentir que está sendo interrogada.</p>
+          <div class="porta-coringa-card">
+            <p class="porta-coringa-item">Me fala mais sobre isso.</p>
+            <p class="porta-coringa-item">O que você quer dizer quando fala isso?</p>
+            <p class="porta-coringa-item">Como você aprendeu a fazer assim?</p>
+            <p class="porta-coringa-item">Quem te ensinou isso?</p>
+            <p class="porta-coringa-item">Quem mais agia dessa maneira?</p>
+            <p class="porta-coringa-item">Quando você percebeu que precisava ser assim?</p>
+            <p class="porta-coringa-item">O que você nunca contou para ninguém sobre isso?</p>
+            <p class="porta-coringa-item" style="margin-bottom:0;">Qual é a parte dessa história que mais pesa no seu coração?</p>
+          </div>
+
+          <div class="porta-master">
+            <p class="porta-label">A Pergunta Mestre</p>
+            <p class="porta-quote">"Onde você já sentiu isso antes?"</p>
+            <p class="porta-desc">Perceba que ela não pergunta pelo fato, mas pela sensação.</p>
+            <div class="porta-example">
+              <p><b>Cliente:</b> "Tenho muito medo de ser rejeitada."</p>
+              <p><b>Você:</b> "Quando foi a primeira vez que você sentiu exatamente essa sensação?"</p>
+              <p class="porta-result">Ela pode responder: "Quando meu pai foi embora." / "Quando minha mãe me deixava com a minha avó." / "Quando meu irmão nasceu."</p>
+            </div>
+            <p class="porta-closing">Pronto. Você saiu do sintoma e encontrou a origem emocional.</p>
+          </div>
+
+          <h2 class="porta-h2">Estrutura em <em>4 perguntas</em></h2>
+          <p class="porta-section-intro">Presente → emoção → passado → vínculos familiares.</p>
+          <div class="porta-coringa-card">
+            <p class="porta-coringa-item" style="color:var(--text);">O que está acontecendo? (o fato)</p>
+            <p class="porta-coringa-item" style="color:var(--text);">O que isso faz você sentir? (a emoção)</p>
+            <p class="porta-coringa-item" style="color:var(--text);">Quando foi a primeira vez que você se sentiu assim? (a origem)</p>
+            <p class="porta-coringa-item" style="color:var(--text);margin-bottom:0;">Quem, na sua história ou na sua família, também carregou essa dor? (o sistema)</p>
+          </div>
+
+          <h2 class="porta-h2">Método <em>P.O.R.T.A.</em></h2>
+          <p class="porta-section-intro">A pessoa entra pela porta do sintoma e, em poucos minutos, você a conduz até a origem.</p>
+          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>P</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Problema</p><p class="porta-title" style="font-size:0.92rem;">O que está acontecendo?</p></div></div>
+          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>O</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Origem</p><p class="porta-title" style="font-size:0.92rem;">Quando você sentiu isso pela primeira vez?</p></div></div>
+          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>R</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Relações</p><p class="porta-title" style="font-size:0.92rem;">Quem mais viveu algo parecido?</p></div></div>
+          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>T</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Travas</p><p class="porta-title" style="font-size:0.92rem;">O que impede essa situação de mudar?</p></div></div>
+          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>A</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Ação</p><p class="porta-title" style="font-size:0.92rem;">Qual seria o primeiro passo para um novo posicionamento?</p></div></div>
+        </div>
+      </div>
+
       <!-- PAINEL ADMIN -->
       <div class="page-content" id="page-adminPanel">
         <div class="section-header">
@@ -790,7 +876,7 @@
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', adminPanel:'Gerir Membros 👥' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', porta:'Método P.O.R.T.A. 🌱', adminPanel:'Gerir Membros 👥' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
   }
