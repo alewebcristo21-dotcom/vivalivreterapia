@@ -731,9 +731,20 @@
     });
     return res.json();
   }
-  const SENHA_ADMIN = 'admin2025viva';
+  // O Supabase às vezes gera um nome automático diferente do que escrevemos
+  // ao criar a função — este mapa liga o nome lógico ao nome real publicado.
+  const EDGE_FN_NAMES = { chat: 'bright-processor', auth: 'auth', conversas: 'smart-handler', 'membros-admin': 'membros-admin' };
+
+  async function callEdge(fn, body) {
+    const realName = EDGE_FN_NAMES[fn] || fn;
+    const headers = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
+    if (authToken) headers['x-auth-token'] = authToken;
+    const res = await fetch(`${EDGE_BASE}/${realName}`, { method: 'POST', headers, body: JSON.stringify(body || {}) });
+    return res.json();
+  }
   let currentMembro = null;
   let souAdmin = false;
+  let authToken = null;
 
   async function sbFetch(path, method='GET', body=null) {
     const opts = { method, headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'return=representation' } };
@@ -918,12 +929,8 @@
     if (nova !== confirmar) { mostrarErro('❌ A confirmação não bate com a nova senha.'); return; }
 
     try {
-      const hashAtual = await hashSenha(atual);
-      if (hashAtual !== currentMembro.senha_hash) { mostrarErro('❌ A senha atual está incorreta.'); return; }
-
-      const hashNova = await hashSenha(nova);
-      await sbFetch(`/rest/v1/membros?id=eq.${currentMembro.id}`, 'PATCH', { senha_hash: hashNova });
-      currentMembro.senha_hash = hashNova;
+      const resp = await callEdge('auth', { action: 'change-password', senhaAtual: atual, senhaNova: nova });
+      if (!resp.ok) { mostrarErro('❌ ' + (resp.error || 'Erro ao alterar a senha.')); return; }
 
       msg.textContent = '✅ Senha alterada com sucesso!';
       msg.style.background = 'rgba(79,122,82,0.1)';
@@ -954,18 +961,21 @@
     const email = document.getElementById('loginEmail').value.trim();
     const pass = document.getElementById('loginPass').value;
     document.getElementById('loginError').style.display = 'none';
-    if (pass === SENHA_ADMIN) { entrarApp('Admin', true); return; }
-    if (!email || !pass) { document.getElementById('loginError').style.display = 'block'; return; }
+    if (!pass) { document.getElementById('loginError').style.display = 'block'; return; }
     try {
-      const hash = await hashSenha(pass);
-      const data = await sbFetch(`/rest/v1/membros?email=eq.${encodeURIComponent(email)}&senha_hash=eq.${hash}&select=*`);
-      if (data && data.length > 0) {
-        const membro = data[0];
-        if (!membro.ativo) { document.getElementById('loginError').textContent = 'Conta ainda não aprovada. Aguarde a Mônica!'; document.getElementById('loginError').style.display = 'block'; return; }
-        if (membro.data_expiracao && new Date(membro.data_expiracao) < new Date()) { document.getElementById('loginError').textContent = 'Acesso expirado. Contacte a Mônica!'; document.getElementById('loginError').style.display = 'block'; return; }
-        currentMembro = membro;
-        entrarApp(membro.nome, false);
-      } else { document.getElementById('loginError').textContent = 'Email ou senha incorretos.'; document.getElementById('loginError').style.display = 'block'; }
+      const resp = await callEdge('auth', { action: 'login', email, senha: pass });
+      if (!resp.ok) {
+        document.getElementById('loginError').textContent = resp.error || 'Email ou senha incorretos.';
+        document.getElementById('loginError').style.display = 'block';
+        return;
+      }
+      authToken = resp.token;
+      if (resp.isAdmin) {
+        entrarApp('Admin', true);
+      } else {
+        currentMembro = resp.membro;
+        entrarApp(resp.membro.nome, false);
+      }
     } catch(e) { document.getElementById('loginError').textContent = 'Erro de conexão. Tenta novamente!'; document.getElementById('loginError').style.display = 'block'; }
   }
 
@@ -995,8 +1005,8 @@
     document.getElementById('registoSucesso').style.display = 'none';
     if (!nome || !email || pass.length < 6) { document.getElementById('registoError').textContent = 'Preencha todos os campos (mínimo 6 caracteres na senha).'; document.getElementById('registoError').style.display = 'block'; return; }
     try {
-      const hash = await hashSenha(pass);
-      await sbFetch('/rest/v1/membros', 'POST', { nome, email, senha_hash: hash, ativo: false });
+      const resp = await callEdge('auth', { action: 'registo', nome, email, senha: pass });
+      if (!resp.ok) { document.getElementById('registoError').textContent = resp.error || 'Erro ao registar. Tenta novamente!'; document.getElementById('registoError').style.display = 'block'; return; }
       document.getElementById('registoSucesso').style.display = 'block';
       document.getElementById('registoNome').value = '';
       document.getElementById('registoEmail').value = '';
@@ -1013,6 +1023,7 @@
     document.getElementById('appPage').style.display = 'none';
     document.getElementById('loginPage').style.display = 'flex';
     currentMembro = null;
+    authToken = null;
     document.getElementById('loginPass').value = '';
     document.getElementById('loginError').style.display = 'none';
     const adminMenu = document.getElementById('adminMenu');
@@ -1056,9 +1067,9 @@
   async function carregarMemoria() {
     if (!currentMembro) return;
     try {
-      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.mavc&select=mensagens`);
-      if (data && data.length > 0 && data[0].mensagens && data[0].mensagens.length > 0) {
-        history = data[0].mensagens;
+      const resp = await callEdge('conversas', { action: 'get', tipo: 'mavc' });
+      if (resp.ok && resp.mensagens && resp.mensagens.length > 0) {
+        history = resp.mensagens;
         document.getElementById('chatSugg').style.display = 'none';
         history.slice(-6).forEach(m => addMsg(m.role, m.content));
         const notice = document.createElement('div');
@@ -1072,12 +1083,7 @@
   async function guardarMemoria() {
     if (!currentMembro) return;
     try {
-      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.mavc&select=id`);
-      if (data && data.length > 0) {
-        await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.mavc`, 'PATCH', { mensagens: history.slice(-50), atualizado_em: new Date().toISOString() });
-      } else {
-        await sbFetch('/rest/v1/conversas', 'POST', { membro_id: currentMembro.id, tipo: 'mavc', mensagens: history.slice(-50) });
-      }
+      await callEdge('conversas', { action: 'save', tipo: 'mavc', mensagens: history.slice(-50) });
     } catch(e) {}
   }
 
@@ -1162,9 +1168,9 @@
   async function carregarMemoriaProsp() {
     if (!currentMembro) return;
     try {
-      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=mensagens`);
-      if (data && data.length > 0 && data[0].mensagens && data[0].mensagens.length > 0) {
-        prospHistory = data[0].mensagens;
+      const resp = await callEdge('conversas', { action: 'get', tipo: 'prosperidade' });
+      if (resp.ok && resp.mensagens && resp.mensagens.length > 0) {
+        prospHistory = resp.mensagens;
         document.getElementById('prospSugg').style.display = 'none';
         prospHistory.slice(-6).forEach(m => addProspMsg(m.role, m.content));
         const notice=document.createElement('div'); notice.style.cssText='text-align:center;font-size:0.72rem;color:var(--text-lt);padding:0.5rem;'; notice.textContent='💰 Conversa anterior carregada';
@@ -1176,9 +1182,7 @@
   async function guardarMemoriaProsp() {
     if (!currentMembro) return;
     try {
-      const data = await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade&select=id`);
-      if (data && data.length > 0) { await sbFetch(`/rest/v1/conversas?membro_id=eq.${currentMembro.id}&tipo=eq.prosperidade`, 'PATCH', {mensagens:prospHistory.slice(-50),atualizado_em:new Date().toISOString()}); }
-      else { await sbFetch('/rest/v1/conversas','POST',{membro_id:currentMembro.id,tipo:'prosperidade',mensagens:prospHistory.slice(-50)}); }
+      await callEdge('conversas', { action: 'save', tipo: 'prosperidade', mensagens: prospHistory.slice(-50) });
     } catch(e) {}
   }
 
