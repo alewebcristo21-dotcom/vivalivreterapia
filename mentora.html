@@ -239,7 +239,6 @@
         <div id="adminMenu" style="display:none;">
           <p class="nav-section-title">Admin</p>
           <a class="nav-item" onclick="showPage('socio')"><span class="nav-icon">🚀</span> Sócio Estratégico</a>
-          <a class="nav-item" onclick="showPage('porta')"><span class="nav-icon">🌱</span> Método P.O.R.T.A.</a>
           <a class="nav-item" onclick="showPage('adminPanel')"><span class="nav-icon">👥</span> Gerir Membros</a>
         </div>
       </nav>
@@ -363,6 +362,15 @@
           .enc-rec-video{display:none;margin-top:1rem;}
           .enc-rec-video iframe{width:100%;aspect-ratio:16/9;border:none;border-radius:0.8rem;}
           .enc-empty{color:var(--text-lt);font-size:0.88rem;text-align:center;padding:1rem;}
+          .enc-admin{background:var(--cream);border:1.5px dashed var(--terra);border-radius:1.2rem;padding:1.2rem 1.4rem;margin-bottom:1.5rem;}
+          .enc-admin-title{font-size:0.78rem;font-weight:500;color:var(--terra-dk);margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:0.06em;}
+          .enc-admin .field{margin-bottom:0.6rem;}
+          .enc-admin input{width:100%;padding:0.6rem 0.8rem;border-radius:0.6rem;border:1.5px solid var(--sand);background:var(--white);font-family:'Jost',sans-serif;font-size:0.85rem;color:var(--text);outline:none;}
+          .enc-admin-row{display:flex;gap:0.6rem;flex-wrap:wrap;}
+          .enc-admin-row .field{flex:1;min-width:140px;}
+          .enc-admin-btn{margin-top:0.4rem;background:var(--sage-dk);color:white;border:none;padding:0.6rem 1.4rem;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer;}
+          .enc-admin-msg{font-size:0.78rem;margin-top:0.5rem;display:none;}
+          .enc-rec-del{font-size:0.72rem;padding:0.35rem 0.7rem;border-radius:2rem;border:1.5px solid #e0b4a8;background:none;color:#a8503d;cursor:pointer;white-space:nowrap;}
         </style>
         <div class="section-header">
           <h3>Encontro <em>Semanal</em></h3>
@@ -374,6 +382,16 @@
             <h3 id="encontroQuando">A carregar...</h3>
             <div class="enc-quando">Liga-te na hora — não precisas de marcar nada, é sempre o mesmo link.</div>
             <a class="enc-btn" id="encontroLink" href="#" target="_blank" rel="noopener">🎥 Entrar no encontro</a>
+          </div>
+          <div id="encAdminPanel" class="enc-admin" style="display:none;">
+            <div class="enc-admin-title">👤 Admin · Adicionar gravação nova</div>
+            <div class="enc-admin-row">
+              <div class="field"><input type="text" id="encNovoTitulo" placeholder="Título (ex: Encontro de 04 de agosto)"></div>
+              <div class="field"><input type="text" id="encNovaData" placeholder="Data (DD/MM/AAAA)"></div>
+            </div>
+            <div class="field"><input type="text" id="encNovoLink" placeholder="Cola aqui o link de partilha do Drive"></div>
+            <button class="enc-admin-btn" onclick="adicionarGravacao()">➕ Adicionar gravação</button>
+            <div id="encAdminMsg" class="enc-admin-msg"></div>
           </div>
           <div class="enc-rec-title">Encontros anteriores</div>
           <div id="encontroGravacoes"></div>
@@ -528,91 +546,6 @@
         </div>
       </div>
 
-      <!-- MÉTODO P.O.R.T.A. (só admin) -->
-      <div class="page-content" id="page-porta">
-        <style>
-          .porta-wrap{max-width:620px;margin:0 auto}
-          .porta-intro{font-size:0.85rem;color:var(--text-lt);line-height:1.6;margin-bottom:2rem;}
-          .porta-card{background:var(--white);border:1px solid var(--sand);border-radius:1.2rem;padding:1.2rem 1.4rem;margin-bottom:0.9rem;display:flex;gap:0.9rem;align-items:flex-start;}
-          .porta-badge{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sage-dk));display:flex;align-items:center;justify-content:center;}
-          .porta-badge span{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--white);font-weight:600;}
-          .porta-badge-lg{width:36px;height:36px;}
-          .porta-badge-lg span{font-size:1.05rem;}
-          .porta-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--text);margin:0 0 0.35rem;line-height:1.4;}
-          .porta-question{font-size:0.85rem;color:var(--sage-dk);margin:0 0 0.5rem;font-style:italic;line-height:1.5;}
-          .porta-note{font-size:0.78rem;color:var(--text-lt);margin:0;line-height:1.5;}
-          .porta-h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--text);margin:2.2rem 0 0.8rem;}
-          .porta-h2 em{font-style:italic;color:var(--sage-dk);}
-          .porta-section-intro{font-size:0.8rem;color:var(--text-lt);margin:0 0 0.9rem;line-height:1.5;}
-          .porta-coringa-card{background:var(--white);border:1px solid var(--sand);border-radius:1.2rem;padding:1.2rem 1.4rem;margin-bottom:1.5rem;}
-          .porta-coringa-item{font-size:0.85rem;color:var(--sage-dk);margin:0 0 0.6rem;padding-left:0.9rem;border-left:2px solid var(--sage-lt);line-height:1.4;}
-          .porta-master{background:linear-gradient(135deg,var(--text),#3d3028);border-radius:1.4rem;padding:1.6rem 1.7rem;margin-bottom:1.5rem;color:var(--white);}
-          .porta-master .porta-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sage-lt);margin:0 0 0.5rem;}
-          .porta-master .porta-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;color:var(--white);margin:0 0 0.6rem;line-height:1.35;}
-          .porta-master .porta-desc{font-size:0.8rem;color:rgba(253,250,246,0.75);margin:0 0 0.9rem;line-height:1.5;}
-          .porta-example{background:rgba(253,250,246,0.08);border-radius:0.9rem;padding:1rem 1.1rem;}
-          .porta-example p{font-size:0.8rem;color:var(--white);margin:0 0 0.5rem;line-height:1.5;}
-          .porta-example p.porta-result{color:var(--sage-lt);margin:0;}
-          .porta-master .porta-closing{font-size:0.8rem;color:var(--sage-lt);margin:0.9rem 0 0;line-height:1.5;}
-        </style>
-        <div class="section-header">
-          <h3>Método <em>P.O.R.T.A.</em></h3>
-          <p>Investigação Sistémica de 5 Minutos — guia rápido de consulta, uso interno.</p>
-        </div>
-        <div class="porta-wrap">
-          <p class="porta-intro">O objetivo não é descobrir toda a história da pessoa, mas encontrar a porta de entrada da sessão. A partir dessa porta, a própria pessoa começa a revelar o que realmente está por trás da queixa.</p>
-
-          <div class="porta-card"><div class="porta-badge"><span>1</span></div><div><p class="porta-title">O que te trouxe aqui hoje?</p><p class="porta-question">"O que está acontecendo que fez você procurar ajuda justamente agora?"</p><p class="porta-note">Descobre a dor atual.</p></div></div>
-          <div class="porta-card"><div class="porta-badge"><span>2</span></div><div><p class="porta-title">O que mais dói nisso?</p><p class="porta-question">"O que mais te machuca nessa situação?"</p><p class="porta-note">A pessoa sai do racional e entra na emoção.</p></div></div>
-          <div class="porta-card"><div class="porta-badge"><span>3</span></div><div><p class="porta-title">Desde quando você se sente assim?</p><p class="porta-question">"Você lembra quando começou a sentir isso pela primeira vez?"</p><p class="porta-note">Se responder "sempre": "Qual é a primeira lembrança que você tem de sentir isso?" Aqui normalmente aparecem pai, mãe ou infância.</p></div></div>
-          <div class="porta-card"><div class="porta-badge"><span>4</span></div><div><p class="porta-title">Isso te lembra alguém?</p><p class="porta-question">"Quem, na sua família, viveu ou vive algo parecido?"</p><p class="porta-note">Se responder "ninguém": "Quem mais sofria na sua casa?"</p></div></div>
-          <div class="porta-card"><div class="porta-badge"><span>5</span></div><div><p class="porta-title">Onde isso aparece?</p><p class="porta-question">"Além dessa situação, em que outras áreas da sua vida você percebe esse mesmo padrão?"</p><p class="porta-note">Relacionamento, dinheiro, trabalho, saúde, filhos, autoestima. Você identifica se é um padrão sistémico e não um evento isolado.</p></div></div>
-          <div class="porta-card"><div class="porta-badge"><span>6</span></div><div><p class="porta-title">O que você acredita que aconteceria se isso fosse resolvido hoje?</p><p class="porta-question">"O que você acredita que aconteceria se isso fosse resolvido hoje?"</p><p class="porta-note">Aqui aparecem as lealdades invisíveis: "Eu teria que me separar." / "Meu pai ficaria sozinho." / "Minha mãe não precisaria mais de mim." / "Eu teria medo de decepcionar minha família."</p></div></div>
-
-          <h2 class="porta-h2">Perguntas <em>Coringa</em></h2>
-          <p class="porta-section-intro">Essas eu deixaria anotadas para usar quando sentir que a conversa travou. Fazem a pessoa aprofundar sem sentir que está sendo interrogada.</p>
-          <div class="porta-coringa-card">
-            <p class="porta-coringa-item">Me fala mais sobre isso.</p>
-            <p class="porta-coringa-item">O que você quer dizer quando fala isso?</p>
-            <p class="porta-coringa-item">Como você aprendeu a fazer assim?</p>
-            <p class="porta-coringa-item">Quem te ensinou isso?</p>
-            <p class="porta-coringa-item">Quem mais agia dessa maneira?</p>
-            <p class="porta-coringa-item">Quando você percebeu que precisava ser assim?</p>
-            <p class="porta-coringa-item">O que você nunca contou para ninguém sobre isso?</p>
-            <p class="porta-coringa-item" style="margin-bottom:0;">Qual é a parte dessa história que mais pesa no seu coração?</p>
-          </div>
-
-          <div class="porta-master">
-            <p class="porta-label">A Pergunta Mestre</p>
-            <p class="porta-quote">"Onde você já sentiu isso antes?"</p>
-            <p class="porta-desc">Perceba que ela não pergunta pelo fato, mas pela sensação.</p>
-            <div class="porta-example">
-              <p><b>Cliente:</b> "Tenho muito medo de ser rejeitada."</p>
-              <p><b>Você:</b> "Quando foi a primeira vez que você sentiu exatamente essa sensação?"</p>
-              <p class="porta-result">Ela pode responder: "Quando meu pai foi embora." / "Quando minha mãe me deixava com a minha avó." / "Quando meu irmão nasceu."</p>
-            </div>
-            <p class="porta-closing">Pronto. Você saiu do sintoma e encontrou a origem emocional.</p>
-          </div>
-
-          <h2 class="porta-h2">Estrutura em <em>4 perguntas</em></h2>
-          <p class="porta-section-intro">Presente → emoção → passado → vínculos familiares.</p>
-          <div class="porta-coringa-card">
-            <p class="porta-coringa-item" style="color:var(--text);">O que está acontecendo? (o fato)</p>
-            <p class="porta-coringa-item" style="color:var(--text);">O que isso faz você sentir? (a emoção)</p>
-            <p class="porta-coringa-item" style="color:var(--text);">Quando foi a primeira vez que você se sentiu assim? (a origem)</p>
-            <p class="porta-coringa-item" style="color:var(--text);margin-bottom:0;">Quem, na sua história ou na sua família, também carregou essa dor? (o sistema)</p>
-          </div>
-
-          <h2 class="porta-h2">Método <em>P.O.R.T.A.</em></h2>
-          <p class="porta-section-intro">A pessoa entra pela porta do sintoma e, em poucos minutos, você a conduz até a origem.</p>
-          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>P</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Problema</p><p class="porta-title" style="font-size:0.92rem;">O que está acontecendo?</p></div></div>
-          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>O</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Origem</p><p class="porta-title" style="font-size:0.92rem;">Quando você sentiu isso pela primeira vez?</p></div></div>
-          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>R</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Relações</p><p class="porta-title" style="font-size:0.92rem;">Quem mais viveu algo parecido?</p></div></div>
-          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>T</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Travas</p><p class="porta-title" style="font-size:0.92rem;">O que impede essa situação de mudar?</p></div></div>
-          <div class="porta-card"><div class="porta-badge porta-badge-lg"><span>A</span></div><div><p class="porta-note" style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.68rem;margin-bottom:0.2rem;">Ação</p><p class="porta-title" style="font-size:0.92rem;">Qual seria o primeiro passo para um novo posicionamento?</p></div></div>
-        </div>
-      </div>
-
       <!-- PAINEL ADMIN -->
       <div class="page-content" id="page-adminPanel">
         <div class="section-header">
@@ -666,6 +599,7 @@
   const SUPABASE_KEY = 'sb_publishable_dEyv8NdRi4pf6FDBMbCUFA_2FPVxUAA';
   const SENHA_ADMIN = 'admin2025viva';
   let currentMembro = null;
+  let souAdmin = false;
 
   async function sbFetch(path, method='GET', body=null) {
     const opts = { method, headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'return=representation' } };
@@ -738,54 +672,98 @@
   const ENCONTRO_LINK = 'https://meet.google.com/czj-zbeg-jee';
   const ENCONTRO_QUANDO = 'Toda terça-feira, às 21h (Portugal) · 17h (Brasil)';
 
-  // Gravações anteriores. Para adicionar uma nova gravação:
-  // 1. No Google Drive, clica com o botão direito no vídeo → Partilhar → "Qualquer pessoa com o link" pode Ver
-  // 2. Copia o link — vai ser algo tipo: https://drive.google.com/file/d/ESTE_CODIGO_AQUI/view?usp=sharing
-  // 3. Copia só o código entre /d/ e /view, e adiciona uma linha nova aqui em baixo (a mais recente primeiro).
-  const ENCONTRO_GRAVACOES = [
-    { titulo: 'Encontro de 28 de julho', data: '28/07/2026', driveId: '1plAcV6zxoFc64g4-tyq1r1nupIhnPifB' },
-    { titulo: 'Encontro de 21 de julho', data: '21/07/2026', driveId: '1RkybUwuGz5Ay1Yd8T9254fT6JSaLUmsI' },
-    { titulo: 'Encontro de 14 de julho', data: '14/07/2026', driveId: '1qs7KqJkGq8M15Oc03rz0pWariUiudUEB' },
-    { titulo: 'Encontro de 12 de julho', data: '12/07/2026', driveId: '1aczkK88_I9Ar5QIjzkFE2oKL4ndAm-uA' },
-    { titulo: 'Encontro de 07 de julho', data: '07/07/2026', driveId: '1HJDcSyrLINIJtUENOQxlUTiMz0v9g95a' },
-    { titulo: 'Encontro de 30 de junho', data: '30/06/2026', driveId: '1qvNR7hIhbkkb3twr2VtGF9ik1YrI-i-t' },
-  ];
+  function extrairDriveId(input) {
+    input = (input || '').trim();
+    const match = input.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match) return match[1];
+    return input; // já deve ser só o ID
+  }
 
-  function initEncontro() {
+  async function carregarGravacoes() {
     const linkEl = document.getElementById('encontroLink');
     const quandoEl = document.getElementById('encontroQuando');
     if (linkEl) linkEl.href = ENCONTRO_LINK;
     if (quandoEl) quandoEl.textContent = ENCONTRO_QUANDO;
 
+    const painelAdmin = document.getElementById('encAdminPanel');
+    if (painelAdmin) painelAdmin.style.display = souAdmin ? 'block' : 'none';
+
     const container = document.getElementById('encontroGravacoes');
     if (!container) return;
-    if (!ENCONTRO_GRAVACOES.length) {
-      container.innerHTML = '<div class="enc-empty">Ainda sem gravações disponíveis. 🌿</div>';
-      return;
-    }
-    container.innerHTML = ENCONTRO_GRAVACOES.map((g, i) => `
-      <div class="enc-rec-card">
-        <div class="enc-rec-head" onclick="toggleGravacao(${i})">
-          <div class="enc-rec-info">
-            <div class="enc-rec-titulo">${g.titulo}</div>
-            <div class="enc-rec-data">${g.data}</div>
+    container.innerHTML = '<div class="enc-empty">A carregar...</div>';
+    try {
+      const data = await sbFetch('/rest/v1/gravacoes?select=*&order=criado_em.desc');
+      if (!data || data.length === 0) {
+        container.innerHTML = '<div class="enc-empty">Ainda sem gravações disponíveis. 🌿</div>';
+        return;
+      }
+      container.innerHTML = data.map((g) => `
+        <div class="enc-rec-card">
+          <div class="enc-rec-head">
+            <div class="enc-rec-info" onclick="toggleGravacao('${g.id}')" style="cursor:pointer;flex:1;">
+              <div class="enc-rec-titulo">${g.titulo}</div>
+              <div class="enc-rec-data">${g.data_encontro}</div>
+            </div>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+              <button class="enc-rec-play" onclick="toggleGravacao('${g.id}')">▶ Assistir</button>
+              ${souAdmin ? `<button class="enc-rec-del" onclick="removerGravacao('${g.id}')">🗑️</button>` : ''}
+            </div>
           </div>
-          <button class="enc-rec-play">▶ Assistir</button>
+          <div class="enc-rec-video" id="encVideo-${g.id}">
+            <iframe src="https://drive.google.com/file/d/${g.drive_id}/preview" allow="autoplay" allowfullscreen></iframe>
+          </div>
         </div>
-        <div class="enc-rec-video" id="encVideo-${i}">
-          <iframe src="https://drive.google.com/file/d/${g.driveId}/preview" allow="autoplay" allowfullscreen></iframe>
-        </div>
-      </div>
-    `).join('');
+      `).join('');
+    } catch(e) {
+      container.innerHTML = '<div class="enc-empty">Erro ao carregar gravações.</div>';
+    }
   }
 
-  function toggleGravacao(i) {
-    const el = document.getElementById(`encVideo-${i}`);
+  function toggleGravacao(id) {
+    const el = document.getElementById(`encVideo-${id}`);
     if (!el) return;
     el.style.display = el.style.display === 'block' ? 'none' : 'block';
   }
 
-  document.addEventListener('DOMContentLoaded', initEncontro);
+  async function adicionarGravacao() {
+    const titulo = document.getElementById('encNovoTitulo').value.trim();
+    const data = document.getElementById('encNovaData').value.trim();
+    const linkInput = document.getElementById('encNovoLink').value.trim();
+    const msg = document.getElementById('encAdminMsg');
+    const driveId = extrairDriveId(linkInput);
+
+    if (!titulo || !data || !driveId) {
+      msg.textContent = '❌ Preenche o título, a data e o link do Drive.';
+      msg.style.color = '#a8503d';
+      msg.style.display = 'block';
+      return;
+    }
+
+    try {
+      await sbFetch('/rest/v1/gravacoes', 'POST', { titulo, data_encontro: data, drive_id: driveId });
+      msg.textContent = '✅ Gravação adicionada!';
+      msg.style.color = 'var(--sage-dk)';
+      msg.style.display = 'block';
+      document.getElementById('encNovoTitulo').value = '';
+      document.getElementById('encNovaData').value = '';
+      document.getElementById('encNovoLink').value = '';
+      carregarGravacoes();
+    } catch(e) {
+      msg.textContent = '❌ Erro ao adicionar. Confirma o link do Drive.';
+      msg.style.color = '#a8503d';
+      msg.style.display = 'block';
+    }
+  }
+
+  async function removerGravacao(id) {
+    if (!confirm('Remover esta gravação da lista? (o vídeo continua no Drive, só deixa de aparecer no site)')) return;
+    try {
+      await sbFetch(`/rest/v1/gravacoes?id=eq.${id}`, 'DELETE');
+      carregarGravacoes();
+    } catch(e) { alert('Erro ao remover gravação.'); }
+  }
+
+  document.addEventListener('DOMContentLoaded', carregarGravacoes);
 
   function switchTab(tab) {
     document.getElementById('formLogin').style.display = tab === 'login' ? 'block' : 'none';
@@ -830,6 +808,7 @@
     document.getElementById('sidebarName').textContent = nome;
     document.getElementById('heroName').textContent = nome;
     if (isAdmin) {
+      souAdmin = true;
       const m = document.getElementById('adminMenu'); if(m) m.style.display = 'block';
       const mob = document.getElementById('mob-adminPanel'); if(mob) mob.style.display = 'flex';
       setTimeout(carregarMembros, 800);
@@ -867,6 +846,7 @@
     document.getElementById('loginError').style.display = 'none';
     const adminMenu = document.getElementById('adminMenu');
     if (adminMenu) adminMenu.style.display = 'none';
+    souAdmin = false;
   }
 
   function showPage(id) {
@@ -876,9 +856,10 @@
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', porta:'Método P.O.R.T.A. 🌱', adminPanel:'Gerir Membros 👥' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', adminPanel:'Gerir Membros 👥' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
+    if (id === 'encontro') carregarGravacoes();
   }
 
   function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; }
