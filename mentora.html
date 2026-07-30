@@ -234,6 +234,7 @@
         <p class="nav-section-title">Ferramentas</p>
         <a class="nav-item" onclick="showPage('prosperidade')"><span class="nav-icon">💰</span> Prosperidade Sistémica<span class="nav-badge">IA</span></a>
         <p class="nav-section-title">Suporte</p>
+        <a class="nav-item" id="navSenha" onclick="showPage('senha')"><span class="nav-icon">🔑</span> Alterar Senha</a>
         <a class="nav-item" href="https://vivalivreterapia.com/#agendamento" target="_blank"><span class="nav-icon">📅</span> Agendar Sessão</a>
         <a class="nav-item" href="https://wa.me/351962250741" target="_blank"><span class="nav-icon">💬</span> WhatsApp</a>
         <div id="adminMenu" style="display:none;">
@@ -395,6 +396,42 @@
           </div>
           <div class="enc-rec-title">Encontros anteriores</div>
           <div id="encontroGravacoes"></div>
+        </div>
+      </div>
+
+      <!-- ALTERAR SENHA -->
+      <div class="page-content" id="page-senha">
+        <style>
+          .senha-wrap{max-width:480px;margin:0 auto}
+          .senha-card{background:var(--white);border:1px solid var(--sand);border-radius:1.5rem;padding:2rem;}
+          .senha-card .field{margin-bottom:1rem;}
+          .senha-card label{font-size:0.75rem;color:var(--text-lt);font-weight:500;letter-spacing:0.05em;text-transform:uppercase;display:block;margin-bottom:0.4rem;}
+          .senha-card input{width:100%;padding:0.8rem 1rem;border-radius:0.8rem;border:1.5px solid var(--sand);background:var(--cream);font-family:'Jost',sans-serif;font-size:0.9rem;color:var(--text);outline:none;}
+          .senha-card input:focus{border-color:var(--sage);}
+          .senha-btn{width:100%;margin-top:0.5rem;background:linear-gradient(135deg,#3d6140,var(--sage-dk));color:white;border:none;padding:0.9rem;border-radius:3rem;font-family:'Jost',sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;}
+          .senha-msg{font-size:0.82rem;margin-top:1rem;display:none;text-align:center;padding:0.7rem;border-radius:0.8rem;}
+        </style>
+        <div class="section-header">
+          <h3>Alterar <em>Senha</em></h3>
+          <p>Mantém o teu acesso seguro — troca a senha sempre que quiseres.</p>
+        </div>
+        <div class="senha-wrap">
+          <div class="senha-card">
+            <div class="field">
+              <label>Senha atual</label>
+              <input type="password" id="senhaAtual" autocomplete="current-password">
+            </div>
+            <div class="field">
+              <label>Nova senha</label>
+              <input type="password" id="senhaNova" autocomplete="new-password">
+            </div>
+            <div class="field">
+              <label>Confirmar nova senha</label>
+              <input type="password" id="senhaConfirmar" autocomplete="new-password">
+            </div>
+            <button class="senha-btn" onclick="alterarSenha()">🔑 Alterar senha</button>
+            <div id="senhaMsg" class="senha-msg"></div>
+          </div>
         </div>
       </div>
 
@@ -765,6 +802,44 @@
 
   document.addEventListener('DOMContentLoaded', carregarGravacoes);
 
+  async function alterarSenha() {
+    const msg = document.getElementById('senhaMsg');
+    const atual = document.getElementById('senhaAtual').value;
+    const nova = document.getElementById('senhaNova').value;
+    const confirmar = document.getElementById('senhaConfirmar').value;
+
+    const mostrarErro = (texto) => {
+      msg.textContent = texto;
+      msg.style.background = 'rgba(200,0,0,0.1)';
+      msg.style.color = '#c0392b';
+      msg.style.display = 'block';
+    };
+
+    if (!currentMembro) { mostrarErro('❌ Sessão inválida. Faz login novamente.'); return; }
+    if (!atual || !nova || !confirmar) { mostrarErro('❌ Preenche todos os campos.'); return; }
+    if (nova.length < 6) { mostrarErro('❌ A nova senha precisa de pelo menos 6 caracteres.'); return; }
+    if (nova !== confirmar) { mostrarErro('❌ A confirmação não bate com a nova senha.'); return; }
+
+    try {
+      const hashAtual = await hashSenha(atual);
+      if (hashAtual !== currentMembro.senha_hash) { mostrarErro('❌ A senha atual está incorreta.'); return; }
+
+      const hashNova = await hashSenha(nova);
+      await sbFetch(`/rest/v1/membros?id=eq.${currentMembro.id}`, 'PATCH', { senha_hash: hashNova });
+      currentMembro.senha_hash = hashNova;
+
+      msg.textContent = '✅ Senha alterada com sucesso!';
+      msg.style.background = 'rgba(79,122,82,0.1)';
+      msg.style.color = 'var(--sage-dk)';
+      msg.style.display = 'block';
+      document.getElementById('senhaAtual').value = '';
+      document.getElementById('senhaNova').value = '';
+      document.getElementById('senhaConfirmar').value = '';
+    } catch(e) {
+      mostrarErro('❌ Erro ao alterar a senha. Tenta novamente.');
+    }
+  }
+
   function switchTab(tab) {
     document.getElementById('formLogin').style.display = tab === 'login' ? 'block' : 'none';
     document.getElementById('formRegisto').style.display = tab === 'registo' ? 'block' : 'none';
@@ -811,6 +886,7 @@
       souAdmin = true;
       const m = document.getElementById('adminMenu'); if(m) m.style.display = 'block';
       const mob = document.getElementById('mob-adminPanel'); if(mob) mob.style.display = 'flex';
+      const ns = document.getElementById('navSenha'); if(ns) ns.style.display = 'none';
       setTimeout(carregarMembros, 800);
     }
     if (currentMembro) { setTimeout(carregarMemoria, 500); setTimeout(carregarMemoriaProsp, 600); }
@@ -856,7 +932,7 @@
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', adminPanel:'Gerir Membros 👥' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', senha:'Alterar Senha 🔑', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', adminPanel:'Gerir Membros 👥' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
     if (id === 'encontro') carregarGravacoes();
