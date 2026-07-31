@@ -588,6 +588,8 @@
     const a = document.createElement('a');
     a.href = PDF_URL;
     a.download = 'Os_7_Sinais_de_Padroes_Familiares.pdf';
+    a.target = '_blank';
+    a.rel = 'noopener';
     document.body.appendChild(a);
     a.click();
     a.remove();
