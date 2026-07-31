@@ -445,9 +445,13 @@
             <label>E-mail</label>
             <input type="email" id="email" name="email" autocomplete="email" placeholder="seu@email.com" required>
           </div>
+          <div class="field">
+            <label>WhatsApp</label>
+            <input type="tel" id="telefone" name="telefone" autocomplete="tel" placeholder="+351 912 345 678" required>
+          </div>
           <div class="field" style="flex-direction:row;align-items:flex-start;gap:10px;">
             <input type="checkbox" id="consentimento" required style="margin-top:3px;width:16px;height:16px;flex-shrink:0;accent-color:var(--sage-dk);">
-            <label for="consentimento" style="font-size:0.78rem;color:var(--text-lt);text-transform:none;letter-spacing:normal;font-weight:300;line-height:1.5;">Li e aceito a <a href="/privacidade" target="_blank" style="color:var(--sage-dk);">Política de Privacidade</a> e autorizo o envio do guia e de comunicações por email.</label>
+            <label for="consentimento" style="font-size:0.78rem;color:var(--text-lt);text-transform:none;letter-spacing:normal;font-weight:300;line-height:1.5;">Li e aceito a <a href="/privacidade" target="_blank" style="color:var(--sage-dk);">Política de Privacidade</a> e autorizo o envio do guia e de comunicações por email e WhatsApp.</label>
           </div>
           <button type="submit" class="btn" id="btn-enviar">✾ Quero meu guia gratuito</button>
           <p id="erro-envio">Não foi possível enviar agora. Tente novamente.</p>
@@ -478,7 +482,7 @@
   const erro = document.getElementById('erro-envio');
   const sucesso = document.getElementById('mensagem-sucesso');
 
-  async function salvarLead(nome, email) {
+  async function salvarLead(nome, email, telefone) {
     try {
       const res = await fetch('https://api.brevo.com/v3/contacts', {
         method: 'POST',
@@ -488,7 +492,7 @@
         },
         body: JSON.stringify({
           email: email,
-          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-padroes-familiares' },
+          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-padroes-familiares', SMS: telefone, WHATSAPP: telefone },
           listIds: [2],
           updateEnabled: true
         })
@@ -562,14 +566,15 @@
     document.getElementById('erro-consentimento').style.display = 'none';
     const nome = document.getElementById('nome').value.trim();
     const email = document.getElementById('email').value.trim();
+    const telefone = document.getElementById('telefone').value.trim();
     const consentiu = document.getElementById('consentimento').checked;
-    if (!nome || !email) return;
+    if (!nome || !email || !telefone) return;
     if (!consentiu) { document.getElementById('erro-consentimento').style.display = 'block'; return; }
 
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
-    const ok = await salvarLead(nome, email);
+    const ok = await salvarLead(nome, email, telefone);
     btn.disabled = false;
     btn.textContent = 'Quero meu guia gratuito';
 
