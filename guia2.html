@@ -492,11 +492,12 @@
         },
         body: JSON.stringify({
           email: email,
-          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-padroes-familiares', SMS: telefone, WHATSAPP: telefone },
+          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-padroes-familiares', SMS: telefone },
           listIds: [2],
           updateEnabled: true
         })
       });
+      if (!res.ok && res.status !== 204) { const t = await res.text(); console.error('Brevo erro:', res.status, t); }
       return res.ok || res.status === 204;
     } catch(e) {
       return false;
