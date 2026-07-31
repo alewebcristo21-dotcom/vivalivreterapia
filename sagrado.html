@@ -429,30 +429,31 @@
 
 <script>
   const BREVO_API_KEY = ['xkeysib-527c410848fdb284fd7029c5e958d44ef4464feb4fb9bf9e0e7536d40e4add3e-','oP7QmpRlLylq6AT5'].join('');
-  const PDF_URL = 'https://drive.google.com/uc?export=download&id=1dRqYeuux9eSTd4AwDaEN122HJbedJVKa';
+  const PDF_URL = 'https://drive.google.com/uc?export=download&id=1Ztn9cZvL5nyP7U-91YbpmEBMlj1wroPc';
 
   const form = document.getElementById('lead-form');
   const btn = document.getElementById('btn-enviar');
   const erro = document.getElementById('erro-envio');
   const sucesso = document.getElementById('mensagem-sucesso');
 
+  async function salvarContato(email, attributes) {
+    const res = await fetch('https://api.brevo.com/v3/contacts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
+      body: JSON.stringify({ email, attributes, listIds: [2], updateEnabled: true })
+    });
+    if (!res.ok && res.status !== 204) { const t = await res.text(); console.error('Brevo erro:', res.status, t); }
+    return res.ok || res.status === 204;
+  }
+
   async function salvarLead(nome, email, telefone) {
     try {
-      const res = await fetch('https://api.brevo.com/v3/contacts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': BREVO_API_KEY
-        },
-        body: JSON.stringify({
-          email: email,
-          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-sagrado', SMS: telefone },
-          listIds: [2],
-          updateEnabled: true
-        })
-      });
-      if (!res.ok && res.status !== 204) { const t = await res.text(); console.error('Brevo erro:', res.status, t); }
-      return res.ok || res.status === 204;
+      const ok = await salvarContato(email, { FIRSTNAME: nome, ORIGEM: 'guia-sagrado', WHATSAPP: telefone });
+      if (ok) return true;
+      // Se falhar (ex: campo WHATSAPP com problema), tenta guardar na mesma sem esse campo,
+      // para nunca perder o lead só por causa disso.
+      console.warn('A tentar guardar sem o campo WHATSAPP...');
+      return await salvarContato(email, { FIRSTNAME: nome, ORIGEM: 'guia-sagrado' });
     } catch(e) {
       console.error('Erro:', e);
       return false;

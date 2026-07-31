@@ -482,23 +482,24 @@
   const erro = document.getElementById('erro-envio');
   const sucesso = document.getElementById('mensagem-sucesso');
 
+  async function salvarContato(email, attributes) {
+    const res = await fetch('https://api.brevo.com/v3/contacts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
+      body: JSON.stringify({ email, attributes, listIds: [2], updateEnabled: true })
+    });
+    if (!res.ok && res.status !== 204) { const t = await res.text(); console.error('Brevo erro:', res.status, t); }
+    return res.ok || res.status === 204;
+  }
+
   async function salvarLead(nome, email, telefone) {
     try {
-      const res = await fetch('https://api.brevo.com/v3/contacts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': BREVO_API_KEY
-        },
-        body: JSON.stringify({
-          email: email,
-          attributes: { FIRSTNAME: nome, ORIGEM: 'guia-padroes-familiares', SMS: telefone },
-          listIds: [2],
-          updateEnabled: true
-        })
-      });
-      if (!res.ok && res.status !== 204) { const t = await res.text(); console.error('Brevo erro:', res.status, t); }
-      return res.ok || res.status === 204;
+      const ok = await salvarContato(email, { FIRSTNAME: nome, ORIGEM: 'guia-padroes-familiares', WHATSAPP: telefone });
+      if (ok) return true;
+      // Se falhar (ex: campo WHATSAPP com problema), tenta guardar na mesma sem esse campo,
+      // para nunca perder o lead só por causa disso.
+      console.warn('A tentar guardar sem o campo WHATSAPP...');
+      return await salvarContato(email, { FIRSTNAME: nome, ORIGEM: 'guia-padroes-familiares' });
     } catch(e) {
       return false;
     }
