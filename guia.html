@@ -305,11 +305,11 @@
   const sucesso = document.getElementById('mensagem-sucesso');
   const linkDownload = document.getElementById('link-download');
 
-  async function salvarContato(email, attributes) {
+  async function salvarContato(email, attributes, listIds = [2]) {
     const res = await fetch('https://api.brevo.com/v3/contacts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
-      body: JSON.stringify({ email, attributes, listIds: [2], updateEnabled: true })
+      body: JSON.stringify({ email, attributes, listIds, updateEnabled: true })
     });
     if (!res.ok && res.status !== 204) { const t = await res.text(); console.error('Brevo erro:', res.status, t); }
     return res.ok || res.status === 204;
@@ -317,12 +317,12 @@
 
   async function salvarLead(nome, email, telefone) {
     try {
-      const ok = await salvarContato(email, { FIRSTNAME: nome, ORIGEM: 'guia-papel-familiar', WHATSAPP: telefone });
+      const ok = await salvarContato(email, { NOME: nome, ORIGEM: 'guia-papel-familiar', WHATSAPP: telefone }, [3]);
       if (ok) return true;
       // Se falhar (ex: campo WHATSAPP com problema), tenta guardar na mesma sem esse campo,
       // para nunca perder o lead só por causa disso.
       console.warn('A tentar guardar sem o campo WHATSAPP...');
-      return await salvarContato(email, { FIRSTNAME: nome, ORIGEM: 'guia-papel-familiar' });
+      return await salvarContato(email, { NOME: nome, ORIGEM: 'guia-papel-familiar' }, [3]);
     } catch(e) {
       console.error('Erro:', e);
       return false;
