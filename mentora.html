@@ -733,7 +733,7 @@
   }
   // O Supabase às vezes gera um nome automático diferente do que escrevemos
   // ao criar a função — este mapa liga o nome lógico ao nome real publicado.
-  const EDGE_FN_NAMES = { chat: 'bright-processor', auth: 'auth', conversas: 'smart-handler', 'membros-admin': 'membros-admin' };
+  const EDGE_FN_NAMES = { chat: 'bright-processor', auth: 'auth', conversas: 'smart-handler', 'membros-admin': 'membros-admin', gravacoes: 'gravacoes' };
 
   async function callEdge(fn, body) {
     const realName = EDGE_FN_NAMES[fn] || fn;
@@ -775,23 +775,49 @@
   async function enviarEmailCredenciais(nome, email, senha, expiracaoISO) {
     const primeiroNome = nome.split(' ')[0];
     const expiracaoHtml = expiracaoISO
-      ? `<p style="font-size:0.85rem;color:#6B5D52;">O seu acesso é válido até <strong>${new Date(expiracaoISO).toLocaleDateString('pt-PT')}</strong>.</p>`
+      ? `<p style="font-size:0.85rem;color:#6B5D52;">O teu acesso é válido até <strong>${new Date(expiracaoISO).toLocaleDateString('pt-PT')}</strong>.</p>`
       : '';
     const html = `
       <div style="font-family:Georgia,serif;background:#F5EFE6;padding:32px;">
-        <div style="max-width:480px;margin:0 auto;background:#FDFAF6;border-radius:20px;padding:36px;">
-          <p style="font-size:1.1rem;color:#2E2820;">✾ Olá, ${primeiroNome}!</p>
-          <p style="color:#2E2820;line-height:1.6;">O seu acesso à Área de Membros da <strong>Viva Livre Terapias</strong> está pronto. Guarde estas credenciais:</p>
-          <div style="background:#F5EFE6;border-radius:12px;padding:18px 22px;margin:20px 0;">
-            <p style="margin:0 0 8px;color:#2E2820;"><strong>Email:</strong> ${email}</p>
-            <p style="margin:0;color:#2E2820;"><strong>Senha:</strong> ${senha}</p>
+        <div style="max-width:520px;margin:0 auto;background:#FDFAF6;border-radius:20px;padding:40px 36px;">
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Olá, ${primeiroNome},</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Antes de mais, obrigado pela tua confiança.</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Em nome da Viva Livre Terapias, queremos dar-te as boas-vindas.</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">A decisão que acabaste de tomar pode ser o início de uma nova forma de olhar para a tua história.</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Lembra-te de uma coisa:</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;font-style:italic;">A dor tem história. A cura também.</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">E, a partir de hoje, não precisas de caminhar sozinho(a).</p>
+
+          <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#4F7A52;margin:28px 0 12px;">🔑 Os teus dados de acesso</p>
+          <div style="background:#F5EFE6;border-radius:12px;padding:18px 22px;margin:0 0 8px;">
+            <p style="margin:0 0 8px;color:#2E2820;"><strong>Área de Membros:</strong> <a href="https://vivalivreterapia.com/mentora" style="color:#4F7A52;">vivalivreterapia.com/mentora</a></p>
+            <p style="margin:0 0 8px;color:#2E2820;"><strong>Utilizador (email):</strong> ${email}</p>
+            <p style="margin:0;color:#2E2820;"><strong>Palavra-passe:</strong> ${senha}</p>
           </div>
+          <p style="font-size:0.8rem;color:#6B5D52;font-style:italic;">«Recomendamos que guardes estes dados num local seguro.»</p>
           ${expiracaoHtml}
-          <p style="text-align:center;margin:28px 0;">
-            <a href="https://vivalivreterapia.com/mentora" style="background:#4F7A52;color:#fff;padding:14px 28px;border-radius:999px;text-decoration:none;font-family:sans-serif;font-size:0.9rem;">Aceder à Área de Membros</a>
+
+          <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#4F7A52;margin:28px 0 12px;">O que vais encontrar</p>
+          <p style="color:#2E2820;line-height:1.8;font-size:0.95rem;">
+            ✔️ Conteúdos exclusivos.<br>
+            ✔️ Cursos e materiais para aprofundares o teu conhecimento.<br>
+            ✔️ Exercícios práticos para aplicares no teu dia a dia.<br>
+            ✔️ Atualizações e novos conteúdos à medida que forem disponibilizados.
           </p>
-          <p style="font-size:0.8rem;color:#6B5D52;">Recomendamos alterar a senha após o primeiro acesso. Qualquer dúvida, responda a este email.</p>
-          <p style="font-size:0.8rem;color:#6B5D52;margin-top:24px;">Com carinho,<br>Mônica Alice Voelz · Viva Livre Terapias</p>
+
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Não sintas que tens de fazer tudo de uma vez.</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Percorre cada módulo ao teu ritmo.</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">O importante não é a velocidade.</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">É permitir que cada passo encontre espaço dentro da tua história.</p>
+
+          <p style="text-align:center;margin:30px 0;">
+            <a href="https://vivalivreterapia.com/mentora" style="background:#4F7A52;color:#fff;padding:14px 30px;border-radius:999px;text-decoration:none;font-family:sans-serif;font-size:0.9rem;">Aceder à Área de Membros</a>
+          </p>
+
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Se tiveres qualquer dificuldade em aceder à plataforma ou alguma dúvida, responde a este email. Teremos todo o gosto em ajudar.</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Mais uma vez, seja muito bem-vindo(a) à Viva Livre Terapias.</p>
+          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Que este seja apenas o início de uma transformação profunda e duradoura.</p>
+          <p style="color:#6B5D52;font-size:0.85rem;margin-top:24px;">Um abraço,<br>Mônica &amp; Alexandre<br>Viva Livre Terapias</p>
         </div>
       </div>`;
     try {
@@ -801,7 +827,7 @@
         body: JSON.stringify({
           sender: BREVO_SENDER,
           to: [{ email, name: nome }],
-          subject: '✾ O seu acesso à Área de Membros — Viva Livre Terapias',
+          subject: '✾ Bem-vindo(a) à Viva Livre Terapias — o teu acesso está pronto',
           htmlContent: html
         })
       });
@@ -837,7 +863,8 @@
     if (!container) return;
     container.innerHTML = '<div class="enc-empty">A carregar...</div>';
     try {
-      const data = await sbFetch('/rest/v1/gravacoes?select=*&order=criado_em.desc');
+      const resp = await callEdge('gravacoes', { action: 'list' });
+      const data = resp.ok ? resp.gravacoes : null;
       if (!data || data.length === 0) {
         container.innerHTML = '<div class="enc-empty">Ainda sem gravações disponíveis. 🌿</div>';
         return;
@@ -885,7 +912,8 @@
     }
 
     try {
-      await sbFetch('/rest/v1/gravacoes', 'POST', { titulo, data_encontro: data, drive_id: driveId });
+      const resp = await callEdge('gravacoes', { action: 'add', titulo, data_encontro: data, drive_id: driveId });
+      if (!resp.ok) throw new Error(resp.error || 'erro');
       msg.textContent = '✅ Gravação adicionada!';
       msg.style.color = 'var(--sage-dk)';
       msg.style.display = 'block';
@@ -903,7 +931,7 @@
   async function removerGravacao(id) {
     if (!confirm('Remover esta gravação da lista? (o vídeo continua no Drive, só deixa de aparecer no site)')) return;
     try {
-      await sbFetch(`/rest/v1/gravacoes?id=eq.${id}`, 'DELETE');
+      await callEdge('gravacoes', { action: 'remove', id });
       carregarGravacoes();
     } catch(e) { alert('Erro ao remover gravação.'); }
   }
@@ -1255,12 +1283,9 @@
     }
 
     try {
-      const hash = await hashSenha(senha);
       const expiracaoISO = expiracao ? new Date(expiracao).toISOString() : null;
-      const body = { nome, email, senha_hash: hash, ativo: true };
-      if (expiracaoISO) body.data_expiracao = expiracaoISO;
-
-      await sbFetch('/rest/v1/membros', 'POST', body);
+      const resp = await callEdge('membros-admin', { action: 'create', nome, email, senha, expiracao });
+      if (!resp.ok) throw new Error(resp.error || 'erro');
 
       const enviarEmail = document.getElementById('adminEnviarEmail').checked;
       let emailOk = null;
@@ -1302,7 +1327,8 @@
     if (!container) return;
     container.innerHTML = '<p style="color:var(--text-lt);">A carregar...</p>';
     try {
-      const data = await sbFetch('/rest/v1/membros?select=*&order=criado_em.desc');
+      const resp = await callEdge('membros-admin', { action: 'list' });
+      const data = resp.ok ? resp.membros : null;
       if (!data || data.length === 0) { container.innerHTML = '<p>Nenhum membro registado ainda.</p>'; return; }
 
       container.innerHTML = data.map(m => {
@@ -1341,7 +1367,7 @@
 
   async function toggleMembro(id, ativoAtual) {
     try {
-      await sbFetch(`/rest/v1/membros?id=eq.${id}`, 'PATCH', { ativo: !ativoAtual });
+      await callEdge('membros-admin', { action: 'toggle', id, ativoAtual });
       carregarMembros();
     } catch(e) { alert('Erro ao atualizar membro.'); }
   }
@@ -1367,8 +1393,7 @@
     const input = document.getElementById(`renovarData-${id}`);
     if (!input || !input.value) { alert('Escolhe uma data primeiro!'); return; }
     try {
-      const novaData = new Date(input.value + 'T23:59:59').toISOString();
-      await sbFetch(`/rest/v1/membros?id=eq.${id}`, 'PATCH', { data_expiracao: novaData });
+      await callEdge('membros-admin', { action: 'renovar', id, novaData: input.value + 'T23:59:59' });
       carregarMembros();
     } catch(e) { alert('Erro ao renovar membro.'); }
   }
@@ -1376,21 +1401,18 @@
   async function reenviarAcesso(id, nome, email) {
     if (!confirm(`Gerar uma nova senha para ${nome} e reenviar as credenciais por email para ${email}?`)) return;
     try {
-      const novaSenha = gerarSenhaAleatoria();
-      const hash = await hashSenha(novaSenha);
-      await sbFetch(`/rest/v1/membros?id=eq.${id}`, 'PATCH', { senha_hash: hash });
-      const membroAtual = await sbFetch(`/rest/v1/membros?id=eq.${id}&select=data_expiracao`);
-      const expiracaoISO = membroAtual?.[0]?.data_expiracao || null;
-      const ok = await enviarEmailCredenciais(nome, email, novaSenha, expiracaoISO);
-      if (ok) alert(`✅ Nova senha gerada e email enviado para ${email}!\n\nSenha (caso precises): ${novaSenha}`);
-      else alert(`❌ Não foi possível enviar o email. Nova senha gerada: ${novaSenha} — envia manualmente.`);
+      const resp = await callEdge('membros-admin', { action: 'reenviar', id });
+      if (!resp.ok) throw new Error(resp.error || 'erro');
+      const ok = await enviarEmailCredenciais(nome, email, resp.novaSenha, resp.data_expiracao);
+      if (ok) alert(`✅ Nova senha gerada e email enviado para ${email}!\n\nSenha (caso precises): ${resp.novaSenha}`);
+      else alert(`❌ Não foi possível enviar o email. Nova senha gerada: ${resp.novaSenha} — envia manualmente.`);
     } catch(e) { alert('Erro ao reenviar acesso.'); }
   }
 
   async function removerExpiracao(id) {
     if (!confirm('Remover a data de expiração deste membro (acesso passa a não expirar)?')) return;
     try {
-      await sbFetch(`/rest/v1/membros?id=eq.${id}`, 'PATCH', { data_expiracao: null });
+      await callEdge('membros-admin', { action: 'remover-expiracao', id });
       carregarMembros();
     } catch(e) { alert('Erro ao remover data de expiração.'); }
   }
