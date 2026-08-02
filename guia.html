@@ -310,7 +310,7 @@
       const res = await fetch('/api/salvar-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome, email, telefone })
+        body: JSON.stringify({ nome, email, telefone, origem: 'guia-papel-familiar' })
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) {

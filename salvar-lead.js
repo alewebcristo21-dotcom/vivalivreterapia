@@ -3,7 +3,7 @@
 // Guarda o lead no Brevo e envia o email de boas-vindas, sem expor a chave da API.
 
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
-const ORIGEM = 'guia-papel-familiar';
+const ORIGEM_PADRAO = 'guia-papel-familiar';
 const LIST_IDS = [3];
 const PDF_URL = 'https://vivalivreterapia.com/papel-familiar.pdf';
 
@@ -101,7 +101,8 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { nome, email, telefone } = req.body || {};
+    const { nome, email, telefone, origem } = req.body || {};
+    const ORIGEM = (typeof origem === 'string' && origem.trim()) ? origem.trim() : ORIGEM_PADRAO;
     if (!nome || !email || !telefone) {
       res.status(400).json({ ok: false, error: 'Preenche nome, email e WhatsApp.' });
       return;
