@@ -761,82 +761,6 @@
     return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
-  // ── EMAIL DE CREDENCIAIS (Brevo) ──
-  const BREVO_API_KEY = ['xkeysib-527c410848fdb284fd7029c5e958d44ef4464feb4fb9bf9e0e7536d40e4add3e-','oP7QmpRlLylq6AT5'].join('');
-  const BREVO_SENDER = { name: 'Viva Livre Terapias', email: 'contato@vivalivreterapia.com' };
-
-  function gerarSenhaAleatoria() {
-    const chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789';
-    let s = '';
-    for (let i = 0; i < 10; i++) s += chars[Math.floor(Math.random() * chars.length)];
-    return s;
-  }
-
-  async function enviarEmailCredenciais(nome, email, senha, expiracaoISO) {
-    const primeiroNome = nome.split(' ')[0];
-    const expiracaoHtml = expiracaoISO
-      ? `<p style="font-size:0.85rem;color:#6B5D52;">O teu acesso é válido até <strong>${new Date(expiracaoISO).toLocaleDateString('pt-PT')}</strong>.</p>`
-      : '';
-    const html = `
-      <div style="font-family:Georgia,serif;background:#F5EFE6;padding:32px;">
-        <div style="max-width:520px;margin:0 auto;background:#FDFAF6;border-radius:20px;padding:40px 36px;">
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Olá, ${primeiroNome},</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Antes de mais, obrigado pela tua confiança.</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Em nome da Viva Livre Terapias, queremos dar-te as boas-vindas.</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">A decisão que acabaste de tomar pode ser o início de uma nova forma de olhar para a tua história.</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Lembra-te de uma coisa:</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;font-style:italic;">A dor tem história. A cura também.</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">E, a partir de hoje, não precisas de caminhar sozinho(a).</p>
-
-          <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#4F7A52;margin:28px 0 12px;">🔑 Os teus dados de acesso</p>
-          <div style="background:#F5EFE6;border-radius:12px;padding:18px 22px;margin:0 0 8px;">
-            <p style="margin:0 0 8px;color:#2E2820;"><strong>Área de Membros:</strong> <a href="https://vivalivreterapia.com/mentora" style="color:#4F7A52;">vivalivreterapia.com/mentora</a></p>
-            <p style="margin:0 0 8px;color:#2E2820;"><strong>Utilizador (email):</strong> ${email}</p>
-            <p style="margin:0;color:#2E2820;"><strong>Palavra-passe:</strong> ${senha}</p>
-          </div>
-          <p style="font-size:0.8rem;color:#6B5D52;font-style:italic;">«Recomendamos que guardes estes dados num local seguro.»</p>
-          ${expiracaoHtml}
-
-          <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#4F7A52;margin:28px 0 12px;">O que vais encontrar</p>
-          <p style="color:#2E2820;line-height:1.8;font-size:0.95rem;">
-            ✔️ Conteúdos exclusivos.<br>
-            ✔️ Cursos e materiais para aprofundares o teu conhecimento.<br>
-            ✔️ Exercícios práticos para aplicares no teu dia a dia.<br>
-            ✔️ Atualizações e novos conteúdos à medida que forem disponibilizados.
-          </p>
-
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Não sintas que tens de fazer tudo de uma vez.</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Percorre cada módulo ao teu ritmo.</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">O importante não é a velocidade.</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">É permitir que cada passo encontre espaço dentro da tua história.</p>
-
-          <p style="text-align:center;margin:30px 0;">
-            <a href="https://vivalivreterapia.com/mentora" style="background:#4F7A52;color:#fff;padding:14px 30px;border-radius:999px;text-decoration:none;font-family:sans-serif;font-size:0.9rem;">Aceder à Área de Membros</a>
-          </p>
-
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Se tiveres qualquer dificuldade em aceder à plataforma ou alguma dúvida, responde a este email. Teremos todo o gosto em ajudar.</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Mais uma vez, seja muito bem-vindo(a) à Viva Livre Terapias.</p>
-          <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Que este seja apenas o início de uma transformação profunda e duradoura.</p>
-          <p style="color:#6B5D52;font-size:0.85rem;margin-top:24px;">Um abraço,<br>Mônica &amp; Alexandre<br>Viva Livre Terapias</p>
-        </div>
-      </div>`;
-    try {
-      const res = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
-        body: JSON.stringify({
-          sender: BREVO_SENDER,
-          to: [{ email, name: nome }],
-          subject: '✾ Bem-vindo(a) à Viva Livre Terapias — o teu acesso está pronto',
-          htmlContent: html
-        })
-      });
-      return res.ok;
-    } catch (e) {
-      console.error('Erro ao enviar email:', e);
-      return false;
-    }
-  }
 
   // ── ENCONTRO SEMANAL ──
   // Link fixo do Meet (recorrente — não muda toda semana). Editar aqui se um dia mudar.
@@ -1283,23 +1207,18 @@
     }
 
     try {
-      const expiracaoISO = expiracao ? new Date(expiracao).toISOString() : null;
-      const resp = await callEdge('membros-admin', { action: 'create', nome, email, senha, expiracao });
+      const enviarEmail = document.getElementById('adminEnviarEmail').checked;
+      msg.textContent = `A criar membro${enviarEmail ? ' e a enviar o email...' : '...'}`;
+      msg.style.background = 'rgba(79,122,82,0.1)';
+      msg.style.color = 'var(--sage-dk)';
+      msg.style.display = 'block';
+
+      const resp = await callEdge('membros-admin', { action: 'create', nome, email, senha, expiracao, enviarEmail });
       if (!resp.ok) throw new Error(resp.error || 'erro');
 
-      const enviarEmail = document.getElementById('adminEnviarEmail').checked;
-      let emailOk = null;
-      if (enviarEmail) {
-        msg.textContent = `✅ Membro ${nome} criado! A enviar email com as credenciais...`;
-        msg.style.background = 'rgba(79,122,82,0.1)';
-        msg.style.color = 'var(--sage-dk)';
-        msg.style.display = 'block';
-        emailOk = await enviarEmailCredenciais(nome, email, senha, expiracaoISO);
-      }
-
-      if (enviarEmail && emailOk) {
+      if (enviarEmail && resp.emailOk) {
         msg.textContent = `✅ Membro ${nome} criado e email enviado para ${email}!`;
-      } else if (enviarEmail && !emailOk) {
+      } else if (enviarEmail && !resp.emailOk) {
         msg.textContent = `✅ Membro ${nome} criado, mas o email falhou. Credenciais — Email: ${email} | Senha: ${senha} (envia manualmente)`;
       } else {
         msg.textContent = `✅ Membro ${nome} criado com sucesso! Email: ${email} | Senha: ${senha}`;
@@ -1403,8 +1322,7 @@
     try {
       const resp = await callEdge('membros-admin', { action: 'reenviar', id });
       if (!resp.ok) throw new Error(resp.error || 'erro');
-      const ok = await enviarEmailCredenciais(nome, email, resp.novaSenha, resp.data_expiracao);
-      if (ok) alert(`✅ Nova senha gerada e email enviado para ${email}!\n\nSenha (caso precises): ${resp.novaSenha}`);
+      if (resp.emailOk) alert(`✅ Nova senha gerada e email enviado para ${email}!\n\nSenha (caso precises): ${resp.novaSenha}`);
       else alert(`❌ Não foi possível enviar o email. Nova senha gerada: ${resp.novaSenha} — envia manualmente.`);
     } catch(e) { alert('Erro ao reenviar acesso.'); }
   }
