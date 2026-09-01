@@ -52,7 +52,7 @@ async function enviarEmailBoasVindas(nome, email) {
         <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Se esta mensagem fez sentido para ti, convido-te a juntares-te à nossa comunidade.</p>
         <p style="color:#2E2820;line-height:1.7;font-size:1rem;">No grupo partilhamos reflexões, conteúdos exclusivos, exercícios e materiais que te ajudam a compreender melhor a tua história e a dar novos passos no teu caminho.</p>
         <p style="text-align:center;margin:30px 0;">
-          <a href="https://chat.whatsapp.com/JSChHMpKZaC6FoBM5hB0qa?s=cl&p=i&ilr=4" style="background:#4F7A52;color:#fff;padding:14px 30px;border-radius:999px;text-decoration:none;font-family:sans-serif;font-size:0.9rem;">💬 Entrar no grupo</a>
+          <a href="https://chat.whatsapp.com/JSChHMpKZaC6FoBM5hB0qa" style="background:#4F7A52;color:#fff;padding:14px 30px;border-radius:999px;text-decoration:none;font-family:sans-serif;font-size:0.9rem;">💬 Entrar no grupo</a>
         </p>
         <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Obrigado por confiares em nós.</p>
         <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Seja muito bem-vindo(a).</p>

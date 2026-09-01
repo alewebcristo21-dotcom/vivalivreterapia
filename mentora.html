@@ -231,6 +231,7 @@
         <a class="nav-item" onclick="showPage('cursos')"><span class="nav-icon">🎓</span> Cursos<span class="nav-soon">Em breve</span></a>
         <a class="nav-item" onclick="showPage('materiais')"><span class="nav-icon">🗺️</span> Mapa do Momento Presente</a>
         <a class="nav-item" onclick="showPage('encontro')"><span class="nav-icon">🎥</span> Encontro Semanal</a>
+        <a class="nav-item" onclick="showPage('area51')"><span class="nav-icon">🔒</span> Área 51</a>
         <p class="nav-section-title">Ferramentas</p>
         <a class="nav-item" onclick="showPage('prosperidade')"><span class="nav-icon">💰</span> Prosperidade Sistémica<span class="nav-badge">IA</span></a>
         <p class="nav-section-title">Suporte</p>
@@ -390,6 +391,58 @@
           </div>
           <div class="enc-rec-title">Encontros anteriores</div>
           <div id="encontroGravacoes"></div>
+        </div>
+      </div>
+
+      <!-- ÁREA 51 -->
+      <div class="page-content" id="page-area51">
+        <style>
+          .a51-wrap{max-width:620px;margin:0 auto}
+          .a51-lock{background:linear-gradient(135deg,var(--text),#3d3028);border-radius:1.4rem;padding:2.4rem 2rem;text-align:center;color:var(--white);}
+          .a51-lock .a51-icon{font-size:2.2rem;margin-bottom:0.8rem;}
+          .a51-lock h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.5rem;margin-bottom:0.5rem;}
+          .a51-lock p{font-size:0.85rem;color:rgba(253,250,246,0.7);margin-bottom:1.5rem;}
+          .a51-lock input{width:100%;max-width:280px;padding:0.8rem 1rem;border-radius:0.8rem;border:1.5px solid rgba(253,250,246,0.25);background:rgba(253,250,246,0.08);color:white;font-family:'Jost',sans-serif;font-size:0.9rem;outline:none;text-align:center;margin-bottom:1rem;}
+          .a51-lock input::placeholder{color:rgba(253,250,246,0.4);}
+          .a51-lock button{background:var(--sage-dk);color:white;border:none;border-radius:2rem;padding:0.8rem 2rem;font-family:'Jost',sans-serif;font-size:0.85rem;cursor:pointer;}
+          .a51-erro{color:#e0a08a;font-size:0.8rem;margin-top:0.8rem;display:none;}
+          .a51-admin{background:var(--cream);border:1.5px dashed var(--terra);border-radius:1.2rem;padding:1.2rem 1.4rem;margin-bottom:1.5rem;}
+          .a51-admin-title{font-size:0.78rem;font-weight:500;color:var(--terra-dk);margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:0.06em;}
+          .a51-admin .field{margin-bottom:0.6rem;}
+          .a51-admin input{width:100%;padding:0.6rem 0.8rem;border-radius:0.6rem;border:1.5px solid var(--sand);background:var(--white);font-family:'Jost',sans-serif;font-size:0.85rem;color:var(--text);outline:none;}
+          .a51-admin-row{display:flex;gap:0.6rem;flex-wrap:wrap;}
+          .a51-admin-row .field{flex:1;min-width:140px;}
+          .a51-admin-btn{margin-top:0.4rem;background:var(--sage-dk);color:white;border:none;padding:0.6rem 1.4rem;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer;}
+          .a51-admin-msg{font-size:0.78rem;margin-top:0.5rem;display:none;}
+        </style>
+        <div class="section-header">
+          <h3>Área <em>51</em></h3>
+          <p>Um espaço reservado para as integrantes do grupo pago.</p>
+        </div>
+        <div class="a51-wrap">
+          <div id="a51Bloqueado" class="a51-lock">
+            <div class="a51-icon">🔒</div>
+            <h3>Esta área é reservada</h3>
+            <p>Introduz a senha que recebeste para entrares.</p>
+            <input type="password" id="a51Senha" placeholder="Senha de acesso" onkeydown="if(event.key==='Enter')desbloquearArea51()">
+            <br>
+            <button onclick="desbloquearArea51()">Entrar</button>
+            <p class="a51-erro" id="a51Erro">Senha incorreta.</p>
+          </div>
+          <div id="a51Conteudo" style="display:none;">
+            <div id="a51AdminPanel" class="a51-admin" style="display:none;">
+              <div class="a51-admin-title">👤 Admin · Adicionar vídeo novo</div>
+              <div class="a51-admin-row">
+                <div class="field"><input type="text" id="a51NovoTitulo" placeholder="Título (ex: Encontro de 01 de setembro)"></div>
+                <div class="field"><input type="text" id="a51NovaData" placeholder="Data (DD/MM/AAAA)"></div>
+              </div>
+              <div class="field"><input type="text" id="a51NovoLink" placeholder="Cola aqui o link de partilha do Drive"></div>
+              <button class="a51-admin-btn" onclick="adicionarArea51()">➕ Adicionar vídeo</button>
+              <div id="a51AdminMsg" class="a51-admin-msg"></div>
+            </div>
+            <div class="enc-rec-title">Vídeos disponíveis</div>
+            <div id="a51Videos"></div>
+          </div>
         </div>
       </div>
 
@@ -726,7 +779,7 @@
   }
   // O Supabase às vezes gera um nome automático diferente do que escrevemos
   // ao criar a função — este mapa liga o nome lógico ao nome real publicado.
-  const EDGE_FN_NAMES = { chat: 'bright-processor', auth: 'auth', conversas: 'smart-handler', 'membros-admin': 'membros-admin', gravacoes: 'gravacoes' };
+  const EDGE_FN_NAMES = { chat: 'bright-processor', auth: 'auth', conversas: 'smart-handler', 'membros-admin': 'membros-admin', gravacoes: 'gravacoes', area51: 'area51' };
 
   async function callEdge(fn, body) {
     const realName = EDGE_FN_NAMES[fn] || fn;
@@ -855,6 +908,103 @@
 
   document.addEventListener('DOMContentLoaded', carregarGravacoes);
 
+  // ── ÁREA 51 ──
+  let a51SenhaOk = null;
+
+  async function desbloquearArea51() {
+    const senha = document.getElementById('a51Senha').value;
+    const erro = document.getElementById('a51Erro');
+    erro.style.display = 'none';
+    if (!senha) return;
+    try {
+      const resp = await callEdge('area51', { action: 'list', senha });
+      if (!resp.ok) { erro.textContent = resp.error || 'Senha incorreta.'; erro.style.display = 'block'; return; }
+      a51SenhaOk = senha;
+      document.getElementById('a51Bloqueado').style.display = 'none';
+      document.getElementById('a51Conteudo').style.display = 'block';
+      const painelAdmin = document.getElementById('a51AdminPanel');
+      if (painelAdmin) painelAdmin.style.display = souAdmin ? 'block' : 'none';
+      renderizarArea51(resp.videos);
+    } catch(e) { erro.textContent = 'Erro de ligação. Tenta novamente.'; erro.style.display = 'block'; }
+  }
+
+  function renderizarArea51(data) {
+    const container = document.getElementById('a51Videos');
+    if (!container) return;
+    if (!data || data.length === 0) {
+      container.innerHTML = '<div class="enc-empty">Ainda sem vídeos disponíveis. 🌿</div>';
+      return;
+    }
+    container.innerHTML = data.map((g) => `
+      <div class="enc-rec-card">
+        <div class="enc-rec-head">
+          <div class="enc-rec-info" onclick="toggleArea51Video('${g.id}')" style="cursor:pointer;flex:1;">
+            <div class="enc-rec-titulo">${g.titulo}</div>
+            <div class="enc-rec-data">${g.data_encontro}</div>
+          </div>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <button class="enc-rec-play" onclick="toggleArea51Video('${g.id}')">▶ Assistir</button>
+            ${souAdmin ? `<button class="enc-rec-del" onclick="removerArea51('${g.id}')">🗑️</button>` : ''}
+          </div>
+        </div>
+        <div class="enc-rec-video" id="a51Video-${g.id}">
+          <iframe src="https://drive.google.com/file/d/${g.drive_id}/preview" allow="autoplay" allowfullscreen></iframe>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function toggleArea51Video(id) {
+    const el = document.getElementById(`a51Video-${id}`);
+    if (!el) return;
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  }
+
+  async function recarregarArea51() {
+    if (!a51SenhaOk) return;
+    const resp = await callEdge('area51', { action: 'list', senha: a51SenhaOk });
+    if (resp.ok) renderizarArea51(resp.videos);
+  }
+
+  async function adicionarArea51() {
+    const titulo = document.getElementById('a51NovoTitulo').value.trim();
+    const data = document.getElementById('a51NovaData').value.trim();
+    const linkInput = document.getElementById('a51NovoLink').value.trim();
+    const msg = document.getElementById('a51AdminMsg');
+    const match = linkInput.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    const driveId = match ? match[1] : linkInput;
+
+    if (!titulo || !data || !driveId) {
+      msg.textContent = '❌ Preenche o título, a data e o link do Drive.';
+      msg.style.color = '#a8503d';
+      msg.style.display = 'block';
+      return;
+    }
+    try {
+      const resp = await callEdge('area51', { action: 'add', titulo, data_encontro: data, drive_id: driveId });
+      if (!resp.ok) throw new Error(resp.error || 'erro');
+      msg.textContent = '✅ Vídeo adicionado!';
+      msg.style.color = 'var(--sage-dk)';
+      msg.style.display = 'block';
+      document.getElementById('a51NovoTitulo').value = '';
+      document.getElementById('a51NovaData').value = '';
+      document.getElementById('a51NovoLink').value = '';
+      recarregarArea51();
+    } catch(e) {
+      msg.textContent = '❌ Erro ao adicionar. Confirma o link do Drive.';
+      msg.style.color = '#a8503d';
+      msg.style.display = 'block';
+    }
+  }
+
+  async function removerArea51(id) {
+    if (!confirm('Remover este vídeo da lista? (continua no Drive, só deixa de aparecer aqui)')) return;
+    try {
+      await callEdge('area51', { action: 'remove', id });
+      recarregarArea51();
+    } catch(e) { alert('Erro ao remover vídeo.'); }
+  }
+
   async function alterarSenha() {
     const msg = document.getElementById('senhaMsg');
     const atual = document.getElementById('senhaAtual').value;
@@ -974,6 +1124,7 @@
     const adminMenu = document.getElementById('adminMenu');
     if (adminMenu) adminMenu.style.display = 'none';
     souAdmin = false;
+    a51SenhaOk = null;
   }
 
   function showPage(id) {
@@ -983,10 +1134,15 @@
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', senha:'Alterar Senha 🔑', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', porta:'Método P.O.R.T.A. 🌱', adminPanel:'Gerir Membros 👥' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', area51:'Área 51 🔒', senha:'Alterar Senha 🔑', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', porta:'Método P.O.R.T.A. 🌱', adminPanel:'Gerir Membros 👥' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
     if (id === 'encontro') carregarGravacoes();
+    if (id === 'area51' && a51SenhaOk) {
+      document.getElementById('a51Bloqueado').style.display = 'none';
+      document.getElementById('a51Conteudo').style.display = 'block';
+      recarregarArea51();
+    }
   }
 
   function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; }

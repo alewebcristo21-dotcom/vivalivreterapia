@@ -2,6 +2,7 @@
   "rewrites": [
     { "source": "/mentora", "destination": "/mentora.html" },
     { "source": "/guia", "destination": "/guia.html" },
-    { "source": "/privacidade", "destination": "/privacidade.html" }
+    { "source": "/privacidade", "destination": "/privacidade.html" },
+    { "source": "/link", "destination": "/link.html" }
   ]
 }
