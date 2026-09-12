@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<title>QR Code — Grupo Reencontro</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  body{ font-family: 'Georgia', serif; background:#F5EFE6; display:flex; flex-direction:column; align-items:center; padding:3rem 1rem; }
+  .card{ background:#FDFAF6; border-radius:24px; padding:2.5rem 2rem; text-align:center; box-shadow:0 20px 50px rgba(46,40,32,0.12); max-width:360px; }
+  h1{ font-size:1.3rem; font-weight:400; color:#2E2820; margin-bottom:0.3rem; }
+  p{ font-size:0.85rem; color:#6B5D52; margin-bottom:1.5rem; }
+  #qrcode{ display:flex; justify-content:center; margin-bottom:1.5rem; }
+  button{ background:linear-gradient(135deg,#3d6140,#4F7A52); color:white; border:none; padding:0.8rem 1.8rem; border-radius:999px; font-family:sans-serif; font-size:0.85rem; cursor:pointer; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>✾ Grupo Reencontro</h1>
+    <p>Aponta a câmara do telemóvel para entrar no grupo do WhatsApp</p>
+    <div id="qrcode"></div>
+    <button onclick="baixar()">⬇️ Descarregar imagem</button>
+  </div>
+
+  <script>
+    const link = "https://chat.whatsapp.com/JSChHMpKZaC6FoBM5hB0qa";
+    new QRCode(document.getElementById("qrcode"), {
+      text: link,
+      width: 240,
+      height: 240,
+      colorDark: "#2E2820",
+      colorLight: "#FDFAF6",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    function baixar() {
+      setTimeout(() => {
+        const canvas = document.querySelector("#qrcode canvas");
+        const a = document.createElement("a");
+        a.href = canvas.toDataURL("image/png");
+        a.download = "qrcode-grupo-reencontro.png";
+        a.click();
+      }, 100);
+    }
+  </script>
+</body>
+</html>
