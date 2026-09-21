@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenho interesse — Reencontro dos Relacionamentos | Viva Livre Terapias</title>
+<meta name="description" content="Deixa o teu contacto e sê a primeira pessoa a saber quando a próxima turma do workshop Reencontro dos Relacionamentos abrir.">
+<meta name="robots" content="noindex, follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --cream: #F5EFE6; --sand: #E8DDD0; --sage: #7A9E7E; --sage-dk: #4F7A52;
+    --text: #2E2820; --text-lt: #6B5D52; --white: #FDFAF6;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background: linear-gradient(180deg, var(--cream), var(--sand));
+    min-height: 100vh; font-family:'Jost',sans-serif; color:var(--text);
+    display:flex; justify-content:center; align-items:center;
+    padding: 2.5rem 1.2rem; -webkit-font-smoothing:antialiased;
+  }
+  .card{
+    max-width: 460px; width:100%; background:var(--white);
+    border-radius: 1.8rem; padding: 2.6rem 2.2rem;
+    box-shadow: 0 20px 50px rgba(46,40,32,0.1);
+  }
+  .eyebrow{ font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--sage-dk); margin-bottom:0.6rem; font-weight:500; }
+  h1{ font-family:'Cormorant Garamond',serif; font-weight:300; font-size:1.7rem; color:var(--text); margin-bottom:0.8rem; }
+  h1 em{ font-style:italic; color:var(--sage-dk); }
+  p.lead{ font-size:0.88rem; color:var(--text-lt); line-height:1.7; margin-bottom:1.8rem; }
+  .field{ margin-bottom:1rem; }
+  label{ display:block; font-size:0.78rem; font-weight:500; margin-bottom:0.35rem; color:var(--text); }
+  input{
+    width:100%; padding:0.75rem 1rem; border-radius:0.8rem;
+    border:1.5px solid var(--sand); background:var(--cream);
+    font-family:'Jost',sans-serif; font-size:0.9rem; color:var(--text); outline:none;
+  }
+  input:focus{ border-color:var(--sage); }
+  .consent{ display:flex; gap:0.6rem; align-items:flex-start; font-size:0.74rem; color:var(--text-lt); margin:1.2rem 0; line-height:1.5; }
+  .consent input{ width:auto; margin-top:0.2rem; }
+  .consent a{ color:var(--sage-dk); }
+  button{
+    width:100%; background:linear-gradient(135deg,#3d6140,var(--sage-dk));
+    color:white; border:none; padding:0.95rem; border-radius:3rem;
+    font-family:'Jost',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer;
+    box-shadow:0 8px 24px rgba(79,122,82,0.3);
+  }
+  button:disabled{ opacity:0.6; cursor:default; }
+  .msg{ margin-top:1rem; font-size:0.82rem; text-align:center; display:none; }
+  .msg.erro{ color:#a8503d; }
+  #sucesso{ display:none; text-align:center; }
+  #sucesso .icon{ font-size:2.2rem; margin-bottom:0.8rem; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div id="formulario">
+      <p class="eyebrow">💛 Reencontro dos Relacionamentos</p>
+      <h1>Fica a saber da <em>próxima turma</em></h1>
+      <p class="lead">Esta data já fechou, mas não queremos que fiques de fora. Deixa o teu contacto e serás das primeiras pessoas a saber assim que abrirmos a próxima turma.</p>
+
+      <form id="lead-form">
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="telefone">WhatsApp</label>
+          <input type="tel" id="telefone" name="telefone" autocomplete="tel" placeholder="+351 912 345 678" required>
+        </div>
+        <label class="consent">
+          <input type="checkbox" id="consentimento" required>
+          <span>Li e aceito a <a href="/privacidade" target="_blank">Política de Privacidade</a> e autorizo o contacto sobre a próxima turma deste workshop.</span>
+        </label>
+        <button type="submit" id="btn-enviar">💛 Quero saber quando abrir</button>
+        <p class="msg erro" id="erro-envio">Não foi possível enviar agora. Tenta novamente em instantes.</p>
+        <p class="msg erro" id="erro-consentimento" style="display:none;">Precisas de aceitar a política de privacidade.</p>
+      </form>
+    </div>
+
+    <div id="sucesso">
+      <div class="icon">💛</div>
+      <h1>Recebido!</h1>
+      <p class="lead">Obrigado pelo teu interesse — vamos avisar-te assim que a próxima turma abrir. Entretanto, confirma o teu email, também te mandámos uma mensagem lá.</p>
+    </div>
+  </div>
+
+<script>
+  const form = document.getElementById('lead-form');
+  const btn = document.getElementById('btn-enviar');
+  const erro = document.getElementById('erro-envio');
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    erro.classList.remove('erro');
+    erro.style.display = 'none';
+    document.getElementById('erro-consentimento').style.display = 'none';
+
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telefone = document.getElementById('telefone').value.trim();
+    const consentiu = document.getElementById('consentimento').checked;
+    if (!nome || !email || !telefone) return;
+    if (!consentiu) { document.getElementById('erro-consentimento').style.display = 'block'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'A enviar...';
+
+    try {
+      const res = await fetch('/api/interesse-workshop', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, email, telefone })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'erro');
+
+      document.getElementById('formulario').style.display = 'none';
+      document.getElementById('sucesso').style.display = 'block';
+    } catch (e) {
+      btn.disabled = false;
+      btn.textContent = '💛 Quero saber quando abrir';
+      erro.style.display = 'block';
+    }
+  });
+</script>
+</body>
+</html>
