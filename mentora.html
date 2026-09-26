@@ -232,6 +232,7 @@
         <a class="nav-item" onclick="showPage('materiais')"><span class="nav-icon">🗺️</span> Mapa do Momento Presente</a>
         <a class="nav-item" onclick="showPage('encontro')"><span class="nav-icon">🎥</span> Encontro Semanal</a>
         <a class="nav-item" onclick="showPage('area51')"><span class="nav-icon">🔒</span> Área 51</a>
+        <a class="nav-item" onclick="showPage('workshops')"><span class="nav-icon">🎬</span> Workshops Gravados</a>
         <p class="nav-section-title">Ferramentas</p>
         <a class="nav-item" onclick="showPage('prosperidade')"><span class="nav-icon">💰</span> Prosperidade Sistémica<span class="nav-badge">IA</span></a>
         <p class="nav-section-title">Suporte</p>
@@ -443,6 +444,34 @@
             <div class="enc-rec-title">Vídeos disponíveis</div>
             <div id="a51Videos"></div>
           </div>
+        </div>
+      </div>
+
+      <!-- WORKSHOPS GRAVADOS -->
+      <div class="page-content" id="page-workshops">
+        <style>
+          .wk-wrap{max-width:640px;margin:0 auto}
+          .wk-card{border-radius:1.4rem;padding:1.6rem 1.8rem;margin-bottom:1.2rem;color:white;position:relative;overflow:hidden;}
+          .wk-card.locked{background:linear-gradient(135deg,#6b6058,#3d3630);cursor:pointer;transition:transform .2s;}
+          .wk-card.locked:hover{transform:translateY(-2px);}
+          .wk-card.unlocked{background:linear-gradient(135deg,#3d6140,#4F7A52);}
+          .wk-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;margin-bottom:0.3rem;}
+          .wk-sub{font-size:0.8rem;color:rgba(255,255,255,0.75);margin-bottom:0.8rem;}
+          .wk-badge{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);padding:0.5rem 1.1rem;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:500;}
+          .wk-videos{margin-top:1rem;}
+          .wk-admin{background:var(--cream);border:1.5px dashed var(--terra);border-radius:1rem;padding:1rem 1.2rem;margin-top:1rem;}
+          .wk-admin input{width:100%;padding:0.55rem 0.8rem;border-radius:0.6rem;border:1.5px solid var(--sand);background:var(--white);font-family:'Jost',sans-serif;font-size:0.82rem;color:var(--text);outline:none;margin-bottom:0.5rem;}
+          .wk-admin button{background:var(--sage-dk);color:white;border:none;padding:0.55rem 1.2rem;border-radius:2rem;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:500;cursor:pointer;}
+          .wk-admin-msg{font-size:0.75rem;margin-top:0.4rem;display:none;}
+          .wk-acessos{background:var(--cream);border-radius:1rem;padding:1rem 1.2rem;margin-top:1rem;}
+          .wk-acessos label{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;margin-bottom:0.4rem;cursor:pointer;}
+        </style>
+        <div class="section-header">
+          <h3>Workshops <em>Gravados</em></h3>
+          <p>As gravações completas dos nossos workshops, para reveres quando quiseres.</p>
+        </div>
+        <div class="wk-wrap" id="wkContainer">
+          <div class="enc-empty">A carregar...</div>
         </div>
       </div>
 
@@ -779,7 +808,7 @@
   }
   // O Supabase às vezes gera um nome automático diferente do que escrevemos
   // ao criar a função — este mapa liga o nome lógico ao nome real publicado.
-  const EDGE_FN_NAMES = { chat: 'bright-processor', auth: 'auth', conversas: 'smart-handler', 'membros-admin': 'membros-admin', gravacoes: 'gravacoes', area51: 'area51' };
+  const EDGE_FN_NAMES = { chat: 'bright-processor', auth: 'auth', conversas: 'smart-handler', 'membros-admin': 'membros-admin', gravacoes: 'gravacoes', area51: 'area51', workshops: 'workshops' };
 
   async function callEdge(fn, body) {
     const realName = EDGE_FN_NAMES[fn] || fn;
@@ -1005,6 +1034,147 @@
     } catch(e) { alert('Erro ao remover vídeo.'); }
   }
 
+  // ── WORKSHOPS GRAVADOS ──
+  const WK_WHATSAPP = '351962250741';
+
+  async function carregarWorkshops() {
+    const container = document.getElementById('wkContainer');
+    if (!container) return;
+    try {
+      const resp = await callEdge('workshops', { action: 'list' });
+      if (!resp.ok) throw new Error(resp.error || 'erro');
+      renderizarWorkshops(resp.workshops);
+    } catch(e) {
+      container.innerHTML = '<div class="enc-empty">Erro ao carregar workshops.</div>';
+    }
+  }
+
+  function renderizarWorkshops(workshops) {
+    const container = document.getElementById('wkContainer');
+    if (!container) return;
+    container.innerHTML = Object.entries(workshops).map(([chave, w]) => {
+      if (!w.temAcesso) {
+        const msg = encodeURIComponent(`Olá! Tenho interesse em comprar o acesso ao workshop "${w.titulo}". Podem enviar mais informações?`);
+        return `
+          <div class="wk-card locked" onclick="window.open('https://wa.me/${WK_WHATSAPP}?text=${msg}','_blank')">
+            <div class="wk-title">🔒 ${w.titulo}</div>
+            <div class="wk-sub">Ainda não tens acesso a este workshop</div>
+            <span class="wk-badge">💬 Falar para comprar</span>
+          </div>`;
+      }
+      const videosHtml = (w.videos && w.videos.length > 0)
+        ? w.videos.map(v => `
+            <div class="enc-rec-card">
+              <div class="enc-rec-head">
+                <div class="enc-rec-info" onclick="toggleWkVideo('${v.id}')" style="cursor:pointer;flex:1;">
+                  <div class="enc-rec-titulo">${v.titulo}</div>
+                  <div class="enc-rec-data">${v.data_encontro}</div>
+                </div>
+                <div style="display:flex;gap:0.5rem;align-items:center;">
+                  <button class="enc-rec-play" onclick="toggleWkVideo('${v.id}')">▶ Assistir</button>
+                  ${souAdmin ? `<button class="enc-rec-del" onclick="removerWkVideo('${v.id}')">🗑️</button>` : ''}
+                </div>
+              </div>
+              <div class="enc-rec-video" id="wkVideo-${v.id}">
+                <iframe src="https://drive.google.com/file/d/${v.drive_id}/preview" allow="autoplay" allowfullscreen></iframe>
+              </div>
+            </div>`).join('')
+        : '<div class="enc-empty">Ainda sem vídeos disponíveis. 🌿</div>';
+
+      const adminForm = souAdmin ? `
+          <div class="wk-admin">
+            <input type="text" id="wkNovoTitulo-${chave}" placeholder="Título (ex: Parte 1)">
+            <input type="text" id="wkNovaData-${chave}" placeholder="Data (DD/MM/AAAA)">
+            <input type="text" id="wkNovoLink-${chave}" placeholder="Cola aqui o link de partilha do Drive">
+            <button onclick="adicionarWkVideo('${chave}')">➕ Adicionar vídeo</button>
+            <div id="wkAdminMsg-${chave}" class="wk-admin-msg"></div>
+          </div>` : '';
+
+      return `
+        <div class="wk-card unlocked">
+          <div class="wk-title">✅ ${w.titulo}</div>
+          <div class="wk-sub">Tens acesso a este workshop</div>
+        </div>
+        <div class="wk-videos">${videosHtml}</div>
+        ${adminForm}`;
+    }).join('<div style="height:1rem"></div>');
+  }
+
+  function toggleWkVideo(id) {
+    const el = document.getElementById(`wkVideo-${id}`);
+    if (!el) return;
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  }
+
+  async function adicionarWkVideo(workshop) {
+    const titulo = document.getElementById(`wkNovoTitulo-${workshop}`).value.trim();
+    const data = document.getElementById(`wkNovaData-${workshop}`).value.trim();
+    const linkInput = document.getElementById(`wkNovoLink-${workshop}`).value.trim();
+    const msg = document.getElementById(`wkAdminMsg-${workshop}`);
+    const match = linkInput.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    const driveId = match ? match[1] : linkInput;
+
+    if (!titulo || !data || !driveId) {
+      msg.textContent = '❌ Preenche o título, a data e o link do Drive.';
+      msg.style.color = '#a8503d';
+      msg.style.display = 'block';
+      return;
+    }
+    try {
+      const resp = await callEdge('workshops', { action: 'add-video', workshop, titulo, data_encontro: data, drive_id: driveId });
+      if (!resp.ok) throw new Error(resp.error || 'erro');
+      msg.textContent = '✅ Vídeo adicionado!';
+      msg.style.color = 'var(--sage-dk)';
+      msg.style.display = 'block';
+      carregarWorkshops();
+    } catch(e) {
+      msg.textContent = '❌ Erro ao adicionar. Confirma o link do Drive.';
+      msg.style.color = '#a8503d';
+      msg.style.display = 'block';
+    }
+  }
+
+  async function removerWkVideo(id) {
+    if (!confirm('Remover este vídeo da lista? (continua no Drive, só deixa de aparecer aqui)')) return;
+    try {
+      await callEdge('workshops', { action: 'remove-video', id });
+      carregarWorkshops();
+    } catch(e) { alert('Erro ao remover vídeo.'); }
+  }
+
+  const WK_TITULOS = { relacionamentos: 'Reencontro dos Relacionamentos', caminho: 'Reencontro do Caminho', pertencimento: 'Pertencimento' };
+
+  async function toggleWkAcessos(membroId) {
+    const painel = document.getElementById(`wkAcessos-${membroId}`);
+    if (!painel) return;
+    const isOpen = painel.style.display === 'block';
+    document.querySelectorAll('[id^="wkAcessos-"]').forEach(el => el.style.display = 'none');
+    if (isOpen) { painel.style.display = 'none'; return; }
+    painel.style.display = 'block';
+    painel.innerHTML = '<div style="font-size:0.75rem;color:var(--text-lt);">A carregar acessos...</div>';
+    try {
+      const resp = await callEdge('workshops', { action: 'listar-acessos', membroId });
+      if (!resp.ok) throw new Error(resp.error || 'erro');
+      const acessos = resp.acessos || [];
+      painel.innerHTML = `
+        <div style="font-size:0.75rem;font-weight:500;color:var(--terra-dk);margin-bottom:0.6rem;text-transform:uppercase;letter-spacing:0.04em;">🎬 Acesso aos workshops gravados</div>
+        ${Object.entries(WK_TITULOS).map(([chave, titulo]) => `
+          <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;margin-bottom:0.4rem;cursor:pointer;">
+            <input type="checkbox" ${acessos.includes(chave) ? 'checked' : ''} onchange="setWkAcesso('${membroId}', '${chave}', this.checked)">
+            ${titulo}
+          </label>`).join('')}
+      `;
+    } catch(e) {
+      painel.innerHTML = '<div style="font-size:0.75rem;color:#c0392b;">Erro ao carregar acessos.</div>';
+    }
+  }
+
+  async function setWkAcesso(membroId, workshop, temAcesso) {
+    try {
+      await callEdge('workshops', { action: 'set-acesso', membroId, workshop, temAcesso });
+    } catch(e) { alert('Erro ao atualizar acesso.'); }
+  }
+
   async function alterarSenha() {
     const msg = document.getElementById('senhaMsg');
     const atual = document.getElementById('senhaAtual').value;
@@ -1134,10 +1304,11 @@
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', area51:'Área 51 🔒', senha:'Alterar Senha 🔑', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', porta:'Método P.O.R.T.A. 🌱', adminPanel:'Gerir Membros 👥' };
+    const titles = { dashboard:'Início', cursos:'Cursos', materiais:'Mapa do Momento Presente 🗺️', encontro:'Encontro Semanal 🎥', area51:'Área 51 🔒', workshops:'Workshops Gravados 🎬', senha:'Alterar Senha 🔑', mentora:'Mentora MAVC', oraculo:'Oráculo dos Sonhos 🔮', maia:'Calendário Maia 🌙', socio:'Sócio Estratégico 🚀', prosperidade:'Prosperidade Sistémica 💰', porta:'Método P.O.R.T.A. 🌱', adminPanel:'Gerir Membros 👥' };
     document.getElementById('topbarTitle').textContent = titles[id] || id;
     event?.currentTarget?.classList.add('active');
     if (id === 'encontro') carregarGravacoes();
+    if (id === 'workshops') carregarWorkshops();
     if (id === 'area51' && a51SenhaOk) {
       document.getElementById('a51Bloqueado').style.display = 'none';
       document.getElementById('a51Conteudo').style.display = 'block';
@@ -1423,6 +1594,7 @@
               <span style="font-size:0.72rem;padding:0.25rem 0.8rem;border-radius:2rem;background:${m.ativo ? 'rgba(79,122,82,0.15)' : 'rgba(200,0,0,0.1)'};color:${m.ativo ? 'var(--sage-dk)' : '#c0392b'};">${m.ativo ? '✅ Ativo' : '❌ Inativo'}</span>
               <button onclick="toggleMembro('${m.id}', ${m.ativo})" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">${m.ativo ? 'Desativar' : 'Ativar'}</button>
               <button onclick="toggleRenovar('${m.id}')" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">🔄 Renovar</button>
+              <button onclick="toggleWkAcessos('${m.id}')" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">🎬 Workshops</button>
               <button onclick="reenviarAcesso('${m.id}', '${m.nome.replace(/'/g, "\\'")}', '${m.email}')" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;">📧 Reenviar acesso</button>
               <button onclick="excluirMembro('${m.id}', '${m.nome.replace(/'/g, "\\'")}')" style="font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:2rem;border:1.5px solid #e0b4a8;background:none;color:#a8503d;cursor:pointer;font-family:'Jost',sans-serif;">🗑️ Excluir</button>
             </div>
@@ -1435,6 +1607,9 @@
             <button onclick="renovarMembro('${m.id}')" style="font-size:0.72rem;padding:0.3rem 0.9rem;border-radius:2rem;border:none;background:var(--sage-dk);color:white;cursor:pointer;font-family:'Jost',sans-serif;">Guardar</button>
             <button onclick="removerExpiracao('${m.id}')" style="font-size:0.7rem;padding:0.3rem 0.6rem;border-radius:2rem;border:1.5px solid var(--sand);background:none;cursor:pointer;font-family:'Jost',sans-serif;color:var(--text-lt);">Remover data</button>
             <button onclick="toggleRenovar('${m.id}')" style="font-size:0.7rem;padding:0.3rem 0.6rem;border-radius:2rem;border:none;background:none;cursor:pointer;font-family:'Jost',sans-serif;color:var(--text-lt);">Cancelar</button>
+          </div>
+          <div id="wkAcessos-${m.id}" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--sand);">
+            <div style="font-size:0.75rem;color:var(--text-lt);margin-bottom:0.5rem;">A carregar acessos...</div>
           </div>
         </div>
       `;}).join('');
