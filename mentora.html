@@ -1177,9 +1177,9 @@
 
   async function alterarSenha() {
     const msg = document.getElementById('senhaMsg');
-    const atual = document.getElementById('senhaAtual').value;
-    const nova = document.getElementById('senhaNova').value;
-    const confirmar = document.getElementById('senhaConfirmar').value;
+    const atual = document.getElementById('senhaAtual').value.trim();
+    const nova = document.getElementById('senhaNova').value.trim();
+    const confirmar = document.getElementById('senhaConfirmar').value.trim();
 
     const mostrarErro = (texto) => {
       msg.textContent = texto;
@@ -1224,7 +1224,7 @@
 
   async function doLogin() {
     const email = document.getElementById('loginEmail').value.trim();
-    const pass = document.getElementById('loginPass').value;
+    const pass = document.getElementById('loginPass').value.trim();
     document.getElementById('loginError').style.display = 'none';
     if (!pass) { document.getElementById('loginError').style.display = 'block'; return; }
     try {
@@ -1265,7 +1265,7 @@
   async function doRegisto() {
     const nome = document.getElementById('registoNome').value.trim();
     const email = document.getElementById('registoEmail').value.trim();
-    const pass = document.getElementById('registoPass').value;
+    const pass = document.getElementById('registoPass').value.trim();
     document.getElementById('registoError').style.display = 'none';
     document.getElementById('registoSucesso').style.display = 'none';
     if (!nome || !email || pass.length < 6) { document.getElementById('registoError').textContent = 'Preencha todos os campos (mínimo 6 caracteres na senha).'; document.getElementById('registoError').style.display = 'block'; return; }
