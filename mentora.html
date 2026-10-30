@@ -1589,6 +1589,7 @@
               <div style="font-weight:500;font-size:0.88rem;">${m.nome}</div>
               <div style="font-size:0.75rem;color:var(--text-lt);">${m.email}</div>
               ${m.data_expiracao ? `<div style="font-size:0.72rem;color:var(--terra-dk);">Expira: ${new Date(m.data_expiracao).toLocaleDateString('pt-PT')}</div>` : `<div style="font-size:0.72rem;color:var(--text-lt);">Sem data de expiração</div>`}
+              <div style="font-size:0.72rem;color:var(--text-lt);">${m.ultimo_acesso ? '👁️ Último acesso: ' + new Date(m.ultimo_acesso).toLocaleDateString('pt-PT') + ' · ' + (m.total_acessos || 0) + (m.total_acessos === 1 ? ' entrada' : ' entradas') : '👁️ Ainda sem registo de acesso'}</div>
             </div>
             <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
               <span style="font-size:0.72rem;padding:0.25rem 0.8rem;border-radius:2rem;background:${m.ativo ? 'rgba(79,122,82,0.15)' : 'rgba(200,0,0,0.1)'};color:${m.ativo ? 'var(--sage-dk)' : '#c0392b'};">${m.ativo ? '✅ Ativo' : '❌ Inativo'}</span>
