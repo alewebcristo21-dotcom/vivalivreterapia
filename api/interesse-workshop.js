@@ -4,7 +4,7 @@
 // para não misturar o email de boas-vindas dos guias com este fluxo.
 
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
-const ORIGEM = 'workshop-interesse';
+const ORIGEM = 'workshop-caminho-interesse';
 const LIST_IDS = [2];
 
 async function salvarContato(email, attributes) {
@@ -25,10 +25,10 @@ async function enviarEmailConfirmacao(nome, email) {
   const html = `
     <div style="font-family:Georgia,serif;background:#F5EFE6;padding:32px;">
       <div style="max-width:520px;margin:0 auto;background:#FDFAF6;border-radius:20px;padding:40px 36px;">
-        <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#4F7A52;margin:0 0 18px;">💛 Reencontro dos Relacionamentos</p>
+        <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#4F7A52;margin:0 0 18px;">💛 Reencontro do Caminho</p>
         <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Olá, ${primeiroNome},</p>
-        <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Recebemos o teu interesse no workshop <strong>Reencontro dos Relacionamentos</strong> — obrigado por quereres fazer parte!</p>
-        <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Estamos a organizar a próxima turma, e serás uma das primeiras pessoas a saber assim que a nova data e as inscrições abrirem.</p>
+        <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Recebemos o teu interesse no workshop <strong>Reencontro do Caminho — o teu campo, a tua história</strong> — obrigado por quereres fazer parte!</p>
+        <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Estamos a preparar este workshop, e serás uma das primeiras pessoas a saber assim que a data e as inscrições abrirem.</p>
         <p style="color:#2E2820;line-height:1.7;font-size:1rem;">Entretanto, fica à vontade para falar connosco se tiveres alguma dúvida.</p>
         <p style="text-align:center;margin:30px 0;">
           <a href="https://wa.me/351962250741" style="background:#4F7A52;color:#fff;padding:14px 30px;border-radius:999px;text-decoration:none;font-family:sans-serif;font-size:0.9rem;">💬 Falar no WhatsApp</a>
@@ -43,7 +43,7 @@ async function enviarEmailConfirmacao(nome, email) {
       body: JSON.stringify({
         sender: { name: 'Viva Livre Terapias', email: 'contato@vivalivreterapia.com' },
         to: [{ email, name: nome }],
-        subject: '💛 Recebemos o teu interesse — Reencontro dos Relacionamentos',
+        subject: '💛 Recebemos o teu interesse — Reencontro do Caminho',
         htmlContent: html
       })
     });
